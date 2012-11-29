@@ -5,6 +5,6 @@ MSICALib/MSITSCA.vcxproj -text svneol=unset#text/xml
 MSICALib/MSITSCA.vcxproj.filters -text svneol=unset#text/xml
 MSICALib/StdAfx.cpp -text
 MSICALib/StdAfx.h -text
-MSICALib/res/MSITSCA.rc -text
-MSICALib/res/MSITSCA.rcx -text svneol=unset#text/plain
+MSICALib/res/MSITSCA.rc -text svneol=unset#unset
+MSICALib/res/MSITSCA.rcx -text svneol=unset#unset
 MSICALib/res/en_GB.po -text
