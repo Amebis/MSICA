@@ -1,6 +1,15 @@
 MSICALib/*.user
 MSICALib/Debug.Win32
 MSICALib/Debug.x64
+MSICALib/MSI/*-1.idt
+MSICALib/MSI/*-2.idt
+MSICALib/MSI/*-2.idtx
+MSICALib/MSI/*.Binary-1
+MSICALib/MSI/*.Binary-2
+MSICALib/MSI/*.Icon-1
+MSICALib/MSI/*.Icon-2
+MSICALib/MSI/*.lst
+MSICALib/MSI/*.msm
 MSICALib/Release.Win32
 MSICALib/Release.x64
 MSICALib/Unicode[!!-~]Debug.Win32

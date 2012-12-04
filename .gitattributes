@@ -1,4 +1,5 @@
 * text=auto !eol
+MSICALib/MSI/Makefile -text
 MSICALib/MSITSCA.cpp -text
 MSICALib/MSITSCA.h -text
 MSICALib/MSITSCA.vcxproj -text svneol=unset#text/xml
