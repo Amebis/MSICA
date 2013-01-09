@@ -6,7 +6,6 @@ MSICALib/MSITSCA.vcxproj -text svneol=unset#text/xml
 MSICALib/MSITSCA.vcxproj.filters -text svneol=unset#text/xml
 MSICALib/MSITSCAOp.cpp -text
 MSICALib/MSITSCAOp.h -text
-MSICALib/Naredi.txt -text
 MSICALib/StdAfx.cpp -text
 MSICALib/StdAfx.h -text
 MSICALib/res/MSITSCA.rc -text svneol=unset#unset
