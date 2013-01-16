@@ -1,5 +1,4 @@
 * text=auto !eol
-MSICALib/MSI/Makefile -text
 MSICALib/MSITSCA.cpp -text
 MSICALib/MSITSCA.h -text
 MSICALib/MSITSCA.vcxproj -text svneol=unset#text/xml
@@ -8,6 +7,7 @@ MSICALib/MSITSCAOp.cpp -text
 MSICALib/MSITSCAOp.h -text
 MSICALib/StdAfx.cpp -text
 MSICALib/StdAfx.h -text
+MSICALib/msm/Makefile -text
 MSICALib/res/MSITSCA.rc -text svneol=unset#unset
 MSICALib/res/MSITSCA.rcx -text svneol=unset#unset
 MSICALib/res/en_GB.po -text
