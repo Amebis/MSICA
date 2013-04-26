@@ -9,6 +9,7 @@ AMSICA/res/en_GB.po -text
 AMSICA/src/AMSICA.cpp -text
 AMSICA/src/AMSICAFileOp.cpp -text
 AMSICA/src/AMSICATSOp.cpp -text
+AMSICA/src/MSICARegOp.cpp -text
 AMSICA/src/StdAfx.cpp -text
 MSITSCA/L10N/sl_SI.po -text
 MSITSCA/MSITSCA.cpp -text

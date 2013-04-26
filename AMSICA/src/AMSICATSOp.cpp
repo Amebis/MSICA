@@ -45,8 +45,8 @@ HRESULT COpTaskCreate::Execute(CSession *pSession)
         // Delete existing task first.
         // Since task deleting is a complicated job (when rollback/commit support is required), and we do have an operation just for that, we use it.
         // Don't worry, COpTaskDelete::Execute() returns S_OK if task doesn't exist.
-        COpTaskDelete opDeleteTask(m_sValue);
-        hr = opDeleteTask.Execute(pSession);
+        COpTaskDelete opDelete(m_sValue);
+        hr = opDelete.Execute(pSession);
         if (FAILED(hr)) goto finish;
     }
 

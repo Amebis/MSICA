@@ -43,9 +43,9 @@ HRESULT COpFileDelete::Execute(CSession *pSession)
         return S_OK;
     else {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(3);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_DELETE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 2, m_sValue                   ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 3, dwError                    ) == ERROR_SUCCESS);
+        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_FILE_DELETE_FAILED) == ERROR_SUCCESS);
+        verify(::MsiRecordSetStringW(hRecordProg, 2, m_sValue                        ) == ERROR_SUCCESS);
+        verify(::MsiRecordSetInteger(hRecordProg, 3, dwError                         ) == ERROR_SUCCESS);
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
         return AtlHresultFromWin32(dwError);
     }
@@ -78,10 +78,10 @@ HRESULT COpFileMove::Execute(CSession *pSession)
         return S_OK;
     } else {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(4);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_MOVE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 2, m_sValue1                ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue2                ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 4, dwError                  ) == ERROR_SUCCESS);
+        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_FILE_MOVE_FAILED) == ERROR_SUCCESS);
+        verify(::MsiRecordSetStringW(hRecordProg, 2, m_sValue1                     ) == ERROR_SUCCESS);
+        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue2                     ) == ERROR_SUCCESS);
+        verify(::MsiRecordSetInteger(hRecordProg, 4, dwError                       ) == ERROR_SUCCESS);
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
         return AtlHresultFromWin32(dwError);
     }

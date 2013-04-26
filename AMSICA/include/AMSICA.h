@@ -26,11 +26,15 @@
 
 
 ////////////////////////////////////////////////////////////////////
-// Error codes (last unused 2561L)
+// Error codes (next unused 2565L)
 ////////////////////////////////////////////////////////////////////
 
-#define ERROR_INSTALL_DELETE_FAILED                    2554L
-#define ERROR_INSTALL_MOVE_FAILED                      2555L
+#define ERROR_INSTALL_FILE_DELETE_FAILED               2554L
+#define ERROR_INSTALL_FILE_MOVE_FAILED                 2555L
+#define ERROR_INSTALL_REGKEY_CREATE_FAILED             2561L
+#define ERROR_INSTALL_REGKEY_COPY_FAILED               2562L
+#define ERROR_INSTALL_REGKEY_PROBING_FAILED            2563L
+#define ERROR_INSTALL_REGKEY_DELETE_FAILED             2564L
 #define ERROR_INSTALL_TASK_CREATE_FAILED               2556L
 #define ERROR_INSTALL_TASK_DELETE_FAILED               2557L
 #define ERROR_INSTALL_TASK_ENABLE_FAILED               2558L
@@ -83,8 +87,8 @@ class COpTypeSingleString : public COperation
 public:
     COpTypeSingleString(LPCWSTR pszValue = L"", int iTicks = 0);
 
-    friend inline HRESULT operator <<(ATL::CAtlFile &f, const AMSICA::COpTypeSingleString &op);
-    friend inline HRESULT operator >>(ATL::CAtlFile &f, AMSICA::COpTypeSingleString &op);
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpTypeSingleString &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpTypeSingleString &op);
 
 protected:
     ATL::CAtlStringW m_sValue;
@@ -100,8 +104,8 @@ class COpTypeSrcDstString : public COperation
 public:
     COpTypeSrcDstString(LPCWSTR pszValue1 = L"", LPCWSTR pszValue2 = L"", int iTicks = 0);
 
-    friend inline HRESULT operator <<(ATL::CAtlFile &f, const AMSICA::COpTypeSrcDstString &op);
-    friend inline HRESULT operator >>(ATL::CAtlFile &f, AMSICA::COpTypeSrcDstString &op);
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpTypeSrcDstString &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpTypeSrcDstString &op);
 
 protected:
     ATL::CAtlStringW m_sValue1;
@@ -118,8 +122,8 @@ class COpTypeBoolean : public COperation
 public:
     COpTypeBoolean(BOOL bValue = TRUE, int iTicks = 0);
 
-    friend inline HRESULT operator <<(ATL::CAtlFile &f, const AMSICA::COpTypeBoolean &op);
-    friend inline HRESULT operator >>(ATL::CAtlFile &f, AMSICA::COpTypeBoolean &op);
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpTypeBoolean &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpTypeBoolean &op);
 
 protected:
     BOOL m_bValue;
@@ -163,6 +167,82 @@ public:
 
 
 ////////////////////////////////////////////////////////////////////////////
+// COpRegKeySingle
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegKeySingle : public COpTypeSingleString
+{
+public:
+    COpRegKeySingle(HKEY hKeyRoot = NULL, LPCWSTR pszKeyName = L"", int iTicks = 0);
+
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegKeySingle &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpRegKeySingle &op);
+
+protected:
+    HKEY m_hKeyRoot;
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegKeySrcDst
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegKeySrcDst : public COpTypeSrcDstString
+{
+public:
+    COpRegKeySrcDst(HKEY hKeyRoot = NULL, LPCWSTR pszKeyNameSrc = L"", LPCWSTR pszKeyNameDst = L"", int iTicks = 0);
+
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegKeySrcDst &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpRegKeySrcDst &op);
+
+protected:
+    HKEY m_hKeyRoot;
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegKeyCreate
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegKeyCreate : public COpRegKeySingle
+{
+public:
+    COpRegKeyCreate(HKEY hKeyRoot = NULL, LPCWSTR pszKeyName = L"", int iTicks = 0);
+    virtual HRESULT Execute(CSession *pSession);
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegKeyCopy
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegKeyCopy : public COpRegKeySrcDst
+{
+public:
+    COpRegKeyCopy(HKEY hKey = NULL, LPCWSTR pszKeyNameSrc = L"", LPCWSTR pszKeyNameDst = L"", int iTicks = 0);
+    virtual HRESULT Execute(CSession *pSession);
+
+private:
+    static LONG CopyKeyRecursively(HKEY hKeyRoot, LPCWSTR pszKeyNameSrc, LPCWSTR pszKeyNameDst, REGSAM samAdditional);
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegKeyDelete
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegKeyDelete : public COpRegKeySingle
+{
+public:
+    COpRegKeyDelete(HKEY hKey = NULL, LPCWSTR pszKeyName = L"", int iTicks = 0);
+    virtual HRESULT Execute(CSession *pSession);
+
+private:
+    static LONG DeleteKeyRecursively(HKEY hKeyRoot, LPCWSTR pszKeyName, REGSAM sam);
+};
+
+
+////////////////////////////////////////////////////////////////////////////
 // COpTaskCreate
 ////////////////////////////////////////////////////////////////////////////
 
@@ -176,8 +256,8 @@ public:
     UINT SetFromRecord(MSIHANDLE hInstall, MSIHANDLE hRecord);
     UINT SetTriggersFromView(MSIHANDLE hView);
 
-    friend inline HRESULT operator <<(ATL::CAtlFile &f, const AMSICA::COpTaskCreate &op);
-    friend inline HRESULT operator >>(ATL::CAtlFile &f, AMSICA::COpTaskCreate &op);
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpTaskCreate &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpTaskCreate &op);
 
 protected:
     ATL::CAtlStringW m_sApplicationName;
@@ -665,7 +745,7 @@ inline HRESULT operator >>(ATL::CAtlFile &f, TASK_TRIGGER &ttData)
 }
 
 
-inline HRESULT operator <<(ATL::CAtlFile &f, const AMSICA::COperation &op)
+inline HRESULT operator <<(ATL::CAtlFile &f, const COperation &op)
 {
     return f << op.m_iTicks;
 }
@@ -740,8 +820,8 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpTypeBoolean &op)
 
 inline HRESULT operator >>(ATL::CAtlFile &f, COpTypeBoolean &op)
 {
-    int iValue;
     HRESULT hr;
+    int iValue;
 
     hr = f >> (COperation &)op;
     if (FAILED(hr)) return hr;
@@ -754,12 +834,59 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpTypeBoolean &op)
 }
 
 
+
+inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegKeySingle &op)
+{
+    HRESULT hr;
+
+    hr = f << (const COpTypeSingleString &)op; if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_hKeyRoot);            if (FAILED(hr)) return hr;
+
+    return S_OK;
+}
+
+
+inline HRESULT operator >>(ATL::CAtlFile &f, COpRegKeySingle &op)
+{
+    HRESULT hr;
+    int iValue;
+
+    hr = f >> (COpTypeSingleString &)op; if (FAILED(hr)) return hr;
+    hr = f >> iValue;                    if (FAILED(hr)) return hr; op.m_hKeyRoot = (HKEY)iValue;
+
+    return S_OK;
+}
+
+
+inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegKeySrcDst &op)
+{
+    HRESULT hr;
+
+    hr = f << (const COpTypeSrcDstString &)op; if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_hKeyRoot);            if (FAILED(hr)) return hr;
+
+    return S_OK;
+}
+
+
+inline HRESULT operator >>(ATL::CAtlFile &f, COpRegKeySrcDst &op)
+{
+    HRESULT hr;
+    int iValue;
+
+    hr = f >> (COpTypeSrcDstString &)op; if (FAILED(hr)) return hr;
+    hr = f >> iValue;                    if (FAILED(hr)) return hr; op.m_hKeyRoot = (HKEY)iValue;
+
+    return S_OK;
+}
+
+
 inline HRESULT operator <<(ATL::CAtlFile &f, const COpTaskCreate &op)
 {
     HRESULT hr;
     POSITION pos;
 
-    hr = f << (const COpTypeSingleString&)op;                  if (FAILED(hr)) return hr;
+    hr = f << (const COpTypeSingleString&)op;                          if (FAILED(hr)) return hr;
     hr = f << op.m_sApplicationName;                                   if (FAILED(hr)) return hr;
     hr = f << op.m_sParameters;                                        if (FAILED(hr)) return hr;
     hr = f << op.m_sWorkingDirectory;                                  if (FAILED(hr)) return hr;
@@ -786,7 +913,7 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpTaskCreate &op)
     HRESULT hr;
     DWORD dwValue;
 
-    hr = f >> (COpTypeSingleString&)op;     if (FAILED(hr)) return hr;
+    hr = f >> (COpTypeSingleString&)op;             if (FAILED(hr)) return hr;
     hr = f >> op.m_sApplicationName;                if (FAILED(hr)) return hr;
     hr = f >> op.m_sParameters;                     if (FAILED(hr)) return hr;
     hr = f >> op.m_sWorkingDirectory;               if (FAILED(hr)) return hr;
@@ -932,6 +1059,44 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpList &list)
 
     return S_OK;
 }
+
+
+////////////////////////////////////////////////////////////////////
+// Inline Functions
+////////////////////////////////////////////////////////////////////
+
+
+inline BOOL IsWow64Process()
+{
+#ifndef _WIN64
+    // Find IsWow64Process() address in KERNEL32.DLL.
+    BOOL (WINAPI *_IsWow64Process)(__in HANDLE hProcess, __out PBOOL Wow64Process) = (BOOL(WINAPI*)(__in HANDLE, __out PBOOL))::GetProcAddress(::GetModuleHandle(_T("KERNEL32.DLL")), "IsWow64Process");
+
+    // See if our 32-bit process is running in 64-bit environment.
+    if (_IsWow64Process) {
+        BOOL bResult;
+
+        // See, what IsWow64Process() says about current process.
+        if (_IsWow64Process(::GetCurrentProcess(), &bResult)) {
+            // Return result.
+            return bResult;
+        } else {
+            // IsWow64Process() returned an error. Assume, the process is not WOW64.
+            return FALSE;
+        }
+    } else {
+        // This KERNEL32.DLL doesn't know IsWow64Process().Definitely not a WOW64 process.
+        return FALSE;
+    }
+#else
+    // 64-bit processes are never run as WOW64.
+    return FALSE;
+#endif
+}
+
+#ifndef _WIN64
+#endif
+
 
 
 ////////////////////////////////////////////////////////////////////////////
