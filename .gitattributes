@@ -1,4 +1,15 @@
 * text=auto !eol
+AMSICA/AMSICA.props -text svneol=unset#text/xml
+AMSICA/AMSICALib/AMSICALib.vcxproj -text svneol=unset#text/xml
+AMSICA/AMSICALib/AMSICALib.vcxproj.filters -text svneol=unset#text/xml
+AMSICA/include/AMSICA.h -text
+AMSICA/include/StdAfx.h -text
+AMSICA/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
+AMSICA/res/en_GB.po -text
+AMSICA/src/AMSICA.cpp -text
+AMSICA/src/AMSICAFileOp.cpp -text
+AMSICA/src/AMSICATSOp.cpp -text
+AMSICA/src/StdAfx.cpp -text
 MSITSCA/L10N/sl_SI.po -text
 MSITSCA/MSITSCA.cpp -text
 MSITSCA/MSITSCA.h -text
