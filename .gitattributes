@@ -3,8 +3,6 @@ MSICALib/MSITSCA.cpp -text
 MSICALib/MSITSCA.h -text
 MSICALib/MSITSCA.vcxproj -text svneol=unset#text/xml
 MSICALib/MSITSCA.vcxproj.filters -text svneol=unset#text/xml
-MSICALib/MSITSCAOp.cpp -text
-MSICALib/MSITSCAOp.h -text
 MSICALib/StdAfx.cpp -text
 MSICALib/StdAfx.h -text
 MSICALib/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
