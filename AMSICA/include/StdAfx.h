@@ -30,8 +30,6 @@
 #include <atlfile.h>
 #include <atlstr.h>
 
-using namespace ATL;
-
 #include "BuildNum.h"
 
 #include "AMSICA.h"

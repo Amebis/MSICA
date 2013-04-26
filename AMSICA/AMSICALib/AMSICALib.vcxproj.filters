@@ -36,4 +36,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\en_GB.po">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>
