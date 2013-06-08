@@ -5,13 +5,13 @@
 // Version
 ////////////////////////////////////////////////////////////////////////////
 
-#define AMSICA_VERSION       0x01000000
+#define AMSICA_VERSION       0x01000100
 
 #define AMSICA_VERSION_MAJ   1
 #define AMSICA_VERSION_MIN   0
-#define AMSICA_VERSION_REV   0
+#define AMSICA_VERSION_REV   1
 
-#define AMSICA_VERSION_STR   "1.0"
+#define AMSICA_VERSION_STR   "1.0.1"
 
 
 #if !defined(RC_INVOKED) && !defined(MIDL_PASS)
@@ -26,26 +26,30 @@
 
 
 ////////////////////////////////////////////////////////////////////
-// Error codes (next unused 2565L)
+// Error codes (next unused 2569L)
 ////////////////////////////////////////////////////////////////////
 
+#define ERROR_INSTALL_DATABASE_OPEN                    2550L
+#define ERROR_INSTALL_PROPERTY_SET                     2553L
+#define ERROR_INSTALL_SCRIPT_WRITE                     2552L
+#define ERROR_INSTALL_SCRIPT_READ                      2560L
 #define ERROR_INSTALL_FILE_DELETE_FAILED               2554L
 #define ERROR_INSTALL_FILE_MOVE_FAILED                 2555L
 #define ERROR_INSTALL_REGKEY_CREATE_FAILED             2561L
 #define ERROR_INSTALL_REGKEY_COPY_FAILED               2562L
 #define ERROR_INSTALL_REGKEY_PROBING_FAILED            2563L
 #define ERROR_INSTALL_REGKEY_DELETE_FAILED             2564L
+#define ERROR_INSTALL_REGKEY_SETVALUE_FAILED           2565L
+#define ERROR_INSTALL_REGKEY_DELETEVALUE_FAILED        2567L
+#define ERROR_INSTALL_REGKEY_COPYVALUE_FAILED          2568L
+#define ERROR_INSTALL_REGKEY_PROBINGVAL_FAILED         2566L
 #define ERROR_INSTALL_TASK_CREATE_FAILED               2556L
 #define ERROR_INSTALL_TASK_DELETE_FAILED               2557L
 #define ERROR_INSTALL_TASK_ENABLE_FAILED               2558L
 #define ERROR_INSTALL_TASK_COPY_FAILED                 2559L
 
 // Errors reported by MSITSCA
-#define ERROR_INSTALL_SCHEDULED_TASKS_DATABASE_OPEN    2550L
 #define ERROR_INSTALL_SCHEDULED_TASKS_OPLIST_CREATE    2551L
-#define ERROR_INSTALL_SCHEDULED_TASKS_SCRIPT_WRITE     2552L
-#define ERROR_INSTALL_SCHEDULED_TASKS_SCRIPT_READ      2560L
-#define ERROR_INSTALL_SCHEDULED_TASKS_PROPERTY_SET     2553L
 
 
 namespace AMSICA {
@@ -96,7 +100,7 @@ protected:
 
 
 ////////////////////////////////////////////////////////////////////////////
-// COpDoubleStringOperation
+// COpTypeSrcDstString
 ////////////////////////////////////////////////////////////////////////////
 
 class COpTypeSrcDstString : public COperation
@@ -219,11 +223,12 @@ public:
 class COpRegKeyCopy : public COpRegKeySrcDst
 {
 public:
-    COpRegKeyCopy(HKEY hKey = NULL, LPCWSTR pszKeyNameSrc = L"", LPCWSTR pszKeyNameDst = L"", int iTicks = 0);
+    COpRegKeyCopy(HKEY hKeyRoot = NULL, LPCWSTR pszKeyNameSrc = L"", LPCWSTR pszKeyNameDst = L"", int iTicks = 0);
     virtual HRESULT Execute(CSession *pSession);
 
 private:
     static LONG CopyKeyRecursively(HKEY hKeyRoot, LPCWSTR pszKeyNameSrc, LPCWSTR pszKeyNameDst, REGSAM samAdditional);
+    static LONG CopyKeyRecursively(HKEY hKeySrc, HKEY hKeyDst, REGSAM samAdditional);
 };
 
 
@@ -234,11 +239,97 @@ private:
 class COpRegKeyDelete : public COpRegKeySingle
 {
 public:
-    COpRegKeyDelete(HKEY hKey = NULL, LPCWSTR pszKeyName = L"", int iTicks = 0);
+    COpRegKeyDelete(HKEY hKeyRoot = NULL, LPCWSTR pszKeyName = L"", int iTicks = 0);
     virtual HRESULT Execute(CSession *pSession);
 
 private:
-    static LONG DeleteKeyRecursively(HKEY hKeyRoot, LPCWSTR pszKeyName, REGSAM sam);
+    static LONG DeleteKeyRecursively(HKEY hKeyRoot, LPCWSTR pszKeyName, REGSAM samAdditional);
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegValueSingle
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegValueSingle : public COpRegKeySingle
+{
+public:
+    COpRegValueSingle(HKEY hKeyRoot = NULL, LPCWSTR pszKeyName = L"", LPCWSTR pszValueName = L"", int iTicks = 0);
+
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegValueSingle &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpRegValueSingle &op);
+
+protected:
+    ATL::CAtlStringW m_sValueName;
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegValueSrcDst
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegValueSrcDst : public COpRegKeySingle
+{
+public:
+    COpRegValueSrcDst(HKEY hKeyRoot = NULL, LPCWSTR pszKeyName = L"", LPCWSTR pszValueNameSrc = L"", LPCWSTR pszValueNameDst = L"", int iTicks = 0);
+
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegValueSrcDst &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpRegValueSrcDst &op);
+
+protected:
+    ATL::CAtlStringW m_sValueName1;
+    ATL::CAtlStringW m_sValueName2;
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegValueCreate
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegValueCreate : public COpRegValueSingle
+{
+public:
+    COpRegValueCreate(HKEY hKeyRoot = NULL, LPCWSTR pszKeyName = L"", LPCWSTR pszValueName = L"", int iTicks = 0);
+    COpRegValueCreate(HKEY hKeyRoot, LPCWSTR pszKeyName, LPCWSTR pszValueName, DWORD dwData, int iTicks = 0);
+    COpRegValueCreate(HKEY hKeyRoot, LPCWSTR pszKeyName, LPCWSTR pszValueName, LPCVOID lpData, SIZE_T nSize, int iTicks = 0);
+    COpRegValueCreate(HKEY hKeyRoot, LPCWSTR pszKeyName, LPCWSTR pszValueName, LPCWSTR pszData, int iTicks = 0);
+    COpRegValueCreate(HKEY hKeyRoot, LPCWSTR pszKeyName, LPCWSTR pszValueName, DWORDLONG qwData, int iTicks = 0);
+    virtual HRESULT Execute(CSession *pSession);
+
+    friend inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegValueCreate &op);
+    friend inline HRESULT operator >>(ATL::CAtlFile &f, COpRegValueCreate &op);
+
+protected:
+    DWORD m_dwType;
+    ATL::CAtlStringW m_sData;
+    ATL::CAtlArray<BYTE> m_binData;
+    DWORD m_dwData;
+    ATL::CAtlArray<WCHAR> m_szData;
+    DWORDLONG m_qwData;
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegValueCopy
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegValueCopy : public COpRegValueSrcDst
+{
+public:
+    COpRegValueCopy(HKEY hKeyRoot = NULL, LPCWSTR pszKeyName = L"", LPCWSTR pszValueNameSrc = L"", LPCWSTR pszValueNameDst = L"", int iTicks = 0);
+    virtual HRESULT Execute(CSession *pSession);
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// COpRegValueDelete
+////////////////////////////////////////////////////////////////////////////
+
+class COpRegValueDelete : public COpRegValueSingle
+{
+public:
+    COpRegValueDelete(HKEY hKeyRoot = NULL, LPCWSTR pszKeyName = L"", LPCWSTR pszValueName = L"", int iTicks = 0);
+    virtual HRESULT Execute(CSession *pSession);
 };
 
 
@@ -339,18 +430,24 @@ public:
 
 protected:
     enum OPERATION {
-        OPERATION_ENABLE_ROLLBACK = 1,
-        OPERATION_DELETE_FILE,
-        OPERATION_MOVE_FILE,
-        OPERATION_CREATE_TASK,
-        OPERATION_DELETE_TASK,
-        OPERATION_ENABLE_TASK,
-        OPERATION_COPY_TASK,
-        OPERATION_SUBLIST
+        OP_ROLLBACK_ENABLE = 1,
+        OP_FILE_DELETE,
+        OP_FILE_MOVE,
+        OP_REG_KEY_CREATE,
+        OP_REG_KEY_COPY,
+        OP_REG_KEY_DELETE,
+        OP_REG_VALUE_CREATE,
+        OP_REG_VALUE_COPY,
+        OP_REG_VALUE_DELETE,
+        OP_TASK_CREATE,
+        OP_TASK_DELETE,
+        OP_TASK_ENABLE,
+        OP_TASK_COPY,
+        OP_SUBLIST
     };
 
 protected:
-    template <class T, int ID> inline static HRESULT Save(ATL::CAtlFile &f, const COperation *p);
+    template <class T, enum OPERATION ID> inline static HRESULT Save(ATL::CAtlFile &f, const COperation *p);
     template <class T> inline HRESULT LoadAndAddTail(ATL::CAtlFile &f);
 };
 
@@ -653,13 +750,81 @@ namespace AMSICA {
 
 inline HRESULT operator <<(ATL::CAtlFile &f, int i)
 {
-    return f.Write(&i, sizeof(int));
+    HRESULT hr;
+    DWORD dwWritten;
+
+    hr = f.Write(&i, sizeof(int), &dwWritten);
+    return SUCCEEDED(hr) ? dwWritten == sizeof(int) ? hr : E_FAIL : hr;
 }
 
 
 inline HRESULT operator >>(ATL::CAtlFile &f, int &i)
 {
-    return f.Read(&i, sizeof(int));
+    HRESULT hr;
+    DWORD dwRead;
+
+    hr = f.Read(&i, sizeof(int), dwRead);
+    return SUCCEEDED(hr) ? dwRead == sizeof(int) ? hr : E_FAIL : hr;
+}
+
+
+inline HRESULT operator <<(ATL::CAtlFile &f, DWORDLONG i)
+{
+    HRESULT hr;
+    DWORD dwWritten;
+
+    hr = f.Write(&i, sizeof(DWORDLONG), &dwWritten);
+    return SUCCEEDED(hr) ? dwWritten == sizeof(DWORDLONG) ? hr : E_FAIL : hr;
+}
+
+
+inline HRESULT operator >>(ATL::CAtlFile &f, DWORDLONG &i)
+{
+    HRESULT hr;
+    DWORD dwRead;
+
+    hr = f.Read(&i, sizeof(DWORDLONG), dwRead);
+    return SUCCEEDED(hr) ? dwRead == sizeof(DWORDLONG) ? hr : E_FAIL : hr;
+}
+
+
+template <class E>
+inline HRESULT operator <<(ATL::CAtlFile &f, const ATL::CAtlArray<E> &a)
+{
+    assert(a.GetCount() <= INT_MAX);
+
+    HRESULT hr;
+    DWORD dwCount = (DWORD)a.GetCount(), dwWritten;
+
+    // Write element count.
+    hr =  f.Write(&dwCount, sizeof(DWORD), &dwWritten);
+    if (FAILED(hr)) return hr;
+    if (dwWritten < sizeof(DWORD)) return E_FAIL;
+
+    // Write data.
+    hr = f.Write(a.GetData(), sizeof(E) * dwCount, &dwWritten);
+    return SUCCEEDED(hr) ? dwWritten == sizeof(E) * dwCount ? hr : E_FAIL : hr;
+}
+
+
+template <class E>
+inline HRESULT operator >>(ATL::CAtlFile &f, ATL::CAtlArray<E> &a)
+{
+    HRESULT hr;
+    DWORD dwCount, dwRead;
+
+    // Read element count as 32-bit integer.
+    hr =  f.Read(&dwCount, sizeof(DWORD), dwRead);
+    if (FAILED(hr)) return hr;
+    if (dwRead < sizeof(DWORD)) return E_FAIL;
+
+    // Allocate the buffer.
+    if (!a.SetCount(dwCount)) return E_OUTOFMEMORY;
+
+    // Read data.
+    hr = f.Read(a.GetData(), sizeof(E) * dwCount, dwRead);
+    if (SUCCEEDED(hr)) a.SetCount(dwRead / sizeof(E));
+    return hr;
 }
 
 
@@ -667,13 +832,16 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const ATL::CAtlStringA &str)
 {
     HRESULT hr;
     int iLength = str.GetLength();
+    DWORD dwWritten;
 
     // Write string length (in characters) as 32-bit integer.
-    hr =  f.Write(&iLength, sizeof(int));
+    hr =  f.Write(&iLength, sizeof(int), &dwWritten);
     if (FAILED(hr)) return hr;
+    if (dwWritten < sizeof(int)) return E_FAIL;
 
     // Write string data (without terminator).
-    return f.Write((LPCSTR)str, sizeof(CHAR) * iLength);
+    hr = f.Write((LPCSTR)str, sizeof(CHAR) * iLength, &dwWritten);
+    return SUCCEEDED(hr) ? dwWritten == sizeof(CHAR) * iLength ? hr : E_FAIL : hr;
 }
 
 
@@ -682,18 +850,20 @@ inline HRESULT operator >>(ATL::CAtlFile &f, ATL::CAtlStringA &str)
     HRESULT hr;
     int iLength;
     LPSTR buf;
+    DWORD dwRead;
 
     // Read string length (in characters) as 32-bit integer.
-    hr =  f.Read(&iLength, sizeof(int));
+    hr =  f.Read(&iLength, sizeof(int), dwRead);
     if (FAILED(hr)) return hr;
+    if (dwRead < sizeof(int)) return E_FAIL;
 
     // Allocate the buffer.
     buf = str.GetBuffer(iLength);
     if (!buf) return E_OUTOFMEMORY;
 
     // Read string data (without terminator).
-    hr = f.Read(buf, sizeof(CHAR) * iLength);
-    str.ReleaseBuffer(SUCCEEDED(hr) ? iLength : 0);
+    hr = f.Read(buf, sizeof(CHAR) * iLength, dwRead);
+    str.ReleaseBuffer(SUCCEEDED(hr) ? dwRead / sizeof(CHAR) : 0);
     return hr;
 }
 
@@ -702,13 +872,16 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const ATL::CAtlStringW &str)
 {
     HRESULT hr;
     int iLength = str.GetLength();
+    DWORD dwWritten;
 
     // Write string length (in characters) as 32-bit integer.
-    hr = f.Write(&iLength, sizeof(int));
+    hr = f.Write(&iLength, sizeof(int), &dwWritten);
     if (FAILED(hr)) return hr;
+    if (dwWritten < sizeof(int)) return E_FAIL;
 
     // Write string data (without terminator).
-    return f.Write((LPCWSTR)str, sizeof(WCHAR) * iLength);
+    hr = f.Write((LPCWSTR)str, sizeof(WCHAR) * iLength, &dwWritten);
+    return SUCCEEDED(hr) ? dwWritten == sizeof(WCHAR) * iLength ? hr : E_FAIL : hr;
 }
 
 
@@ -717,31 +890,41 @@ inline HRESULT operator >>(ATL::CAtlFile &f, ATL::CAtlStringW &str)
     HRESULT hr;
     int iLength;
     LPWSTR buf;
+    DWORD dwRead;
 
     // Read string length (in characters) as 32-bit integer.
-    hr =  f.Read(&iLength, sizeof(int));
+    hr =  f.Read(&iLength, sizeof(int), dwRead);
     if (FAILED(hr)) return hr;
+    if (dwRead < sizeof(int)) return E_FAIL;
 
     // Allocate the buffer.
     buf = str.GetBuffer(iLength);
     if (!buf) return E_OUTOFMEMORY;
 
     // Read string data (without terminator).
-    hr = f.Read(buf, sizeof(WCHAR) * iLength);
-    str.ReleaseBuffer(SUCCEEDED(hr) ? iLength : 0);
+    hr = f.Read(buf, sizeof(WCHAR) * iLength, dwRead);
+    str.ReleaseBuffer(SUCCEEDED(hr) ? dwRead / sizeof(WCHAR) : 0);
     return hr;
 }
 
 
 inline HRESULT operator <<(ATL::CAtlFile &f, const TASK_TRIGGER &ttData)
 {
-    return f.Write(&ttData, sizeof(TASK_TRIGGER));
+    HRESULT hr;
+    DWORD dwWritten;
+
+    hr = f.Write(&ttData, sizeof(TASK_TRIGGER), &dwWritten);
+    return SUCCEEDED(hr) ? dwWritten == sizeof(TASK_TRIGGER) ? hr : E_FAIL : hr;
 }
 
 
 inline HRESULT operator >>(ATL::CAtlFile &f, TASK_TRIGGER &ttData)
 {
-    return f.Read(&ttData, sizeof(TASK_TRIGGER));
+    HRESULT hr;
+    DWORD dwRead;
+
+    hr = f.Read(&ttData, sizeof(TASK_TRIGGER), dwRead);
+    return SUCCEEDED(hr) ? dwRead == sizeof(TASK_TRIGGER) ? hr : E_FAIL : hr;
 }
 
 
@@ -761,10 +944,10 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpTypeSingleString &op)
 {
     HRESULT hr;
 
-    hr = f << (const COperation &)op;
-    if (FAILED(hr)) return hr;
+    hr = f << (const COperation &)op; if (FAILED(hr)) return hr;
+    hr = f << op.m_sValue;            if (FAILED(hr)) return hr;
 
-    return f << op.m_sValue;
+    return S_OK;
 }
 
 
@@ -772,10 +955,10 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpTypeSingleString &op)
 {
     HRESULT hr;
 
-    hr = f >> (COperation &)op;
-    if (FAILED(hr)) return hr;
+    hr = f >> (COperation &)op; if (FAILED(hr)) return hr;
+    hr = f >> op.m_sValue;      if (FAILED(hr)) return hr;
 
-    return f >> op.m_sValue;
+    return S_OK;
 }
 
 
@@ -783,13 +966,11 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpTypeSrcDstString &op)
 {
     HRESULT hr;
 
-    hr = f << (const COperation &)op;
-    if (FAILED(hr)) return hr;
+    hr = f << (const COperation &)op; if (FAILED(hr)) return hr;
+    hr = f << op.m_sValue1;           if (FAILED(hr)) return hr;
+    hr = f << op.m_sValue2;           if (FAILED(hr)) return hr;
 
-    hr = f << op.m_sValue1;
-    if (FAILED(hr)) return hr;
-
-    return f << op.m_sValue2;
+    return S_OK;
 }
 
 
@@ -797,13 +978,11 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpTypeSrcDstString &op)
 {
     HRESULT hr;
 
-    hr = f >> (COperation &)op;
-    if (FAILED(hr)) return hr;
+    hr = f >> (COperation &)op; if (FAILED(hr)) return hr;
+    hr = f >> op.m_sValue1;     if (FAILED(hr)) return hr;
+    hr = f >> op.m_sValue2;     if (FAILED(hr)) return hr;
 
-    hr = f >> op.m_sValue1;
-    if (FAILED(hr)) return hr;
-
-    return f >> op.m_sValue2;
+    return S_OK;
 }
 
 
@@ -811,10 +990,10 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpTypeBoolean &op)
 {
     HRESULT hr;
 
-    hr = f << (const COperation &)op;
-    if (FAILED(hr)) return hr;
+    hr = f << (const COperation &)op; if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_bValue);     if (FAILED(hr)) return hr;
 
-    return f << (int)op.m_bValue;
+    return S_OK;
 }
 
 
@@ -823,16 +1002,11 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpTypeBoolean &op)
     HRESULT hr;
     int iValue;
 
-    hr = f >> (COperation &)op;
-    if (FAILED(hr)) return hr;
-
-    hr = f >> iValue;
-    if (FAILED(hr)) return hr;
-    op.m_bValue = iValue ? TRUE : FALSE;
+    hr = f >> (COperation &)op; if (FAILED(hr)) return hr;
+    hr = f >> iValue;           if (FAILED(hr)) return hr; op.m_bValue = iValue ? TRUE : FALSE;
 
     return S_OK;
 }
-
 
 
 inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegKeySingle &op)
@@ -881,6 +1055,96 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpRegKeySrcDst &op)
 }
 
 
+inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegValueSingle &op)
+{
+    HRESULT hr;
+
+    hr = f << (const COpRegKeySingle &)op; if (FAILED(hr)) return hr;
+    hr = f << op.m_sValueName;             if (FAILED(hr)) return hr;
+
+    return S_OK;
+}
+
+
+inline HRESULT operator >>(ATL::CAtlFile &f, COpRegValueSingle &op)
+{
+    HRESULT hr;
+
+    hr = f >> (COpRegKeySingle &)op; if (FAILED(hr)) return hr;
+    hr = f >> op.m_sValueName;       if (FAILED(hr)) return hr;
+
+    return S_OK;
+}
+
+
+inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegValueSrcDst &op)
+{
+    HRESULT hr;
+
+    hr = f << (const COpRegKeySingle &)op; if (FAILED(hr)) return hr;
+    hr = f << op.m_sValueName1;            if (FAILED(hr)) return hr;
+    hr = f << op.m_sValueName2;            if (FAILED(hr)) return hr;
+
+    return S_OK;
+}
+
+
+inline HRESULT operator >>(ATL::CAtlFile &f, COpRegValueSrcDst &op)
+{
+    HRESULT hr;
+
+    hr = f >> (COpRegKeySingle &)op; if (FAILED(hr)) return hr;
+    hr = f >> op.m_sValueName1;      if (FAILED(hr)) return hr;
+    hr = f >> op.m_sValueName2;      if (FAILED(hr)) return hr;
+
+    return S_OK;
+}
+
+
+inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegValueCreate &op)
+{
+    HRESULT hr;
+
+    hr = f << (const COpRegValueSingle &)op; if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_dwType);            if (FAILED(hr)) return hr;
+    switch (op.m_dwType) {
+    case REG_SZ:
+    case REG_EXPAND_SZ:
+    case REG_LINK:                hr = f << op.m_sData;         if (FAILED(hr)) return hr; break;
+    case REG_BINARY:              hr = f << op.m_binData;       if (FAILED(hr)) return hr; break;
+    case REG_DWORD_LITTLE_ENDIAN:
+    case REG_DWORD_BIG_ENDIAN:    hr = f << (int)(op.m_dwData); if (FAILED(hr)) return hr; break;
+    case REG_MULTI_SZ:            hr = f << op.m_szData;        if (FAILED(hr)) return hr; break;
+    case REG_QWORD_LITTLE_ENDIAN: hr = f << op.m_qwData;        if (FAILED(hr)) return hr; break;
+    default:                      assert(0); return E_UNEXPECTED;
+    }
+
+    return S_OK;
+}
+
+
+inline HRESULT operator >>(ATL::CAtlFile &f, COpRegValueCreate &op)
+{
+    HRESULT hr;
+
+    hr = f >> (COpRegValueSingle &)op; if (FAILED(hr)) return hr;
+    hr = f >> (int&)(op.m_dwType);     if (FAILED(hr)) return hr;
+    switch (op.m_dwType) {
+    case REG_SZ:
+    case REG_EXPAND_SZ:
+    case REG_LINK:                hr = f >> op.m_sData;          if (FAILED(hr)) return hr; break;
+    case REG_BINARY:              hr = f >> op.m_binData;        if (FAILED(hr)) return hr; break;
+    case REG_DWORD_LITTLE_ENDIAN:
+    case REG_DWORD_BIG_ENDIAN:    hr = f >> (int&)(op.m_dwData); if (FAILED(hr)) return hr; break;
+    case REG_MULTI_SZ:            hr = f >> op.m_szData;         if (FAILED(hr)) return hr; break;
+    case REG_QWORD_LITTLE_ENDIAN: hr = f >> op.m_qwData;         if (FAILED(hr)) return hr; break;
+    default:                      assert(0); return E_UNEXPECTED;
+    }
+
+    return S_OK;
+}
+
+
 inline HRESULT operator <<(ATL::CAtlFile &f, const COpTaskCreate &op)
 {
     HRESULT hr;
@@ -892,13 +1156,13 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpTaskCreate &op)
     hr = f << op.m_sWorkingDirectory;                                  if (FAILED(hr)) return hr;
     hr = f << op.m_sAuthor;                                            if (FAILED(hr)) return hr;
     hr = f << op.m_sComment;                                           if (FAILED(hr)) return hr;
-    hr = f << (int)op.m_dwFlags;                                       if (FAILED(hr)) return hr;
-    hr = f << (int)op.m_dwPriority;                                    if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_dwFlags);                                     if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_dwPriority);                                  if (FAILED(hr)) return hr;
     hr = f << op.m_sAccountName;                                       if (FAILED(hr)) return hr;
     hr = f << op.m_sPassword;                                          if (FAILED(hr)) return hr;
     hr = f << (int)MAKELONG(op.m_wDeadlineMinutes, op.m_wIdleMinutes); if (FAILED(hr)) return hr;
-    hr = f << (int)op.m_dwMaxRuntimeMS;                                if (FAILED(hr)) return hr;
-    hr = f << (int)op.m_lTriggers.GetCount();                          if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_dwMaxRuntimeMS);                              if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_lTriggers.GetCount());                        if (FAILED(hr)) return hr;
     for (pos = op.m_lTriggers.GetHeadPosition(); pos;) {
         hr = f << op.m_lTriggers.GetNext(pos);
         if (FAILED(hr)) return hr;
@@ -941,10 +1205,10 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpTaskEnable &op)
 {
     HRESULT hr;
 
-    hr = f << (const COpTypeSingleString&)op;
-    if (FAILED(hr)) return hr;
+    hr = f << (const COpTypeSingleString&)op; if (FAILED(hr)) return hr;
+    hr = f << (int)(op.m_bEnable);            if (FAILED(hr)) return hr;
 
-    return f << (int)op.m_bEnable;
+    return S_OK;
 }
 
 
@@ -953,12 +1217,8 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpTaskEnable &op)
     HRESULT hr;
     int iTemp;
 
-    hr = f >> (COpTypeSingleString&)op;
-    if (FAILED(hr)) return hr;
-
-    hr = f >> iTemp;
-    if (FAILED(hr)) return hr;
-    op.m_bEnable = iTemp ? TRUE : FALSE;
+    hr = f >> (COpTypeSingleString&)op; if (FAILED(hr)) return hr;
+    hr = f >> iTemp;                    if (FAILED(hr)) return hr; op.m_bEnable = iTemp ? TRUE : FALSE;
 
     return S_OK;
 }
@@ -972,27 +1232,39 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpList &list)
     hr = f << (const COperation &)list;
     if (FAILED(hr)) return hr;
 
-    hr = f << (int)list.GetCount();
+    hr = f << (int)(list.GetCount());
     if (FAILED(hr)) return hr;
 
     for (pos = list.GetHeadPosition(); pos;) {
         const COperation *pOp = list.GetNext(pos);
         if (dynamic_cast<const COpRollbackEnable*>(pOp))
-            hr = list.Save<COpRollbackEnable, COpList::OPERATION_ENABLE_ROLLBACK>(f, pOp);
+            hr = list.Save<COpRollbackEnable, COpList::OP_ROLLBACK_ENABLE>(f, pOp);
         else if (dynamic_cast<const COpFileDelete*>(pOp))
-            hr = list.Save<COpFileDelete, COpList::OPERATION_DELETE_FILE>(f, pOp);
+            hr = list.Save<COpFileDelete, COpList::OP_FILE_DELETE>(f, pOp);
         else if (dynamic_cast<const COpFileMove*>(pOp))
-            hr = list.Save<COpFileMove, COpList::OPERATION_MOVE_FILE>(f, pOp);
+            hr = list.Save<COpFileMove, COpList::OP_FILE_MOVE>(f, pOp);
+        else if (dynamic_cast<const COpRegKeyCreate*>(pOp))
+            hr = list.Save<COpRegKeyCreate, COpList::OP_REG_KEY_CREATE>(f, pOp);
+        else if (dynamic_cast<const COpRegKeyCopy*>(pOp))
+            hr = list.Save<COpRegKeyCopy, COpList::OP_REG_KEY_COPY>(f, pOp);
+        else if (dynamic_cast<const COpRegKeyDelete*>(pOp))
+            hr = list.Save<COpRegKeyDelete, COpList::OP_REG_KEY_DELETE>(f, pOp);
+        else if (dynamic_cast<const COpRegValueCreate*>(pOp))
+            hr = list.Save<COpRegValueCreate, COpList::OP_REG_VALUE_CREATE>(f, pOp);
+        else if (dynamic_cast<const COpRegValueCopy*>(pOp))
+            hr = list.Save<COpRegValueCopy, COpList::OP_REG_VALUE_COPY>(f, pOp);
+        else if (dynamic_cast<const COpRegValueDelete*>(pOp))
+            hr = list.Save<COpRegValueDelete, COpList::OP_REG_VALUE_DELETE>(f, pOp);
         else if (dynamic_cast<const COpTaskCreate*>(pOp))
-            hr = list.Save<COpTaskCreate, COpList::OPERATION_CREATE_TASK>(f, pOp);
+            hr = list.Save<COpTaskCreate, COpList::OP_TASK_CREATE>(f, pOp);
         else if (dynamic_cast<const COpTaskDelete*>(pOp))
-            hr = list.Save<COpTaskDelete, COpList::OPERATION_DELETE_TASK>(f, pOp);
+            hr = list.Save<COpTaskDelete, COpList::OP_TASK_DELETE>(f, pOp);
         else if (dynamic_cast<const COpTaskEnable*>(pOp))
-            hr = list.Save<COpTaskEnable, COpList::OPERATION_ENABLE_TASK>(f, pOp);
+            hr = list.Save<COpTaskEnable, COpList::OP_TASK_ENABLE>(f, pOp);
         else if (dynamic_cast<const COpTaskCopy*>(pOp))
-            hr = list.Save<COpTaskCopy, COpList::OPERATION_COPY_TASK>(f, pOp);
+            hr = list.Save<COpTaskCopy, COpList::OP_TASK_COPY>(f, pOp);
         else if (dynamic_cast<const COpList*>(pOp))
-            hr = list.Save<COpList, COpList::OPERATION_SUBLIST>(f, pOp);
+            hr = list.Save<COpList, COpList::OP_SUBLIST>(f, pOp);
         else {
             // Unsupported type of operation.
             assert(0);
@@ -1009,43 +1281,61 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpList &list)
 inline HRESULT operator >>(ATL::CAtlFile &f, COpList &list)
 {
     HRESULT hr;
-    DWORD dwCount;
+    int iCount;
 
     hr = f >> (COperation &)list;
     if (FAILED(hr)) return hr;
 
-    hr = f >> (int&)dwCount;
+    hr = f >> iCount;
     if (FAILED(hr)) return hr;
 
-    while (dwCount--) {
+    while (iCount--) {
         int iTemp;
 
         hr = f >> iTemp;
         if (FAILED(hr)) return hr;
 
         switch ((COpList::OPERATION)iTemp) {
-        case COpList::OPERATION_ENABLE_ROLLBACK:
+        case COpList::OP_ROLLBACK_ENABLE:
             hr = list.LoadAndAddTail<COpRollbackEnable>(f);
             break;
-        case COpList::OPERATION_DELETE_FILE:
+        case COpList::OP_FILE_DELETE:
             hr = list.LoadAndAddTail<COpFileDelete>(f);
             break;
-        case COpList::OPERATION_MOVE_FILE:
+        case COpList::OP_FILE_MOVE:
             hr = list.LoadAndAddTail<COpFileMove>(f);
             break;
-        case COpList::OPERATION_CREATE_TASK:
+        case COpList::OP_REG_KEY_CREATE:
+            hr = list.LoadAndAddTail<COpRegKeyCreate>(f);
+            break;
+        case COpList::OP_REG_KEY_COPY:
+            hr = list.LoadAndAddTail<COpRegKeyCopy>(f);
+            break;
+        case COpList::OP_REG_KEY_DELETE:
+            hr = list.LoadAndAddTail<COpRegKeyDelete>(f);
+            break;
+        case COpList::OP_REG_VALUE_CREATE:
+            hr = list.LoadAndAddTail<COpRegValueCreate>(f);
+            break;
+        case COpList::OP_REG_VALUE_COPY:
+            hr = list.LoadAndAddTail<COpRegValueCopy>(f);
+            break;
+        case COpList::OP_REG_VALUE_DELETE:
+            hr = list.LoadAndAddTail<COpRegValueDelete>(f);
+            break;
+        case COpList::OP_TASK_CREATE:
             hr = list.LoadAndAddTail<COpTaskCreate>(f);
             break;
-        case COpList::OPERATION_DELETE_TASK:
+        case COpList::OP_TASK_DELETE:
             hr = list.LoadAndAddTail<COpTaskDelete>(f);
             break;
-        case COpList::OPERATION_ENABLE_TASK:
+        case COpList::OP_TASK_ENABLE:
             hr = list.LoadAndAddTail<COpTaskEnable>(f);
             break;
-        case COpList::OPERATION_COPY_TASK:
+        case COpList::OP_TASK_COPY:
             hr = list.LoadAndAddTail<COpTaskCopy>(f);
             break;
-        case COpList::OPERATION_SUBLIST:
+        case COpList::OP_SUBLIST:
             hr = list.LoadAndAddTail<COpList>(f);
             break;
         default:
@@ -1103,7 +1393,7 @@ inline BOOL IsWow64Process()
 // Inline methods
 ////////////////////////////////////////////////////////////////////////////
 
-template <class T, int ID> inline static HRESULT COpList::Save(ATL::CAtlFile &f, const COperation *p)
+template <class T, enum COpList::OPERATION ID> inline static HRESULT COpList::Save(ATL::CAtlFile &f, const COperation *p)
 {
     assert(p);
     HRESULT hr;

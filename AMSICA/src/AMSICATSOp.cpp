@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 
+#pragma comment(lib, "mstask.lib")
 #pragma comment(lib, "taskschd.lib")
 
 

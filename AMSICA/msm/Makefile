@@ -31,6 +31,10 @@ Error	Error
 Error	Message
 i2	L0
 1250	Error	Error
+2550	Pri odpiranju namestitvenega paketa je prišlo do napake. Obrnite se na svojo tehnièno službo.
+2552	Pri pisanju v datoteko seznama opravil »[2]« je prišlo do napake [3]. Obrnite se na svojo tehnièno službo.
+2560	Pri branju iz datoteke seznama opravil »[2]« je prišlo do napake [3]. Obrnite se na svojo tehnièno službo.
+2553	Pri nastavljanju parametra »[2]« je prišlo do napake [3]. Obrnite se na svojo tehnièno službo.
 2554	Pri brisanju datoteke »[2]« je prišlo do napake [3]. Obrnite se na svojo tehnièno službo.
 2555	Pri premikanju datoteke »[2]« v »[3]« je prišlo do napake [4]. Obrnite se na svojo tehnièno službo.
 2556	Pri ustvarjanju razporejenega opravila »[2]« je prišlo do napake [3]. Obrnite se na svojo tehnièno službo.

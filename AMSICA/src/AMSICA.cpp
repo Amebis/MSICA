@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 
+#pragma comment(lib, "msi.lib")
+
 
 namespace AMSICA {
 
@@ -25,7 +27,7 @@ COpTypeSingleString::COpTypeSingleString(LPCWSTR pszValue, int iTicks) :
 
 
 ////////////////////////////////////////////////////////////////////////////
-// COpDoubleStringOperation
+// COpTypeSrcDstString
 ////////////////////////////////////////////////////////////////////////////
 
 COpTypeSrcDstString::COpTypeSrcDstString(LPCWSTR pszValue1, LPCWSTR pszValue2, int iTicks) :
