@@ -5,13 +5,13 @@
 // Version
 ////////////////////////////////////////////////////////////////////////////
 
-#define AMSICA_VERSION       0x01000100
+#define AMSICA_VERSION       0x01010000
 
 #define AMSICA_VERSION_MAJ   1
-#define AMSICA_VERSION_MIN   0
-#define AMSICA_VERSION_REV   1
+#define AMSICA_VERSION_MIN   1
+#define AMSICA_VERSION_REV   0
 
-#define AMSICA_VERSION_STR   "1.0.1"
+#define AMSICA_VERSION_STR   "1.1"
 
 
 #if !defined(RC_INVOKED) && !defined(MIDL_PASS)
