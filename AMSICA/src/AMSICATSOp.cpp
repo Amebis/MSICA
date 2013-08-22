@@ -38,7 +38,7 @@ HRESULT COpTaskCreate::Execute(CSession *pSession)
     POSITION pos;
 
     // Display our custom message in the progress bar.
-    verify(::MsiRecordSetStringW(hRecordMsg, 1, m_sValue) == ERROR_SUCCESS);
+    ::MsiRecordSetStringW(hRecordMsg, 1, m_sValue);
     if (MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ACTIONDATA, hRecordMsg) == IDCANCEL)
         return AtlHresultFromWin32(ERROR_INSTALL_USEREXIT);
 
@@ -396,7 +396,7 @@ HRESULT COpTaskCreate::Execute(CSession *pSession)
                 stValue.wYear  = ttData.wBeginYear;
                 stValue.wMonth = ttData.wBeginMonth;
                 stValue.wDay   = ttData.wBeginDay;
-                verify(::SystemTimeToFileTime(&stValue, &ftValue));
+                ::SystemTimeToFileTime(&stValue, &ftValue);
                 ullValue = ((ULONGLONG)(ftValue.dwHighDateTime) << 32) | ftValue.dwLowDateTime;
 
                 // Wrap days.
@@ -408,7 +408,7 @@ HRESULT COpTaskCreate::Execute(CSession *pSession)
                 // Convert numerical date to DMY (ULONGLONG -> FILETIME -> SYSTEMTIME).
                 ftValue.dwHighDateTime = ullValue >> 32;
                 ftValue.dwLowDateTime  = ullValue & 0xffffffff;
-                verify(::FileTimeToSystemTime(&ftValue, &stValue));
+                ::FileTimeToSystemTime(&ftValue, &stValue);
 
                 // Set new trigger date and time.
                 ttData.wBeginYear   = stValue.wYear;
@@ -431,9 +431,9 @@ HRESULT COpTaskCreate::Execute(CSession *pSession)
 finish:
     if (FAILED(hr)) {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(3);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_TASK_CREATE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 2, m_sValue                        ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 3, hr                              ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_TASK_CREATE_FAILED);
+        ::MsiRecordSetStringW(hRecordProg, 2, m_sValue                        );
+        ::MsiRecordSetInteger(hRecordProg, 3, hr                              );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
     }
     return hr;
@@ -634,7 +634,6 @@ COpTaskDelete::COpTaskDelete(LPCWSTR pszTaskName, int iTicks) :
 
 HRESULT COpTaskDelete::Execute(CSession *pSession)
 {
-    assert(pSession);
     HRESULT hr;
     CComPtr<ITaskService> pService;
 
@@ -802,9 +801,9 @@ HRESULT COpTaskDelete::Execute(CSession *pSession)
 finish:
     if (FAILED(hr)) {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(3);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_TASK_DELETE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 2, m_sValue                        ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 3, hr                              ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_TASK_DELETE_FAILED);
+        ::MsiRecordSetStringW(hRecordProg, 2, m_sValue                        );
+        ::MsiRecordSetInteger(hRecordProg, 3, hr                              );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
     }
     return hr;
@@ -824,7 +823,6 @@ COpTaskEnable::COpTaskEnable(LPCWSTR pszTaskName, BOOL bEnable, int iTicks) :
 
 HRESULT COpTaskEnable::Execute(CSession *pSession)
 {
-    assert(pSession);
     HRESULT hr;
     CComPtr<ITaskService> pService;
 
@@ -923,9 +921,9 @@ HRESULT COpTaskEnable::Execute(CSession *pSession)
 finish:
     if (FAILED(hr)) {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(3);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_TASK_ENABLE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 2, m_sValue                        ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 3, hr                              ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_TASK_ENABLE_FAILED);
+        ::MsiRecordSetStringW(hRecordProg, 2, m_sValue                        );
+        ::MsiRecordSetInteger(hRecordProg, 3, hr                              );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
     }
     return hr;
@@ -944,7 +942,6 @@ COpTaskCopy::COpTaskCopy(LPCWSTR pszTaskSrc, LPCWSTR pszTaskDst, int iTicks) :
 
 HRESULT COpTaskCopy::Execute(CSession *pSession)
 {
-    assert(pSession);
     HRESULT hr;
     CComPtr<ITaskService> pService;
 
@@ -1029,10 +1026,10 @@ HRESULT COpTaskCopy::Execute(CSession *pSession)
 finish:
     if (FAILED(hr)) {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(4);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_TASK_COPY_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 2, m_sValue1                     ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue2                     ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 4, hr                            ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_TASK_COPY_FAILED);
+        ::MsiRecordSetStringW(hRecordProg, 2, m_sValue1                     );
+        ::MsiRecordSetStringW(hRecordProg, 3, m_sValue2                     );
+        ::MsiRecordSetInteger(hRecordProg, 4, hr                            );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
     }
     return hr;

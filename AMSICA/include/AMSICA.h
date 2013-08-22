@@ -5,13 +5,13 @@
 // Version
 ////////////////////////////////////////////////////////////////////////////
 
-#define AMSICA_VERSION       0x01010000
+#define AMSICA_VERSION       0x01010100
 
 #define AMSICA_VERSION_MAJ   1
 #define AMSICA_VERSION_MIN   1
-#define AMSICA_VERSION_REV   0
+#define AMSICA_VERSION_REV   1
 
-#define AMSICA_VERSION_STR   "1.1"
+#define AMSICA_VERSION_STR   "1.1.1"
 
 
 #if !defined(RC_INVOKED) && !defined(MIDL_PASS)
@@ -477,7 +477,6 @@ public:
 
 #include <atlfile.h>
 #include <atlstr.h>
-#include <assert.h>
 #include <msiquery.h>
 #include <mstask.h>
 
@@ -791,8 +790,6 @@ inline HRESULT operator >>(ATL::CAtlFile &f, DWORDLONG &i)
 template <class E>
 inline HRESULT operator <<(ATL::CAtlFile &f, const ATL::CAtlArray<E> &a)
 {
-    assert(a.GetCount() <= INT_MAX);
-
     HRESULT hr;
     DWORD dwCount = (DWORD)a.GetCount(), dwWritten;
 
@@ -1116,7 +1113,7 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpRegValueCreate &op)
     case REG_DWORD_BIG_ENDIAN:    hr = f << (int)(op.m_dwData); if (FAILED(hr)) return hr; break;
     case REG_MULTI_SZ:            hr = f << op.m_szData;        if (FAILED(hr)) return hr; break;
     case REG_QWORD_LITTLE_ENDIAN: hr = f << op.m_qwData;        if (FAILED(hr)) return hr; break;
-    default:                      assert(0); return E_UNEXPECTED;
+    default:                      return E_UNEXPECTED;
     }
 
     return S_OK;
@@ -1138,7 +1135,7 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpRegValueCreate &op)
     case REG_DWORD_BIG_ENDIAN:    hr = f >> (int&)(op.m_dwData); if (FAILED(hr)) return hr; break;
     case REG_MULTI_SZ:            hr = f >> op.m_szData;         if (FAILED(hr)) return hr; break;
     case REG_QWORD_LITTLE_ENDIAN: hr = f >> op.m_qwData;         if (FAILED(hr)) return hr; break;
-    default:                      assert(0); return E_UNEXPECTED;
+    default:                      return E_UNEXPECTED;
     }
 
     return S_OK;
@@ -1267,7 +1264,6 @@ inline HRESULT operator <<(ATL::CAtlFile &f, const COpList &list)
             hr = list.Save<COpList, COpList::OP_SUBLIST>(f, pOp);
         else {
             // Unsupported type of operation.
-            assert(0);
             hr = E_UNEXPECTED;
         }
 
@@ -1340,7 +1336,6 @@ inline HRESULT operator >>(ATL::CAtlFile &f, COpList &list)
             break;
         default:
             // Unsupported type of operation.
-            assert(0);
             hr = E_UNEXPECTED;
         }
 
@@ -1395,7 +1390,6 @@ inline BOOL IsWow64Process()
 
 template <class T, enum COpList::OPERATION ID> inline static HRESULT COpList::Save(ATL::CAtlFile &f, const COperation *p)
 {
-    assert(p);
     HRESULT hr;
     const T *pp = dynamic_cast<const T*>(p);
     if (!pp) return E_UNEXPECTED;

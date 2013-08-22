@@ -61,8 +61,6 @@ COpRollbackEnable::COpRollbackEnable(BOOL bEnable, int iTicks) :
 
 HRESULT COpRollbackEnable::Execute(CSession *pSession)
 {
-    assert(pSession);
-
     pSession->m_bRollbackEnabled = m_bValue;
     return S_OK;
 }
@@ -100,7 +98,6 @@ void COpList::Free()
 
 HRESULT COpList::LoadFromFile(LPCTSTR pszFileName)
 {
-    assert(pszFileName);
     HRESULT hr;
     ATL::CAtlFile fSequence;
 
@@ -114,7 +111,6 @@ HRESULT COpList::LoadFromFile(LPCTSTR pszFileName)
 
 HRESULT COpList::SaveToFile(LPCTSTR pszFileName) const
 {
-    assert(pszFileName);
     HRESULT hr;
     ATL::CAtlFile fSequence;
 
@@ -132,24 +128,22 @@ HRESULT COpList::SaveToFile(LPCTSTR pszFileName) const
 
 HRESULT COpList::Execute(CSession *pSession)
 {
-    assert(pSession);
     POSITION pos;
     HRESULT hr;
     PMSIHANDLE hRecordProg = ::MsiCreateRecord(3);
 
     // Tell the installer to use explicit progress messages.
-    verify(::MsiRecordSetInteger(hRecordProg, 1, 1) == ERROR_SUCCESS);
-    verify(::MsiRecordSetInteger(hRecordProg, 2, 1) == ERROR_SUCCESS);
-    verify(::MsiRecordSetInteger(hRecordProg, 3, 0) == ERROR_SUCCESS);
+    ::MsiRecordSetInteger(hRecordProg, 1, 1);
+    ::MsiRecordSetInteger(hRecordProg, 2, 1);
+    ::MsiRecordSetInteger(hRecordProg, 3, 0);
     ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg);
 
     // Prepare hRecordProg for progress messages.
-    verify(::MsiRecordSetInteger(hRecordProg, 1, 2) == ERROR_SUCCESS);
-    verify(::MsiRecordSetInteger(hRecordProg, 3, 0) == ERROR_SUCCESS);
+    ::MsiRecordSetInteger(hRecordProg, 1, 2);
+    ::MsiRecordSetInteger(hRecordProg, 3, 0);
 
     for (pos = GetHeadPosition(); pos;) {
         COperation *pOp = GetNext(pos);
-        assert(pOp);
 
         hr = pOp->Execute(pSession);
         if (!pSession->m_bContinueOnError && FAILED(hr)) {
@@ -158,12 +152,12 @@ HRESULT COpList::Execute(CSession *pSession)
             return hr;
         }
 
-        verify(::MsiRecordSetInteger(hRecordProg, 2, pOp->m_iTicks) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 2, pOp->m_iTicks);
         if (::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL)
             return AtlHresultFromWin32(ERROR_INSTALL_USEREXIT);
     }
 
-    verify(::MsiRecordSetInteger(hRecordProg, 2, m_iTicks) == ERROR_SUCCESS);
+    ::MsiRecordSetInteger(hRecordProg, 2, m_iTicks);
     ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg);
 
     return S_OK;

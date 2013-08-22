@@ -37,7 +37,6 @@ COpRegKeyCreate::COpRegKeyCreate(HKEY hKeyRoot, LPCWSTR pszKeyName, int iTicks) 
 
 HRESULT COpRegKeyCreate::Execute(CSession *pSession)
 {
-    assert(pSession);
     LONG lResult;
     REGSAM samAdditional = 0;
     ATL::CAtlStringW sPartialName;
@@ -72,10 +71,10 @@ HRESULT COpRegKeyCreate::Execute(CSession *pSession)
             // Create the key.
             lResult = ::RegCreateKeyExW(m_hKeyRoot, sPartialName, NULL, NULL, REG_OPTION_NON_VOLATILE, KEY_ENUMERATE_SUB_KEYS | samAdditional, NULL, &hKey, NULL);
             if (lResult != ERROR_SUCCESS) break;
-            verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+            ::RegCloseKey(hKey);
         } else if (lResult == ERROR_SUCCESS) {
             // This key already exists. Release its handle and continue.
-            verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+            ::RegCloseKey(hKey);
         } else
             break;
 
@@ -87,10 +86,10 @@ HRESULT COpRegKeyCreate::Execute(CSession *pSession)
         return S_OK;
     else {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(4);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_CREATE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff     ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue                          ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 4, lResult                           ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_CREATE_FAILED);
+        ::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff     );
+        ::MsiRecordSetStringW(hRecordProg, 3, m_sValue                          );
+        ::MsiRecordSetInteger(hRecordProg, 4, lResult                           );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
         return AtlHresultFromWin32(lResult);
     }
@@ -108,7 +107,6 @@ COpRegKeyCopy::COpRegKeyCopy(HKEY hKeyRoot, LPCWSTR pszKeyNameSrc, LPCWSTR pszKe
 
 HRESULT COpRegKeyCopy::Execute(CSession *pSession)
 {
-    assert(pSession);
     LONG lResult;
     REGSAM samAdditional = 0;
 
@@ -139,11 +137,11 @@ HRESULT COpRegKeyCopy::Execute(CSession *pSession)
         return S_OK;
     else {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(5);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_COPY_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff   ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue1                       ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 4, m_sValue2                       ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 5, lResult                         ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_COPY_FAILED);
+        ::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff   );
+        ::MsiRecordSetStringW(hRecordProg, 3, m_sValue1                       );
+        ::MsiRecordSetStringW(hRecordProg, 4, m_sValue2                       );
+        ::MsiRecordSetInteger(hRecordProg, 5, lResult                         );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
         return AtlHresultFromWin32(lResult);
     }
@@ -293,7 +291,6 @@ COpRegKeyDelete::COpRegKeyDelete(HKEY hKey, LPCWSTR pszKeyName, int iTicks) : CO
 
 HRESULT COpRegKeyDelete::Execute(CSession *pSession)
 {
-    assert(pSession);
     LONG lResult;
     HKEY hKey;
     REGSAM samAdditional = 0;
@@ -308,7 +305,7 @@ HRESULT COpRegKeyDelete::Execute(CSession *pSession)
     // Probe to see if the key exists.
     lResult = ::RegOpenKeyExW(m_hKeyRoot, m_sValue, 0, DELETE | samAdditional, &hKey);
     if (lResult == ERROR_SUCCESS) {
-        verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+        ::RegCloseKey(hKey);
 
         if (pSession->m_bRollbackEnabled) {
             // Make a backup of the key first.
@@ -324,7 +321,7 @@ HRESULT COpRegKeyDelete::Execute(CSession *pSession)
                 sBackupName.Format(L"%.*ls (orig %u)", iLength, (LPCWSTR)m_sValue, ++uiCount);
                 lResult = ::RegOpenKeyExW(m_hKeyRoot, sBackupName, 0, KEY_ENUMERATE_SUB_KEYS | samAdditional, &hKey);
                 if (lResult != ERROR_SUCCESS) break;
-                verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+                ::RegCloseKey(hKey);
             }
             if (lResult == ERROR_FILE_NOT_FOUND) {
                 // Since copying registry key is a complicated job (when rollback/commit support is required), and we do have an operation just for that, we use it.
@@ -339,10 +336,10 @@ HRESULT COpRegKeyDelete::Execute(CSession *pSession)
                 pSession->m_olCommit.AddTail(new COpRegKeyDelete(m_hKeyRoot, sBackupName));
             } else {
                 PMSIHANDLE hRecordProg = ::MsiCreateRecord(4);
-                verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_PROBING_FAILED) == ERROR_SUCCESS);
-                verify(::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff      ) == ERROR_SUCCESS);
-                verify(::MsiRecordSetStringW(hRecordProg, 3, sBackupName                        ) == ERROR_SUCCESS);
-                verify(::MsiRecordSetInteger(hRecordProg, 4, lResult                            ) == ERROR_SUCCESS);
+                ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_PROBING_FAILED);
+                ::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff      );
+                ::MsiRecordSetStringW(hRecordProg, 3, sBackupName                        );
+                ::MsiRecordSetInteger(hRecordProg, 4, lResult                            );
                 ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                 return AtlHresultFromWin32(lResult);
             }
@@ -356,10 +353,10 @@ HRESULT COpRegKeyDelete::Execute(CSession *pSession)
         return S_OK;
     else {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(4);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_DELETE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff     ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue                          ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 4, lResult                           ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_DELETE_FAILED);
+        ::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff     );
+        ::MsiRecordSetStringW(hRecordProg, 3, m_sValue                          );
+        ::MsiRecordSetInteger(hRecordProg, 4, lResult                           );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
         return AtlHresultFromWin32(lResult);
     }
@@ -407,7 +404,7 @@ LONG COpRegKeyDelete::DeleteKeyRecursively(HKEY hKeyRoot, LPCWSTR pszKeyName, RE
                 lResult = ERROR_OUTOFMEMORY;
         }
 
-        verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+        ::RegCloseKey(hKey);
 
         // Finally try to delete the key.
         lResult = ::RegDeleteKeyExW(hKeyRoot, pszKeyName, samAdditional, 0);
@@ -466,8 +463,7 @@ COpRegValueCreate::COpRegValueCreate(HKEY hKeyRoot, LPCWSTR pszKeyName, LPCWSTR 
     m_dwType(REG_BINARY),
     COpRegValueSingle(hKeyRoot, pszKeyName, pszValueName, iTicks)
 {
-    assert(lpData || !nSize);
-    verify(m_binData.SetCount(nSize));
+    m_binData.SetCount(nSize);
     memcpy(m_binData.GetData(), lpData, nSize);
 }
 
@@ -490,7 +486,6 @@ COpRegValueCreate::COpRegValueCreate(HKEY hKeyRoot, LPCWSTR pszKeyName, LPCWSTR 
 
 HRESULT COpRegValueCreate::Execute(CSession *pSession)
 {
-    assert(pSession);
     LONG lResult;
     REGSAM sam = KEY_QUERY_VALUE | STANDARD_RIGHTS_WRITE | KEY_SET_VALUE;
     HKEY hKey;
@@ -544,22 +539,21 @@ HRESULT COpRegValueCreate::Execute(CSession *pSession)
             break;
 
         default:
-            assert(0);
             lResult = ERROR_UNSUPPORTED_TYPE;
         }
 
-        verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+        ::RegCloseKey(hKey);
     }
 
     if (lResult == ERROR_SUCCESS)
         return S_OK;
     else {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(5);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_SETVALUE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff       ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue                            ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 4, m_sValueName                        ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 5, lResult                             ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_SETVALUE_FAILED);
+        ::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff       );
+        ::MsiRecordSetStringW(hRecordProg, 3, m_sValue                            );
+        ::MsiRecordSetStringW(hRecordProg, 4, m_sValueName                        );
+        ::MsiRecordSetInteger(hRecordProg, 5, lResult                             );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
         return AtlHresultFromWin32(lResult);
     }
@@ -577,7 +571,6 @@ COpRegValueCopy::COpRegValueCopy(HKEY hKeyRoot, LPCWSTR pszKeyName, LPCWSTR pszV
 
 HRESULT COpRegValueCopy::Execute(CSession *pSession)
 {
-    assert(pSession);
     LONG lResult;
     REGSAM sam = KEY_QUERY_VALUE | KEY_SET_VALUE;
     HKEY hKey;
@@ -607,7 +600,6 @@ HRESULT COpRegValueCopy::Execute(CSession *pSession)
         lResult = ::RegQueryValueExW(hKey, m_sValueName1, 0, NULL, NULL, &dwSize);
         if (lResult == ERROR_SUCCESS) {
             LPBYTE lpData = new BYTE[dwSize];
-            assert(lpData);
             // Read the source registry value.
             lResult = ::RegQueryValueExW(hKey, m_sValueName1, 0, &dwType, lpData, &dwSize);
             if (lResult == ERROR_SUCCESS) {
@@ -622,19 +614,19 @@ HRESULT COpRegValueCopy::Execute(CSession *pSession)
             delete [] lpData;
         }
 
-        verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+        ::RegCloseKey(hKey);
     }
 
     if (lResult == ERROR_SUCCESS)
         return S_OK;
     else {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(6);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_COPYVALUE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff        ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue                             ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 4, m_sValueName1                        ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 5, m_sValueName2                        ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 6, lResult                              ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_COPYVALUE_FAILED);
+        ::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff        );
+        ::MsiRecordSetStringW(hRecordProg, 3, m_sValue                             );
+        ::MsiRecordSetStringW(hRecordProg, 4, m_sValueName1                        );
+        ::MsiRecordSetStringW(hRecordProg, 5, m_sValueName2                        );
+        ::MsiRecordSetInteger(hRecordProg, 6, lResult                              );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
         return AtlHresultFromWin32(lResult);
     }
@@ -652,7 +644,6 @@ COpRegValueDelete::COpRegValueDelete(HKEY hKeyRoot, LPCWSTR pszKeyName, LPCWSTR 
 
 HRESULT COpRegValueDelete::Execute(CSession *pSession)
 {
-    assert(pSession);
     LONG lResult;
     REGSAM sam = KEY_QUERY_VALUE | KEY_SET_VALUE;
     HKEY hKey;
@@ -687,7 +678,7 @@ HRESULT COpRegValueDelete::Execute(CSession *pSession)
                     COpRegValueCopy opCopy(m_hKeyRoot, m_sValue, m_sValueName, sBackupName);
                     HRESULT hr = opCopy.Execute(pSession);
                     if (FAILED(hr)) {
-                        verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+                        ::RegCloseKey(hKey);
                         return hr;
                     }
 
@@ -698,13 +689,13 @@ HRESULT COpRegValueDelete::Execute(CSession *pSession)
                     pSession->m_olCommit.AddTail(new COpRegValueDelete(m_hKeyRoot, m_sValue, sBackupName));
                 } else {
                     PMSIHANDLE hRecordProg = ::MsiCreateRecord(5);
-                    verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_PROBINGVAL_FAILED) == ERROR_SUCCESS);
-                    verify(::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff         ) == ERROR_SUCCESS);
-                    verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue                              ) == ERROR_SUCCESS);
-                    verify(::MsiRecordSetStringW(hRecordProg, 3, sBackupName                           ) == ERROR_SUCCESS);
-                    verify(::MsiRecordSetInteger(hRecordProg, 4, lResult                               ) == ERROR_SUCCESS);
+                    ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_PROBINGVAL_FAILED);
+                    ::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff         );
+                    ::MsiRecordSetStringW(hRecordProg, 3, m_sValue                              );
+                    ::MsiRecordSetStringW(hRecordProg, 3, sBackupName                           );
+                    ::MsiRecordSetInteger(hRecordProg, 4, lResult                               );
                     ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                    verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+                    ::RegCloseKey(hKey);
                     return AtlHresultFromWin32(lResult);
                 }
             }
@@ -713,18 +704,18 @@ HRESULT COpRegValueDelete::Execute(CSession *pSession)
             lResult = ::RegDeleteValueW(hKey, m_sValueName);
         }
 
-        verify(::RegCloseKey(hKey) == ERROR_SUCCESS);
+        ::RegCloseKey(hKey);
     }
 
     if (lResult == ERROR_SUCCESS || lResult == ERROR_FILE_NOT_FOUND)
         return S_OK;
     else {
         PMSIHANDLE hRecordProg = ::MsiCreateRecord(5);
-        verify(::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_DELETEVALUE_FAILED) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff          ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 3, m_sValue                               ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetStringW(hRecordProg, 4, m_sValueName                           ) == ERROR_SUCCESS);
-        verify(::MsiRecordSetInteger(hRecordProg, 5, lResult                                ) == ERROR_SUCCESS);
+        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_REGKEY_DELETEVALUE_FAILED);
+        ::MsiRecordSetInteger(hRecordProg, 2, (UINT)m_hKeyRoot & 0x7fffffff          );
+        ::MsiRecordSetStringW(hRecordProg, 3, m_sValue                               );
+        ::MsiRecordSetStringW(hRecordProg, 4, m_sValueName                           );
+        ::MsiRecordSetInteger(hRecordProg, 5, lResult                                );
         ::MsiProcessMessage(pSession->m_hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
         return AtlHresultFromWin32(lResult);
     }

@@ -38,9 +38,3 @@
 #include <msiquery.h>
 #include <mstask.h>
 #include <taskschd.h>
-
-#ifdef NDEBUG
-#define verify(expr) ((void)(expr))
-#else
-#define verify(expr) assert(expr)
-#endif
