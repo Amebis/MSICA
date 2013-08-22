@@ -407,7 +407,7 @@ LONG COpRegKeyDelete::DeleteKeyRecursively(HKEY hKeyRoot, LPCWSTR pszKeyName, RE
         ::RegCloseKey(hKey);
 
         // Finally try to delete the key.
-        lResult = ::RegDeleteKeyExW(hKeyRoot, pszKeyName, samAdditional, 0);
+        lResult = ::RegDeleteKey(hKeyRoot, pszKeyName);
     } else if (lResult == ERROR_FILE_NOT_FOUND) {
         // The key doesn't exist. Not really an error in this case.
         lResult = ERROR_SUCCESS;
