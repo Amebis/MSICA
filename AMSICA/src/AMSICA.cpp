@@ -175,4 +175,10 @@ CSession::CSession() :
 }
 
 
+CSession::~CSession()
+{
+    m_olRollback.Free();
+    m_olCommit.Free();
+}
+
 } // namespace AMSICA
