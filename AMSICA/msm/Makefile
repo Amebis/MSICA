@@ -1,13 +1,6 @@
 !INCLUDE "..\..\include\MSINast.mak"
 
 MSM_IMA_LOKALIZACIJO=1
-!IF "$(CFG)" == "ReleaseU"
-CFG_VC=Unicode Release
-!ELSEIF "$(CFG)" == "DebugU"
-CFG_VC=Unicode Debug
-!ELSE
-CFG_VC=$(CFG)
-!ENDIF
 
 
 ######################################################################

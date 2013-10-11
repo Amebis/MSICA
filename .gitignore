@@ -1,12 +1,11 @@
+AMSICA/*.opensdf
+AMSICA/*.sdf
+AMSICA/*.suo
 AMSICA/AMSICALib/*.user
 AMSICA/AMSICALib/Debug.Win32
 AMSICA/AMSICALib/Debug.x64
 AMSICA/AMSICALib/Release.Win32
 AMSICA/AMSICALib/Release.x64
-AMSICA/AMSICALib/Unicode[!!-~]Debug.Win32
-AMSICA/AMSICALib/Unicode[!!-~]Debug.x64
-AMSICA/AMSICALib/Unicode[!!-~]Release.Win32
-AMSICA/AMSICALib/Unicode[!!-~]Release.x64
 AMSICA/msm/*-1.idt
 AMSICA/msm/*-2.idt
 AMSICA/msm/*-2.idtx

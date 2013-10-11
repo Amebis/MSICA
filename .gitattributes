@@ -1,4 +1,5 @@
 * text=auto !eol
+AMSICA/AMSICA-10.0.sln svneol=CRLF#text/plain eol=crlf
 AMSICA/AMSICA.props -text svneol=unset#text/xml
 AMSICA/AMSICALib/AMSICALib.vcxproj -text svneol=unset#text/xml
 AMSICA/AMSICALib/AMSICALib.vcxproj.filters -text svneol=unset#text/xml
