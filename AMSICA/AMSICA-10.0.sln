@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AMSICALib", "AMSICALib\AMSICALib.vcxproj", "{8552EE55-177E-4F51-B51B-BAF7D6462CDE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AMSICALib", "build\AMSICALib.vcxproj", "{8552EE55-177E-4F51-B51B-BAF7D6462CDE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
