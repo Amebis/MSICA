@@ -1,12 +1,8 @@
 MSICALib/*.user
-MSICALib/Debug.Win32
-MSICALib/Debug.x64
-MSICALib/Release.Win32
-MSICALib/Release.x64
-MSICALib/Unicode[!!-~]Debug.Win32
-MSICALib/Unicode[!!-~]Debug.x64
-MSICALib/Unicode[!!-~]Release.Win32
-MSICALib/Unicode[!!-~]Release.x64
+MSICALib/MSITSCA.Debug.Win32
+MSICALib/MSITSCA.Debug.x64
+MSICALib/MSITSCA.Release.Win32
+MSICALib/MSITSCA.Release.x64
 MSICALib/msm/*-1.idt
 MSICALib/msm/*-2.idt
 MSICALib/msm/*-2.idtx
