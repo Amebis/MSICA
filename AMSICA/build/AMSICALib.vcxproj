@@ -73,6 +73,7 @@
     <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisDebug.props" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisWin32.props" />
+    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisLib.props" />
     <Import Project="AMSICA.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -80,6 +81,7 @@
     <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisDebug.props" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\Amebisx64.props" />
+    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisLib.props" />
     <Import Project="AMSICA.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -87,6 +89,7 @@
     <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisRelease.props" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisWin32.props" />
+    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisLib.props" />
     <Import Project="AMSICA.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -94,17 +97,10 @@
     <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisRelease.props" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\Amebisx64.props" />
+    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisLib.props" />
     <Import Project="AMSICA.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|x64'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugU|x64'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|x64'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseU|x64'" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile />
     <Link>
@@ -128,9 +124,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <ClCompile />
-    <ClCompile>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-    </ClCompile>
+    <ClCompile />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile />
@@ -141,9 +135,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <ClCompile />
-    <ClCompile>
-      <WholeProgramOptimization>false</WholeProgramOptimization>
-    </ClCompile>
+    <ClCompile />
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
