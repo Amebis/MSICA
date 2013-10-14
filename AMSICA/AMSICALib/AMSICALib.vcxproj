@@ -70,32 +70,11 @@
   <ImportGroup Label="ExtensionSettings">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\rcxgettext.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+  <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisDebug.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisWin32.props" />
-    <Import Project="..\AMSICA.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisRelease.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisWin32.props" />
-    <Import Project="..\AMSICA.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisDebug.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebisx64.props" />
-    <Import Project="..\AMSICA.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisRelease.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebisx64.props" />
+    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis $(Configuration).props" Condition="exists('$(VCInstallDir)VCProjectDefaults\Amebis $(Configuration).props')" />
+    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis $(Platform).props" Condition="exists('$(VCInstallDir)VCProjectDefaults\Amebis $(Platform).props')" />
     <Import Project="..\AMSICA.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
