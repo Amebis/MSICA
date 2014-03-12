@@ -1,11 +1,11 @@
 * text=auto !eol
-MSICALib/L10N/sl_SI.po -text
-MSICALib/MSITSCA.cpp -text
-MSICALib/MSITSCA.h -text
-MSICALib/MSITSCA.vcxproj -text svneol=unset#text/xml
-MSICALib/MSITSCA.vcxproj.filters -text svneol=unset#text/xml
-MSICALib/StdAfx.cpp -text
-MSICALib/StdAfx.h -text
-MSICALib/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
-MSICALib/res/MSITSCA.rc -text svneol=unset#unset
-MSICALib/res/MSITSCA.rcx -text svneol=unset#unset
+MSITSCA/L10N/sl_SI.po -text
+MSITSCA/MSITSCA.cpp -text
+MSITSCA/MSITSCA.h -text
+MSITSCA/MSITSCA.vcxproj -text svneol=unset#text/xml
+MSITSCA/MSITSCA.vcxproj.filters -text svneol=unset#text/xml
+MSITSCA/StdAfx.cpp -text
+MSITSCA/StdAfx.h -text
+MSITSCA/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
+MSITSCA/res/MSITSCA.rc -text svneol=unset#unset
+MSITSCA/res/MSITSCA.rcx -text svneol=unset#unset
