@@ -1,10 +1,10 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 #pragma comment(lib, "mstask.lib")
 #pragma comment(lib, "taskschd.lib")
 
 
-namespace AMSICA {
+namespace MSICA {
 
 ////////////////////////////////////////////////////////////////////////////
 // COpTaskCreate
@@ -1035,4 +1035,4 @@ finish:
     return hr;
 }
 
-} // namespace AMSICA
+} // namespace MSICA

@@ -1,7 +1,7 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 
-namespace AMSICA {
+namespace MSICA {
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -721,4 +721,4 @@ HRESULT COpRegValueDelete::Execute(CSession *pSession)
     }
 }
 
-} // namespace AMSICA
+} // namespace MSICA

@@ -19,11 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\AMSICA.cpp" />
-    <ClCompile Include="..\src\AMSICAFileOp.cpp" />
-    <ClCompile Include="..\src\AMSICATSOp.cpp" />
-    <ClCompile Include="..\src\MSICARegOp.cpp" />
-    <ClCompile Include="..\src\StdAfx.cpp">
+    <ClCompile Include="MSICALib.cpp" />
+    <ClCompile Include="FileOp.cpp" />
+    <ClCompile Include="TSOp.cpp" />
+    <ClCompile Include="RegOp.cpp" />
+    <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -31,17 +31,17 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\AMSICA.h" />
-    <ClInclude Include="..\include\StdAfx.h" />
+    <ClInclude Include="MSICALib.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\en_GB.po" />
+    <None Include="res\en_GB.po" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8552EE55-177E-4F51-B51B-BAF7D6462CDE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>AMSICALib</RootNamespace>
-    <ProjectName>AMSICALib</ProjectName>
+    <RootNamespace>MSICALib</RootNamespace>
+    <ProjectName>MSICALib</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -68,37 +68,29 @@
   <ImportGroup Label="ExtensionSettings">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\rcxgettext.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisDebug.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisWin32.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisLib.props" />
-    <Import Project="AMSICA.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\Win32.props" />
+    <Import Project="..\include\Release.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisDebug.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebisx64.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisLib.props" />
-    <Import Project="AMSICA.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\Win32.props" />
+    <Import Project="..\include\Debug.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisRelease.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisWin32.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisLib.props" />
-    <Import Project="AMSICA.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\x64.props" />
+    <Import Project="..\include\Release.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisRelease.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebisx64.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisLib.props" />
-    <Import Project="AMSICA.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\x64.props" />
+    <Import Project="..\include\Debug.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

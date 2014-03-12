@@ -15,32 +15,32 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\AMSICA.cpp">
+    <ClCompile Include="MSICALib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AMSICAFileOp.cpp">
+    <ClCompile Include="FileOp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\AMSICATSOp.cpp">
+    <ClCompile Include="TSOp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\StdAfx.cpp">
+    <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\MSICARegOp.cpp">
+    <ClCompile Include="RegOp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\AMSICA.h">
+    <ClInclude Include="MSICALib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\StdAfx.h">
+    <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\en_GB.po">
+    <None Include="res\en_GB.po">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

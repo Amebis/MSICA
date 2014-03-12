@@ -1,17 +1,15 @@
 * text=auto !eol
-AMSICA/AMSICA-10.0.sln svneol=CRLF#text/plain eol=crlf
-AMSICA/build/AMSICA.props -text svneol=unset#text/xml
-AMSICA/build/AMSICALib.vcxproj -text svneol=unset#text/xml
-AMSICA/build/AMSICALib.vcxproj.filters -text svneol=unset#text/xml
-AMSICA/include/AMSICA.h -text
-AMSICA/include/StdAfx.h -text
-AMSICA/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
-AMSICA/res/en_GB.po -text
-AMSICA/src/AMSICA.cpp -text
-AMSICA/src/AMSICAFileOp.cpp -text
-AMSICA/src/AMSICATSOp.cpp -text
-AMSICA/src/MSICARegOp.cpp -text
-AMSICA/src/StdAfx.cpp -text
+MSICALib/FileOp.cpp -text
+MSICALib/MSICALib.cpp -text
+MSICALib/MSICALib.h -text
+MSICALib/MSICALib.vcxproj -text svneol=unset#text/xml
+MSICALib/MSICALib.vcxproj.filters -text svneol=unset#text/xml
+MSICALib/RegOp.cpp -text
+MSICALib/TSOp.cpp -text
+MSICALib/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
+MSICALib/res/en_GB.po -text
+MSICALib/stdafx.cpp -text
+MSICALib/stdafx.h -text
 MSITSCA/L10N/sl_SI.po -text
 MSITSCA/MSITSCA.cpp -text
 MSITSCA/MSITSCA.h -text
@@ -22,3 +20,8 @@ MSITSCA/StdAfx.h -text
 MSITSCA/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
 MSITSCA/res/MSITSCA.rc -text svneol=unset#unset
 MSITSCA/res/MSITSCA.rcx -text svneol=unset#unset
+include/Debug.props -text svneol=unset#text/xml
+include/Release.props -text svneol=unset#text/xml
+include/Win32.props -text svneol=unset#text/xml
+include/common.props -text svneol=unset#text/xml
+include/x64.props -text svneol=unset#text/xml

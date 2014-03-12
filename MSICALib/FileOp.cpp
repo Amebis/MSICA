@@ -1,7 +1,7 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 
-namespace AMSICA {
+namespace MSICA {
 
 ////////////////////////////////////////////////////////////////////////////
 // COpFileDelete
@@ -85,4 +85,4 @@ HRESULT COpFileMove::Execute(CSession *pSession)
     }
 }
 
-} // namespace AMSICA
+} // namespace MSICA

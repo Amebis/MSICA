@@ -1,17 +1,17 @@
-#ifndef __AMSICA_H__
-#define __AMSICA_H__
+#ifndef __MSICALib_H__
+#define __MSICALib_H__
 
 ////////////////////////////////////////////////////////////////////////////
 // Version
 ////////////////////////////////////////////////////////////////////////////
 
-#define AMSICA_VERSION       0x02000000
+#define MSICALib_VERSION       0x02000000
 
-#define AMSICA_VERSION_MAJ   2
-#define AMSICA_VERSION_MIN   0
-#define AMSICA_VERSION_REV   0
+#define MSICALib_VERSION_MAJ   2
+#define MSICALib_VERSION_MIN   0
+#define MSICALib_VERSION_REV   0
 
-#define AMSICA_VERSION_STR   "2.0"
+#define MSICALib_VERSION_STR   "2.0"
 
 
 #if !defined(RC_INVOKED) && !defined(MIDL_PASS)
@@ -52,7 +52,7 @@
 #define ERROR_INSTALL_SCHEDULED_TASKS_OPLIST_CREATE    2551L
 
 
-namespace AMSICA {
+namespace MSICA {
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -469,7 +469,7 @@ public:
     COpList m_olCommit;          // Commit operation list
 };
 
-} // namespace AMSICA
+} // namespace MSICA
 
 
 ////////////////////////////////////////////////////////////////////
@@ -742,7 +742,7 @@ inline UINT MsiGetTargetPathW(MSIHANDLE hInstall, LPCWSTR szFolder, ATL::CAtlStr
 }
 
 
-namespace AMSICA {
+namespace MSICA {
 
 ////////////////////////////////////////////////////////////////////////////
 // Inline operators
@@ -1422,8 +1422,8 @@ template <class T> inline HRESULT COpList::LoadAndAddTail(ATL::CAtlFile &f)
     return S_OK;
 }
 
-} // namespace AMSICA
+} // namespace MSICA
 
 
 #endif // RC_INVOKED
-#endif // __AMSICA_H__
+#endif // __MSICALib_H__

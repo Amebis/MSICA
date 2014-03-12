@@ -1,9 +1,9 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 #pragma comment(lib, "msi.lib")
 
 
-namespace AMSICA {
+namespace MSICA {
 
 ////////////////////////////////////////////////////////////////////////////
 // COperation
@@ -181,4 +181,4 @@ CSession::~CSession()
     m_olCommit.Free();
 }
 
-} // namespace AMSICA
+} // namespace MSICA
