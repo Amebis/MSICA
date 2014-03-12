@@ -6,7 +6,7 @@ MSIBUILD_IS_LOCALIZEABLE=1
 ######################################################################
 # _Validation
 
-Vse :: "$(LANG).$(PLAT).$(CFG)._Validation-1.idt"
+All :: "$(LANG).$(PLAT).$(CFG)._Validation-1.idt"
 
 "$(LANG).$(PLAT).$(CFG)._Validation-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
 	-if exist $@ del /f /q $@
@@ -52,7 +52,7 @@ TaskTrigger	Task_	N			ScheduledTask	1	Identifier		Key of the Trigger's task.
 ######################################################################
 # ActionText
 
-Vse :: "$(LANG).$(PLAT).$(CFG).ActionText-2.idt"
+All :: "$(LANG).$(PLAT).$(CFG).ActionText-2.idt"
 
 "En.$(PLAT).$(CFG).ActionText-2.idtx" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
 	-if exist $@ del /f /q $@
@@ -79,7 +79,7 @@ InstallScheduledTasks	Registering scheduled tasks	Scheduled task: [1]
 ######################################################################
 # Binary
 
-Vse :: \
+All :: \
 	"$(LANG).$(PLAT).$(CFG).Binary-1.idt" \
 	"$(LANG).$(PLAT).$(CFG).Binary-1\MSITSCA.dll"
 
@@ -99,7 +99,7 @@ binMSITSCA.dll	MSITSCA.dll
 ######################################################################
 # CustomAction
 
-Vse :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
+All :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
 
 "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
 	-if exist $@ del /f /q $@
@@ -117,7 +117,7 @@ CommitScheduledTasks	3585	binMSITSCA.dll	InstallScheduledTasks
 ######################################################################
 # Error
 
-Vse :: "$(LANG).$(PLAT).$(CFG).Error-2.idt"
+All :: "$(LANG).$(PLAT).$(CFG).Error-2.idt"
 
 "En.$(PLAT).$(CFG).Error-2.idtx" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
 	-if exist $@ del /f /q $@
@@ -144,7 +144,7 @@ i2	L0
 ######################################################################
 # InstallExecuteSequence
 
-Vse :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
+All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
 
 "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
 	-if exist $@ del /f /q $@
@@ -162,7 +162,7 @@ CommitScheduledTasks		6583
 ######################################################################
 # ScheduledTask
 
-Vse :: "$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt"
+All :: "$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt"
 
 "$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
 	-if exist $@ del /f /q $@
@@ -176,7 +176,7 @@ ScheduledTask	Task
 ######################################################################
 # TaskTrigger
 
-Vse :: "$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt"
+All :: "$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt"
 
 "$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
 	-if exist $@ del /f /q $@
@@ -188,7 +188,7 @@ TaskTrigger	Trigger
 
 
 ######################################################################
-# Izdelava modula MSM
+# Build MSM module!
 ######################################################################
 
 !INCLUDE "..\..\MSIBuild\MSM.mak"

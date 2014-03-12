@@ -1,5 +1,6 @@
 * text=auto !eol
 MSICALib/FileOp.cpp -text
+MSICALib/L10N/sl_SI.po -text
 MSICALib/MSICALib.cpp -text
 MSICALib/MSICALib.h -text
 MSICALib/MSICALib.vcxproj -text svneol=unset#text/xml
@@ -7,7 +8,6 @@ MSICALib/MSICALib.vcxproj.filters -text svneol=unset#text/xml
 MSICALib/RegOp.cpp -text
 MSICALib/TSOp.cpp -text
 MSICALib/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
-MSICALib/res/en_GB.po -text
 MSICALib/stdafx.cpp -text
 MSICALib/stdafx.h -text
 MSITSCA/L10N/sl_SI.po -text

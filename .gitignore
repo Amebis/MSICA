@@ -1,4 +1,5 @@
 MSICALib/*.user
+MSICALib/L10N/*.mo
 MSICALib/msm/*-1.idt
 MSICALib/msm/*-2.idt
 MSICALib/msm/*-2.idtx
@@ -8,7 +9,6 @@ MSICALib/msm/*.Icon-1
 MSICALib/msm/*.Icon-2
 MSICALib/msm/*.lst
 MSICALib/msm/*.msm
-MSICALib/res/*.mo
 MSICALib/temp
 MSITSCA/*.user
 MSITSCA/L10N/*.mo
