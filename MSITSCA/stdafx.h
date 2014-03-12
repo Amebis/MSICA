@@ -32,6 +32,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "MSITSCA.h"
-
 #include "..\MSICALib\MSICALib.h"
+
+#include "MSITSCA.h"

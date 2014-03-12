@@ -25,4 +25,5 @@ include/Debug.props -text svneol=unset#text/xml
 include/Release.props -text svneol=unset#text/xml
 include/Win32.props -text svneol=unset#text/xml
 include/common.props -text svneol=unset#text/xml
+include/version.h -text
 include/x64.props -text svneol=unset#text/xml
