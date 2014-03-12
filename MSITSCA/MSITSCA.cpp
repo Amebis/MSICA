@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -43,7 +43,7 @@ UINT MSITSCA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
     UINT uiResult;
     HRESULT hr;
     BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
-    AMSICA::COpList olExecute;
+    MSICA::COpList olExecute;
     BOOL bRollbackEnabled;
     PMSIHANDLE
         hDatabase,
@@ -55,7 +55,7 @@ UINT MSITSCA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
     bRollbackEnabled = uiResult == ERROR_SUCCESS ?
         _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
         TRUE;
-    olExecute.AddTail(new AMSICA::COpRollbackEnable(bRollbackEnabled));
+    olExecute.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
 
     // Open MSI database.
     hDatabase = ::MsiGetActiveDatabase(hInstall);
@@ -111,7 +111,7 @@ UINT MSITSCA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
                         if (iAction >= INSTALLSTATE_LOCAL) {
                             // Component is or should be installed. Create the task.
                             PMSIHANDLE hViewTT;
-                            AMSICA::COpTaskCreate *opCreateTask = new AMSICA::COpTaskCreate(sDisplayName, MSITSCA_TASK_TICK_SIZE);
+                            MSICA::COpTaskCreate *opCreateTask = new MSICA::COpTaskCreate(sDisplayName, MSITSCA_TASK_TICK_SIZE);
 
                             // Populate the operation with task's data.
                             uiResult = opCreateTask->SetFromRecord(hInstall, hRecord);
@@ -134,7 +134,7 @@ UINT MSITSCA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
                             olExecute.AddTail(opCreateTask);
                         } else if (iAction >= INSTALLSTATE_REMOVED) {
                             // Component is installed, but should be degraded to advertised/removed. Delete the task.
-                            olExecute.AddTail(new AMSICA::COpTaskDelete(sDisplayName, MSITSCA_TASK_TICK_SIZE));
+                            olExecute.AddTail(new MSICA::COpTaskDelete(sDisplayName, MSITSCA_TASK_TICK_SIZE));
                         }
 
                         // The amount of tick space to add for each task to progress indicator.
@@ -232,7 +232,7 @@ UINT MSITSCA_API InstallScheduledTasks(MSIHANDLE hInstall)
 
     uiResult = ::MsiGetProperty(hInstall, _T("CustomActionData"), sSequenceFilename);
     if (uiResult == ERROR_SUCCESS) {
-        AMSICA::COpList lstOperations;
+        MSICA::COpList lstOperations;
         BOOL bIsCleanup = ::MsiGetMode(hInstall, MSIRUNMODE_COMMIT) || ::MsiGetMode(hInstall, MSIRUNMODE_ROLLBACK);
 
         //assert(0); // Attach debugger here, or press "Ignore"!
@@ -240,7 +240,7 @@ UINT MSITSCA_API InstallScheduledTasks(MSIHANDLE hInstall)
         // Load operation sequence.
         hr = lstOperations.LoadFromFile(sSequenceFilename);
         if (SUCCEEDED(hr)) {
-            AMSICA::CSession session;
+            MSICA::CSession session;
 
             session.m_hInstall = hInstall;
 
@@ -260,14 +260,14 @@ UINT MSITSCA_API InstallScheduledTasks(MSIHANDLE hInstall)
                 sSequenceFilenameCM.Format(_T("%.*ls-cm%ls"), pszExtension - (LPCTSTR)sSequenceFilename, (LPCTSTR)sSequenceFilename, pszExtension);
 
                 // After commit, delete rollback file. After rollback, delete commit file.
-                session.m_olCommit.AddTail(new AMSICA::COpFileDelete(
+                session.m_olCommit.AddTail(new MSICA::COpFileDelete(
 #ifdef _UNICODE
                     sSequenceFilenameRB
 #else
                     ATL::CAtlStringW(sSequenceFilenameRB)
 #endif
                     ));
-                session.m_olRollback.AddTail(new AMSICA::COpFileDelete(
+                session.m_olRollback.AddTail(new MSICA::COpFileDelete(
 #ifdef _UNICODE
                     sSequenceFilenameCM
 #else

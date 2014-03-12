@@ -49,40 +49,40 @@
   <ImportGroup Label="ExtensionSettings">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\rcxgettext.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisDebug.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisWin32.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\Win32.props" />
+    <Import Project="..\include\Release.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisDebug.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebisx64.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\Win32.props" />
+    <Import Project="..\include\Debug.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisRelease.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisWin32.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\x64.props" />
+    <Import Project="..\include\Release.props" />
   </ImportGroup>
-  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebis.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\AmebisRelease.props" />
-    <Import Project="$(VCInstallDir)VCProjectDefaults\Amebisx64.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\x64.props" />
+    <Import Project="..\include\Debug.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\Test\$(Configuration).$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\output\$(Configuration).$(Platform)\</OutDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\Test\$(Configuration).$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\output\$(Configuration).$(Platform)\</OutDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\Test\$(Configuration).$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\output\$(Configuration).$(Platform)\</OutDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\Test\$(Configuration).$(Platform)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\output\$(Configuration).$(Platform)\</OutDir>
     <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -94,11 +94,9 @@
     </Midl>
     <ClCompile />
     <ResourceLocalizator>
-      <LanguageCatalogs>res\en_GB.po</LanguageCatalogs>
+      <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
     </ResourceLocalizator>
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\AMSICA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
+    <ClCompile />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
@@ -109,11 +107,9 @@
     </Midl>
     <ClCompile />
     <ResourceLocalizator>
-      <LanguageCatalogs>res\en_GB.po</LanguageCatalogs>
+      <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
     </ResourceLocalizator>
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\AMSICA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
+    <ClCompile />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Link>
@@ -124,11 +120,9 @@
     </Midl>
     <ClCompile />
     <ResourceLocalizator>
-      <LanguageCatalogs>res\en_GB.po</LanguageCatalogs>
+      <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
     </ResourceLocalizator>
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\AMSICA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
+    <ClCompile />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
@@ -139,15 +133,13 @@
     </Midl>
     <ClCompile />
     <ResourceLocalizator>
-      <LanguageCatalogs>res\en_GB.po</LanguageCatalogs>
+      <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
     </ResourceLocalizator>
-    <ClCompile>
-      <AdditionalIncludeDirectories>..\AMSICA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
+    <ClCompile />
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MSITSCA.cpp" />
-    <ClCompile Include="StdAfx.cpp">
+    <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -156,21 +148,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MSITSCA.h" />
-    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\MSITSCA.rc" />
+    <ResourceCompile Include="MSITSCA.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceLocalizator Include="res\MSITSCA.rcx" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AMSICA\build\AMSICALib.vcxproj">
-      <Project>{8552ee55-177e-4f51-b51b-baf7d6462cde}</Project>
-    </ProjectReference>
+    <ResourceLocalizator Include="MSITSCA.rcx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="L10N\sl_SI.po" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MSICALib\MSICALib.vcxproj">
+      <Project>{8552ee55-177e-4f51-b51b-baf7d6462cde}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

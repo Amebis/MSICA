@@ -18,7 +18,7 @@
     <ClCompile Include="MSITSCA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StdAfx.cpp">
+    <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -26,17 +26,17 @@
     <ClInclude Include="MSITSCA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="StdAfx.h">
+    <ClInclude Include="stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\MSITSCA.rc">
+    <ResourceCompile Include="MSITSCA.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceLocalizator Include="res\MSITSCA.rcx">
+    <ResourceLocalizator Include="MSITSCA.rcx">
       <Filter>Resource Files</Filter>
     </ResourceLocalizator>
   </ItemGroup>

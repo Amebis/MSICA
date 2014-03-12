@@ -1,3 +1,6 @@
+/*.opensdf
+/*.sdf
+/*.suo
 MSICALib/*.user
 MSICALib/L10N/*.mo
 MSICALib/msm/*-1.idt
@@ -12,10 +15,6 @@ MSICALib/msm/*.msm
 MSICALib/temp
 MSITSCA/*.user
 MSITSCA/L10N/*.mo
-MSITSCA/MSITSCA.Debug.Win32
-MSITSCA/MSITSCA.Debug.x64
-MSITSCA/MSITSCA.Release.Win32
-MSITSCA/MSITSCA.Release.x64
 MSITSCA/msm/*-1.idt
 MSITSCA/msm/*-2.idt
 MSITSCA/msm/*-2.idtx
@@ -25,4 +24,6 @@ MSITSCA/msm/*.Icon-1
 MSITSCA/msm/*.Icon-2
 MSITSCA/msm/*.lst
 MSITSCA/msm/*.msm
-MSITSCA/res/*.mo
+MSITSCA/temp
+/ipch
+/output

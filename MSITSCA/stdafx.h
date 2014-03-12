@@ -1,4 +1,4 @@
-// StdAfx.h : include file for standard system include files,
+// stdafx.h : include file for standard system include files,
 // or project specific include files that are used frequently,
 // but are changed infrequently
 
@@ -28,19 +28,10 @@
 #include <atlfile.h>
 #include <atlstr.h>
 
-#include "BuildNum.h"
-
-#include "MSITSCA.h"
-
-#include "AMSICA.h"
-
-//#include <assert.h>
 #include <corerror.h>
 #include <stdlib.h>
 #include <time.h>
 
-#ifdef NDEBUG
-#define verify(expr) ((void)(expr))
-#else
-#define verify(expr) assert(expr)
-#endif
+#include "MSITSCA.h"
+
+#include "..\MSICALib\MSICALib.h"

@@ -1,4 +1,5 @@
 * text=auto !eol
+/MSICA.sln svneol=CRLF#text/plain eol=crlf
 MSICALib/FileOp.cpp -text
 MSICALib/L10N/sl_SI.po -text
 MSICALib/MSICALib.cpp -text
@@ -13,13 +14,13 @@ MSICALib/stdafx.h -text
 MSITSCA/L10N/sl_SI.po -text
 MSITSCA/MSITSCA.cpp -text
 MSITSCA/MSITSCA.h -text
+MSITSCA/MSITSCA.rc -text svneol=unset#unset
+MSITSCA/MSITSCA.rcx -text svneol=unset#unset
 MSITSCA/MSITSCA.vcxproj -text svneol=unset#text/xml
 MSITSCA/MSITSCA.vcxproj.filters -text svneol=unset#text/xml
-MSITSCA/StdAfx.cpp -text
-MSITSCA/StdAfx.h -text
 MSITSCA/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
-MSITSCA/res/MSITSCA.rc -text svneol=unset#unset
-MSITSCA/res/MSITSCA.rcx -text svneol=unset#unset
+MSITSCA/stdafx.cpp -text
+MSITSCA/stdafx.h -text
 include/Debug.props -text svneol=unset#text/xml
 include/Release.props -text svneol=unset#text/xml
 include/Win32.props -text svneol=unset#text/xml
