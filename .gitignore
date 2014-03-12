@@ -1,4 +1,5 @@
 MSICALib/*.user
+MSICALib/L10N/*.mo
 MSICALib/MSITSCA.Debug.Win32
 MSICALib/MSITSCA.Debug.x64
 MSICALib/MSITSCA.Release.Win32
