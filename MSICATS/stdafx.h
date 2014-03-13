@@ -20,7 +20,7 @@
 #define _WIN32_WINNT 0x0501                // Include Windows XP symbols
 #define _WINSOCKAPI_                       // Prevent inclusion of winsock.h in windows.h
 #ifdef _WINDLL
-#define MSITSCA_DLL                        // This is a DLL
+#define MSICATS_DLL                        // This is a DLL
 #endif
 #define _ATL_APARTMENT_THREADED
 
@@ -34,4 +34,4 @@
 
 #include "..\MSICALib\MSICALib.h"
 
-#include "MSITSCA.h"
+#include "MSICATS.h"

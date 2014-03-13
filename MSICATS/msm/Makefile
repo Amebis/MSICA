@@ -81,7 +81,7 @@ InstallScheduledTasks	Registering scheduled tasks	Scheduled task: [1]
 
 All :: \
 	"$(LANG).$(PLAT).$(CFG).Binary-1.idt" \
-	"$(LANG).$(PLAT).$(CFG).Binary-1\MSITSCA.dll"
+	"$(LANG).$(PLAT).$(CFG).Binary-1\MSICATS.dll"
 
 "$(LANG).$(PLAT).$(CFG).Binary-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak"" "$(LANG).$(PLAT).$(CFG).Binary-1"
 	-if exist $@ del /f /q $@
@@ -89,10 +89,10 @@ All :: \
 Name	Data
 s$(MSIBUILD_LENGTH_ID)	v0
 Binary	Name
-binMSITSCA.dll	MSITSCA.dll
+binMSICATS.dll	MSICATS.dll
 <<NOKEEP
 
-"$(LANG).$(PLAT).$(CFG).Binary-1\MSITSCA.dll" : "..\..\Test\$(CFG).$(PLAT)\MSITSCA.dll"
+"$(LANG).$(PLAT).$(CFG).Binary-1\MSICATS.dll" : "..\..\Test\$(CFG).$(PLAT)\MSICATS.dll"
 	copy /y $** $@ > NUL
 
 
@@ -107,10 +107,10 @@ All :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
 Action	Type	Source	Target
 s$(MSIBUILD_LENGTH_ID)	i2	S$(MSIBUILD_LENGTH_ID)	S255
 CustomAction	Action
-EvaluateScheduledTasks	1	binMSITSCA.dll	EvaluateScheduledTasks
-InstallScheduledTasks	3073	binMSITSCA.dll	InstallScheduledTasks
-RollbackScheduledTasks	3329	binMSITSCA.dll	InstallScheduledTasks
-CommitScheduledTasks	3585	binMSITSCA.dll	InstallScheduledTasks
+EvaluateScheduledTasks	1	binMSICATS.dll	EvaluateScheduledTasks
+InstallScheduledTasks	3073	binMSICATS.dll	InstallScheduledTasks
+RollbackScheduledTasks	3329	binMSICATS.dll	InstallScheduledTasks
+CommitScheduledTasks	3585	binMSICATS.dll	InstallScheduledTasks
 <<NOKEEP
 
 

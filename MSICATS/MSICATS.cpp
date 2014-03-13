@@ -5,7 +5,7 @@
 // Local constants
 ////////////////////////////////////////////////////////////////////////////
 
-#define MSITSCA_TASK_TICK_SIZE  (16*1024)
+#define MSICATS_TASK_TICK_SIZE  (16*1024)
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -38,7 +38,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 // Exported functions
 ////////////////////////////////////////////////////////////////////
 
-UINT MSITSCA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
+UINT MSICATS_API EvaluateScheduledTasks(MSIHANDLE hInstall)
 {
     UINT uiResult;
     HRESULT hr;
@@ -111,7 +111,7 @@ UINT MSITSCA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
                         if (iAction >= INSTALLSTATE_LOCAL) {
                             // Component is or should be installed. Create the task.
                             PMSIHANDLE hViewTT;
-                            MSICA::COpTaskCreate *opCreateTask = new MSICA::COpTaskCreate(sDisplayName, MSITSCA_TASK_TICK_SIZE);
+                            MSICA::COpTaskCreate *opCreateTask = new MSICA::COpTaskCreate(sDisplayName, MSICATS_TASK_TICK_SIZE);
 
                             // Populate the operation with task's data.
                             uiResult = opCreateTask->SetFromRecord(hInstall, hRecord);
@@ -134,12 +134,12 @@ UINT MSITSCA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
                             olExecute.AddTail(opCreateTask);
                         } else if (iAction >= INSTALLSTATE_REMOVED) {
                             // Component is installed, but should be degraded to advertised/removed. Delete the task.
-                            olExecute.AddTail(new MSICA::COpTaskDelete(sDisplayName, MSITSCA_TASK_TICK_SIZE));
+                            olExecute.AddTail(new MSICA::COpTaskDelete(sDisplayName, MSICATS_TASK_TICK_SIZE));
                         }
 
                         // The amount of tick space to add for each task to progress indicator.
                         ::MsiRecordSetInteger(hRecordProg, 1, 3                     );
-                        ::MsiRecordSetInteger(hRecordProg, 2, MSITSCA_TASK_TICK_SIZE);
+                        ::MsiRecordSetInteger(hRecordProg, 2, MSICATS_TASK_TICK_SIZE);
                         if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
                     }
                     ::MsiViewClose(hViewST);
@@ -223,7 +223,7 @@ UINT MSITSCA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
 }
 
 
-UINT MSITSCA_API InstallScheduledTasks(MSIHANDLE hInstall)
+UINT MSICATS_API InstallScheduledTasks(MSIHANDLE hInstall)
 {
     UINT uiResult;
     HRESULT hr;

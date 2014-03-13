@@ -1,26 +1,27 @@
 * text=auto !eol
 /MSICA.sln svneol=CRLF#text/plain eol=crlf
-MSICALib/FileOp.cpp -text
 MSICALib/L10N/sl_SI.po -text
 MSICALib/MSICALib.cpp -text
 MSICALib/MSICALib.h -text
 MSICALib/MSICALib.vcxproj -text svneol=unset#text/xml
 MSICALib/MSICALib.vcxproj.filters -text svneol=unset#text/xml
-MSICALib/RegOp.cpp -text
-MSICALib/TSOp.cpp -text
+MSICALib/OpCert.cpp -text
+MSICALib/OpFile.cpp -text
+MSICALib/OpReg.cpp -text
+MSICALib/OpTS.cpp -text
 MSICALib/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
 MSICALib/stdafx.cpp -text
 MSICALib/stdafx.h -text
-MSITSCA/L10N/sl_SI.po -text
-MSITSCA/MSITSCA.cpp -text
-MSITSCA/MSITSCA.h -text
-MSITSCA/MSITSCA.rc -text svneol=unset#unset
-MSITSCA/MSITSCA.rcx -text svneol=unset#unset
-MSITSCA/MSITSCA.vcxproj -text svneol=unset#text/xml
-MSITSCA/MSITSCA.vcxproj.filters -text svneol=unset#text/xml
-MSITSCA/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
-MSITSCA/stdafx.cpp -text
-MSITSCA/stdafx.h -text
+MSICATS/L10N/sl_SI.po -text
+MSICATS/MSICATS.cpp -text
+MSICATS/MSICATS.h -text
+MSICATS/MSICATS.rc -text svneol=unset#unset
+MSICATS/MSICATS.rcx -text svneol=unset#unset
+MSICATS/MSICATS.vcxproj -text svneol=unset#text/xml
+MSICATS/MSICATS.vcxproj.filters -text svneol=unset#text/xml
+MSICATS/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
+MSICATS/stdafx.cpp -text
+MSICATS/stdafx.h -text
 include/Debug.props -text svneol=unset#text/xml
 include/Release.props -text svneol=unset#text/xml
 include/Win32.props -text svneol=unset#text/xml
