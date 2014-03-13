@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: MSICATS\n"
+"Project-Id-Version: MSICACert\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-13 11:35+0100\n"
+"POT-Creation-Date: 2014-03-13 11:34+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -19,50 +19,50 @@ msgstr ""
 # Language Code and Windows Charset (hexadecimal)
 # If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
 # For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#: MSICATS.rcx:42
+#: MSICACert.rcx:42
 msgid "040904e4"
 msgstr "042404e2"
 
 # Language Code (hexadecimal)
 # If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
 # For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#: MSICATS.rcx:60
+#: MSICACert.rcx:60
 msgid "0x409"
 msgstr "0x424"
 
 # Windows charset for this language (decimal)
-#: MSICATS.rcx:60
+#: MSICACert.rcx:60
 msgid "1252"
 msgstr "1250"
 
 # The name of the constant in RC to include the resources in this language.
-#: MSICATS.rcx:41 MSICATS.rcx:59 MSICATS.rcx:75
+#: MSICACert.rcx:41 MSICACert.rcx:59 MSICACert.rcx:75
 msgid "AFX_TARG_ENU"
 msgstr "AFX_TARG_SLV"
 
-#: MSICATS.rcx:44
+#: MSICACert.rcx:44
 msgid "Amebis, d. o. o., Kamnik"
 msgstr "Amebis, d. o. o., Kamnik"
 
-#: MSICATS.rcx:48
+#: MSICACert.rcx:45
+msgid "Certificate Installation Support Library"
+msgstr "Podporna knjižnica za nameščanje certifikatov"
+
+#: MSICACert.rcx:48
 msgid "Copyright © Amebis, d. o. o., Kamnik, 2012"
 msgstr "Vse pravice pridržane © Amebis, d. o. o., Kamnik, 2012"
 
 # Language Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#: MSICATS.rcx:77
+#: MSICACert.rcx:77
 msgid "LANG_ENGLISH"
 msgstr "LANG_SLOVENIAN"
 
-#: MSICATS.rcx:47 MSICATS.rcx:49
-msgid "MSICATS"
-msgstr "MSICATS"
-
-#: MSICATS.rcx:45
-msgid "Scheduled Task Installation Support Library"
-msgstr "Podporna knjižnica za nameščanje načrtovanih opravil"
+#: MSICACert.rcx:47 MSICACert.rcx:49
+msgid "MSICACert"
+msgstr "MSICACert"
 
 # Sublanguage Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#: MSICATS.rcx:77
+#: MSICACert.rcx:77
 msgid "SUBLANG_DEFAULT"
 msgstr "SUBLANG_DEFAULT"
 

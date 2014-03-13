@@ -1,5 +1,15 @@
 * text=auto !eol
 /MSICA.sln svneol=CRLF#text/plain eol=crlf
+MSICACert/L10N/sl_SI.po -text
+MSICACert/MSICACert.cpp -text
+MSICACert/MSICACert.h -text
+MSICACert/MSICACert.rc -text svneol=unset#unset
+MSICACert/MSICACert.rcx -text svneol=unset#unset
+MSICACert/MSICACert.vcxproj -text svneol=unset#text/xml
+MSICACert/MSICACert.vcxproj.filters -text svneol=unset#text/xml
+MSICACert/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
+MSICACert/stdafx.cpp -text
+MSICACert/stdafx.h -text
 MSICALib/L10N/sl_SI.po -text
 MSICALib/MSICALib.cpp -text
 MSICALib/MSICALib.h -text

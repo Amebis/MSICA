@@ -60,7 +60,7 @@ All :: "$(LANG).$(PLAT).$(CFG).ActionText-2.idt"
 Action	Description	Template
 s$(MSIBUILD_LENGTH_ID)	L0	L0
 1250	ActionText	Action
-InstallScheduledTasks	Registering scheduled tasks	Scheduled task: [1]
+InstallCertificates	Installing certificates	Certificate: [1]
 <<NOKEEP
 
 "De.$(CFG).$(PLAT).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\de_DE.po"
@@ -81,7 +81,7 @@ InstallScheduledTasks	Registering scheduled tasks	Scheduled task: [1]
 
 All :: \
 	"$(LANG).$(PLAT).$(CFG).Binary-1.idt" \
-	"$(LANG).$(PLAT).$(CFG).Binary-1\MSICATS.dll"
+	"$(LANG).$(PLAT).$(CFG).Binary-1\MSICACert.dll"
 
 "$(LANG).$(PLAT).$(CFG).Binary-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak"" "$(LANG).$(PLAT).$(CFG).Binary-1"
 	-if exist $@ del /f /q $@
@@ -89,10 +89,10 @@ All :: \
 Name	Data
 s$(MSIBUILD_LENGTH_ID)	v0
 Binary	Name
-binMSICATS.dll	MSICATS.dll
+binMSICACert.dll	MSICACert.dll
 <<NOKEEP
 
-"$(LANG).$(PLAT).$(CFG).Binary-1\MSICATS.dll" : "..\..\Test\$(CFG).$(PLAT)\MSICATS.dll"
+"$(LANG).$(PLAT).$(CFG).Binary-1\MSICACert.dll" : "..\..\Test\$(CFG).$(PLAT)\MSICACert.dll"
 	copy /y $** $@ > NUL
 
 
@@ -107,10 +107,10 @@ All :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
 Action	Type	Source	Target
 s$(MSIBUILD_LENGTH_ID)	i2	S$(MSIBUILD_LENGTH_ID)	S255
 CustomAction	Action
-EvaluateScheduledTasks	1	binMSICATS.dll	EvaluateSequence
-InstallScheduledTasks	3073	binMSICATS.dll	ExecuteSequence
-RollbackScheduledTasks	3329	binMSICATS.dll	ExecuteSequence
-CommitScheduledTasks	3585	binMSICATS.dll	ExecuteSequence
+EvaluateCertificates	1	binMSICACert.dll	EvaluateSequence
+InstallCertificates	3073	binMSICACert.dll	ExecuteSequence
+RollbackCertificates	3329	binMSICACert.dll	ExecuteSequence
+CommitCertificates	3585	binMSICACert.dll	ExecuteSequence
 <<NOKEEP
 
 
@@ -125,10 +125,10 @@ All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
 Action	Condition	Sequence
 s$(MSIBUILD_LENGTH_ID)	S255	I2
 InstallExecuteSequence	Action
-EvaluateScheduledTasks		6580
-RollbackScheduledTasks		6581
-InstallScheduledTasks		6582
-CommitScheduledTasks		6583
+EvaluateCertificates		6577
+RollbackCertificates		6576
+InstallCertificates		6578
+CommitCertificates		6579
 <<NOKEEP
 
 

@@ -5,7 +5,7 @@
 // Local constants
 ////////////////////////////////////////////////////////////////////////////
 
-#define MSICATS_TASK_TICK_SIZE  (16*1024)
+#define MSICACERT_TASK_TICK_SIZE  (16*1024)
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 // Exported functions
 ////////////////////////////////////////////////////////////////////
 
-UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
+UINT MSICACERT_API EvaluateSequence(MSIHANDLE hInstall)
 {
     UINT uiResult;
     HRESULT hr;
@@ -98,7 +98,7 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
                         if (iAction >= INSTALLSTATE_LOCAL) {
                             // Component is or should be installed. Create the task.
                             PMSIHANDLE hViewTT;
-                            MSICA::COpTaskCreate *opCreateTask = new MSICA::COpTaskCreate(sDisplayName, MSICATS_TASK_TICK_SIZE);
+                            MSICA::COpTaskCreate *opCreateTask = new MSICA::COpTaskCreate(sDisplayName, MSICACERT_TASK_TICK_SIZE);
 
                             // Populate the operation with task's data.
                             uiResult = opCreateTask->SetFromRecord(hInstall, hRecord);
@@ -121,12 +121,12 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
                             olExecute.AddTail(opCreateTask);
                         } else if (iAction >= INSTALLSTATE_REMOVED) {
                             // Component is installed, but should be degraded to advertised/removed. Delete the task.
-                            olExecute.AddTail(new MSICA::COpTaskDelete(sDisplayName, MSICATS_TASK_TICK_SIZE));
+                            olExecute.AddTail(new MSICA::COpTaskDelete(sDisplayName, MSICACERT_TASK_TICK_SIZE));
                         }
 
                         // The amount of tick space to add for each task to progress indicator.
-                        ::MsiRecordSetInteger(hRecordProg, 1, 3                     );
-                        ::MsiRecordSetInteger(hRecordProg, 2, MSICATS_TASK_TICK_SIZE);
+                        ::MsiRecordSetInteger(hRecordProg, 1, 3                       );
+                        ::MsiRecordSetInteger(hRecordProg, 2, MSICACERT_TASK_TICK_SIZE);
                         if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
                     }
                     ::MsiViewClose(hViewST);
@@ -136,7 +136,7 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
                         ATL::CAtlFile fSequence;
 
                         // Prepare our own sequence script file.
-                        // The InstallScheduledTasks is a deferred custom action, thus all this information will be unavailable to it.
+                        // The InstallCertificates is a deferred custom action, thus all this information will be unavailable to it.
                         // Therefore save all required info to file now.
                         {
                             LPTSTR szBuffer = sSequenceFilename.GetBuffer(MAX_PATH);
@@ -148,32 +148,32 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
                         hr = olExecute.SaveToFile(sSequenceFilename);
                         if (SUCCEEDED(hr)) {
                             // Store sequence script file names to properties for deferred custiom actions.
-                            uiResult = ::MsiSetProperty(hInstall, _T("InstallScheduledTasks"),  sSequenceFilename);
+                            uiResult = ::MsiSetProperty(hInstall, _T("InstallCertificates"), sSequenceFilename);
                             if (uiResult == ERROR_SUCCESS) {
                                 LPCTSTR pszExtension = ::PathFindExtension(sSequenceFilename);
                                 ATL::CAtlString sSequenceFilename2;
 
                                 sSequenceFilename2.Format(_T("%.*ls-rb%ls"), pszExtension - (LPCTSTR)sSequenceFilename, (LPCTSTR)sSequenceFilename, pszExtension);
-                                uiResult = ::MsiSetProperty(hInstall, _T("RollbackScheduledTasks"), sSequenceFilename2);
+                                uiResult = ::MsiSetProperty(hInstall, _T("RollbackCertificates"), sSequenceFilename2);
                                 if (uiResult == ERROR_SUCCESS) {
                                     sSequenceFilename2.Format(_T("%.*ls-cm%ls"), pszExtension - (LPCTSTR)sSequenceFilename, (LPCTSTR)sSequenceFilename, pszExtension);
-                                    uiResult = ::MsiSetProperty(hInstall, _T("CommitScheduledTasks"),   sSequenceFilename2);
+                                    uiResult = ::MsiSetProperty(hInstall, _T("CommitCertificates"), sSequenceFilename2);
                                     if (uiResult != ERROR_SUCCESS) {
                                         ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_PROPERTY_SET);
-                                        ::MsiRecordSetString (hRecordProg, 2, _T("CommitScheduledTasks"));
-                                        ::MsiRecordSetInteger(hRecordProg, 3, uiResult                  );
+                                        ::MsiRecordSetString (hRecordProg, 2, _T("CommitCertificates"));
+                                        ::MsiRecordSetInteger(hRecordProg, 3, uiResult                );
                                         ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                                     }
                                 } else {
                                     ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_PROPERTY_SET  );
-                                    ::MsiRecordSetString (hRecordProg, 2, _T("RollbackScheduledTasks"));
-                                    ::MsiRecordSetInteger(hRecordProg, 3, uiResult                    );
+                                    ::MsiRecordSetString (hRecordProg, 2, _T("RollbackCertificates"));
+                                    ::MsiRecordSetInteger(hRecordProg, 3, uiResult                  );
                                     ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                                 }
                             } else {
                                 ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_PROPERTY_SET );
-                                ::MsiRecordSetString (hRecordProg, 2, _T("InstallScheduledTasks"));
-                                ::MsiRecordSetInteger(hRecordProg, 3, uiResult                   );
+                                ::MsiRecordSetString (hRecordProg, 2, _T("InstallCertificates"));
+                                ::MsiRecordSetInteger(hRecordProg, 3, uiResult                 );
                                 ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                             }
                             if (uiResult != ERROR_SUCCESS) ::DeleteFile(sSequenceFilename);
@@ -210,7 +210,7 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
 }
 
 
-UINT MSICATS_API ExecuteSequence(MSIHANDLE hInstall)
+UINT MSICACERT_API ExecuteSequence(MSIHANDLE hInstall)
 {
     return MSICA::ExecuteSequence(hInstall);
 }

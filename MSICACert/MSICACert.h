@@ -1,5 +1,5 @@
-#ifndef __MSICATS_H__
-#define __MSICATS_H__
+#ifndef __MSICACERT_H__
+#define __MSICACERT_H__
 
 #include <msi.h>
 
@@ -8,12 +8,12 @@
 // Calling declaration
 ////////////////////////////////////////////////////////////////////
 
-#if defined(MSICATS_DLL)
-#define MSICATS_API __declspec(dllexport)
-#elif defined(MSICATS_DLLIMP)
-#define MSICATS_API __declspec(dllimport)
+#if defined(MSICACERT_DLL)
+#define MSICACERT_API __declspec(dllexport)
+#elif defined(MSICACERT_DLLIMP)
+#define MSICACERT_API __declspec(dllimport)
 #else
-#define MSICATS_API
+#define MSICACERT_API
 #endif
 
 ////////////////////////////////////////////////////////////////////
@@ -24,11 +24,11 @@
 extern "C" {
 #endif
 
-    UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall);
-    UINT MSICATS_API ExecuteSequence(MSIHANDLE hInstall);
+    UINT MSICACERT_API EvaluateSequence(MSIHANDLE hInstall);
+    UINT MSICACERT_API ExecuteSequence(MSIHANDLE hInstall);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // __MSICATS_H__
+#endif // __MSICACERT_H__
