@@ -7,7 +7,7 @@ MSICACert/MSICACert.rc -text svneol=unset#unset
 MSICACert/MSICACert.rcx -text svneol=unset#unset
 MSICACert/MSICACert.vcxproj -text svneol=unset#text/xml
 MSICACert/MSICACert.vcxproj.filters -text svneol=unset#text/xml
-MSICACert/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
+MSICACert/msm/Makefile -text
 MSICACert/stdafx.cpp -text
 MSICACert/stdafx.h -text
 MSICALib/L10N/sl_SI.po -text
@@ -19,7 +19,7 @@ MSICALib/OpCert.cpp -text
 MSICALib/OpFile.cpp -text
 MSICALib/OpReg.cpp -text
 MSICALib/OpTS.cpp -text
-MSICALib/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
+MSICALib/msm/Makefile -text
 MSICALib/stdafx.cpp -text
 MSICALib/stdafx.h -text
 MSICATS/L10N/sl_SI.po -text
@@ -29,7 +29,7 @@ MSICATS/MSICATS.rc -text svneol=unset#unset
 MSICATS/MSICATS.rcx -text svneol=unset#unset
 MSICATS/MSICATS.vcxproj -text svneol=unset#text/xml
 MSICATS/MSICATS.vcxproj.filters -text svneol=unset#text/xml
-MSICATS/msm/Makefile -text svneol=unset#text/plain%3B+charset%3DWindows-1250
+MSICATS/msm/Makefile -text
 MSICATS/stdafx.cpp -text
 MSICATS/stdafx.h -text
 include/Debug.props -text svneol=unset#text/xml
