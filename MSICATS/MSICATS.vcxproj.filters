@@ -31,12 +31,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MSICATS.rc">
+    <ResourceCompile Include="res\MSICATS.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceLocalizator Include="MSICATS.rcx">
+    <ResourceLocalizator Include="res\MSICATS.rcx">
       <Filter>Resource Files</Filter>
     </ResourceLocalizator>
   </ItemGroup>

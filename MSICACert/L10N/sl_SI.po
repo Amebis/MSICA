@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSICACert\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-13 11:34+0100\n"
+"POT-Creation-Date: 2014-03-13 12:19+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -14,57 +14,76 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: ..\n"
 "X-Generator: Poedit 1.5.7\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-0: msm\n"
+"X-Poedit-SearchPath-1: res\n"
 
 # Language Code and Windows Charset (hexadecimal)
 # If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
 # For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#: MSICACert.rcx:42
+#: res/MSICACert.rcx:42
 msgid "040904e4"
 msgstr "042404e2"
 
 # Language Code (hexadecimal)
 # If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
 # For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#: MSICACert.rcx:60
+#: res/MSICACert.rcx:60
 msgid "0x409"
 msgstr "0x424"
 
 # Windows charset for this language (decimal)
-#: MSICACert.rcx:60
+#: res/MSICACert.rcx:60 msm/En.Win32.Debug.ActionText-2.idtx:3
+#: msm/En.Win32.Release.ActionText-2.idtx:3
+#: msm/En.x64.Debug.ActionText-2.idtx:3 msm/En.x64.Release.ActionText-2.idtx:3
 msgid "1252"
 msgstr "1250"
 
 # The name of the constant in RC to include the resources in this language.
-#: MSICACert.rcx:41 MSICACert.rcx:59 MSICACert.rcx:75
+#: res/MSICACert.rcx:41 res/MSICACert.rcx:59 res/MSICACert.rcx:75
 msgid "AFX_TARG_ENU"
 msgstr "AFX_TARG_SLV"
 
-#: MSICACert.rcx:44
+#: res/MSICACert.rcx:44
 msgid "Amebis, d. o. o., Kamnik"
 msgstr "Amebis, d. o. o., Kamnik"
 
-#: MSICACert.rcx:45
+#: res/MSICACert.rcx:45
 msgid "Certificate Installation Support Library"
 msgstr "Podporna knjižnica za nameščanje certifikatov"
 
-#: MSICACert.rcx:48
+#: res/MSICACert.rcx:48
 msgid "Copyright © Amebis, d. o. o., Kamnik, 2012"
 msgstr "Vse pravice pridržane © Amebis, d. o. o., Kamnik, 2012"
 
 # Language Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#: MSICACert.rcx:77
+#: res/MSICACert.rcx:77
 msgid "LANG_ENGLISH"
 msgstr "LANG_SLOVENIAN"
 
-#: MSICACert.rcx:47 MSICACert.rcx:49
+#: res/MSICACert.rcx:49
+msgid "MSICA"
+msgstr "MSICA"
+
+#: res/MSICACert.rcx:47
 msgid "MSICACert"
 msgstr "MSICACert"
 
 # Sublanguage Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#: MSICACert.rcx:77
+#: res/MSICACert.rcx:77
 msgid "SUBLANG_DEFAULT"
 msgstr "SUBLANG_DEFAULT"
+
+#: msm/En.Win32.Debug.ActionText-2.idtx:4
+#: msm/En.Win32.Release.ActionText-2.idtx:4
+#: msm/En.x64.Debug.ActionText-2.idtx:4 msm/En.x64.Release.ActionText-2.idtx:4
+msgid "Certificate: [1]"
+msgstr "Digitalno potrdilo: [1]"
+
+#: msm/En.Win32.Debug.ActionText-2.idtx:4
+#: msm/En.Win32.Release.ActionText-2.idtx:4
+#: msm/En.x64.Debug.ActionText-2.idtx:4 msm/En.x64.Release.ActionText-2.idtx:4
+msgid "Installing certificates"
+msgstr "Nameščanje digitalnih potrdil"
 
 #~ msgid "Scheduled task: [1]"
 #~ msgstr "Razporejeno opravilo: [1]"

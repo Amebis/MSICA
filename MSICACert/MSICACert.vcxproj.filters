@@ -31,12 +31,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MSICACert.rc">
+    <ResourceCompile Include="res\MSICACert.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceLocalizator Include="MSICACert.rcx">
+    <ResourceLocalizator Include="res\MSICACert.rcx">
       <Filter>Resource Files</Filter>
     </ResourceLocalizator>
   </ItemGroup>

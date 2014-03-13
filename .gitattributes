@@ -3,11 +3,13 @@
 MSICACert/L10N/sl_SI.po -text
 MSICACert/MSICACert.cpp -text
 MSICACert/MSICACert.h -text
-MSICACert/MSICACert.rc -text svneol=unset#unset
-MSICACert/MSICACert.rcx -text svneol=unset#unset
 MSICACert/MSICACert.vcxproj -text svneol=unset#text/xml
 MSICACert/MSICACert.vcxproj.filters -text svneol=unset#text/xml
 MSICACert/msm/Makefile -text
+MSICACert/msm/build_all.bat -text
+MSICACert/msm/clean_all.bat -text
+MSICACert/res/MSICACert.rc -text svneol=unset#unset
+MSICACert/res/MSICACert.rcx -text svneol=unset#unset
 MSICACert/stdafx.cpp -text
 MSICACert/stdafx.h -text
 MSICALib/L10N/sl_SI.po -text
@@ -20,16 +22,20 @@ MSICALib/OpFile.cpp -text
 MSICALib/OpReg.cpp -text
 MSICALib/OpTS.cpp -text
 MSICALib/msm/Makefile -text
+MSICALib/msm/build_all.bat -text
+MSICALib/msm/clean_all.bat -text
 MSICALib/stdafx.cpp -text
 MSICALib/stdafx.h -text
 MSICATS/L10N/sl_SI.po -text
 MSICATS/MSICATS.cpp -text
 MSICATS/MSICATS.h -text
-MSICATS/MSICATS.rc -text svneol=unset#unset
-MSICATS/MSICATS.rcx -text svneol=unset#unset
 MSICATS/MSICATS.vcxproj -text svneol=unset#text/xml
 MSICATS/MSICATS.vcxproj.filters -text svneol=unset#text/xml
 MSICATS/msm/Makefile -text
+MSICATS/msm/build_all.bat -text
+MSICATS/msm/clean_all.bat -text
+MSICATS/res/MSICATS.rc -text svneol=unset#unset
+MSICATS/res/MSICATS.rcx -text svneol=unset#unset
 MSICATS/stdafx.cpp -text
 MSICATS/stdafx.h -text
 include/Debug.props -text svneol=unset#text/xml

@@ -1,4 +1,4 @@
-!INCLUDE "..\..\include\MSIBuildCfg.mak"
+!INCLUDE "..\..\..\include\MSIBuildCfg.mak"
 
 MSIBUILD_IS_LOCALIZEABLE=1
 
@@ -8,7 +8,7 @@ MSIBUILD_IS_LOCALIZEABLE=1
 
 All :: "$(LANG).$(PLAT).$(CFG)._Validation-1.idt"
 
-"$(LANG).$(PLAT).$(CFG)._Validation-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
+"$(LANG).$(PLAT).$(CFG)._Validation-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Table	Column	Nullable	MinValue	MaxValue	KeyTable	KeyColumn	Category	Set	Description
@@ -54,25 +54,25 @@ TaskTrigger	Task_	N			ScheduledTask	1	Identifier		Key of the Trigger's task.
 
 All :: "$(LANG).$(PLAT).$(CFG).ActionText-2.idt"
 
-"En.$(PLAT).$(CFG).ActionText-2.idtx" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
+"En.$(PLAT).$(CFG).ActionText-2.idtx" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Action	Description	Template
 s$(MSIBUILD_LENGTH_ID)	L0	L0
-1250	ActionText	Action
+1252	ActionText	Action
 InstallScheduledTasks	Registering scheduled tasks	Scheduled task: [1]
 <<NOKEEP
 
-"De.$(CFG).$(PLAT).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\de_DE.po"
+"De.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\de_DE.po"
 	rcxgettext.exe idtp $@ $**
 
 "En.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx"
 	copy /y $** $@ > NUL
 
-"It.$(CFG).$(PLAT).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\it_IT.po"
+"It.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\it_IT.po"
 	rcxgettext.exe idtp $@ $**
 
-"Sl.$(CFG).$(PLAT).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\sl_SI.po"
+"Sl.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\sl_SI.po"
 	rcxgettext.exe idtp $@ $**
 
 
@@ -83,7 +83,7 @@ All :: \
 	"$(LANG).$(PLAT).$(CFG).Binary-1.idt" \
 	"$(LANG).$(PLAT).$(CFG).Binary-1\MSICATS.dll"
 
-"$(LANG).$(PLAT).$(CFG).Binary-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak"" "$(LANG).$(PLAT).$(CFG).Binary-1"
+"$(LANG).$(PLAT).$(CFG).Binary-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak" "$(LANG).$(PLAT).$(CFG).Binary-1"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Name	Data
@@ -92,7 +92,7 @@ Binary	Name
 binMSICATS.dll	MSICATS.dll
 <<NOKEEP
 
-"$(LANG).$(PLAT).$(CFG).Binary-1\MSICATS.dll" : "..\..\Test\$(CFG).$(PLAT)\MSICATS.dll"
+"$(LANG).$(PLAT).$(CFG).Binary-1\MSICATS.dll" : "..\..\output\$(PLAT).$(CFG)\MSICATS.dll"
 	copy /y $** $@ > NUL
 
 
@@ -101,7 +101,7 @@ binMSICATS.dll	MSICATS.dll
 
 All :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
 
-"$(LANG).$(PLAT).$(CFG).CustomAction-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
+"$(LANG).$(PLAT).$(CFG).CustomAction-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Action	Type	Source	Target
@@ -119,7 +119,7 @@ CommitScheduledTasks	3585	binMSICATS.dll	ExecuteSequence
 
 All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
 
-"$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
+"$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Action	Condition	Sequence
@@ -137,7 +137,7 @@ CommitScheduledTasks		6583
 
 All :: "$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt"
 
-"$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
+"$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Task	DisplayName	Application	Parameters	Directory_	Flags	Priority	User	Password	Author	Description	IdleMin	IdleDeadline	MaxRuntime	Condition	Component_
@@ -151,7 +151,7 @@ ScheduledTask	Task
 
 All :: "$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt"
 
-"$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
+"$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Trigger	BeginDate	EndDate	StartTime	StartTimeRand	MinutesDuration	MinutesInterval	Flags	Type	DaysInterval	WeeksInterval	DaysOfTheWeek	DaysOfMonth	WeekOfMonth	MonthsOfYear	Task_
@@ -164,4 +164,4 @@ TaskTrigger	Trigger
 # Build MSM module!
 ######################################################################
 
-!INCLUDE "..\..\MSIBuild\MSM.mak"
+!INCLUDE "..\..\..\MSIBuild\MSM.mak"
