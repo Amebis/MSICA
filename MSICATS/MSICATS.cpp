@@ -198,8 +198,8 @@ UINT MSICATS_API EvaluateScheduledTasks(MSIHANDLE hInstall)
                             ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                         }
                     } else if (uiResult != ERROR_INSTALL_USEREXIT) {
-                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_SCHEDULED_TASKS_OPLIST_CREATE);
-                        ::MsiRecordSetInteger(hRecordProg, 2, uiResult                                   );
+                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
+                        ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
                         ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                     }
                 } else {

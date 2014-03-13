@@ -115,33 +115,6 @@ CommitScheduledTasks	3585	binMSICATS.dll	InstallScheduledTasks
 
 
 ######################################################################
-# Error
-
-All :: "$(LANG).$(PLAT).$(CFG).Error-2.idt"
-
-"En.$(PLAT).$(CFG).Error-2.idtx" : "Makefile" ""..\..\include\MSIBuildCfg.mak""
-	-if exist $@ del /f /q $@
-	move /y << $@ > NUL
-Error	Message
-i2	L0
-1250	Error	Error
-2551	Error [2] creating scheduled task list. Please, contact your support personnel.
-<<NOKEEP
-
-"De.$(CFG).$(PLAT).Error-2.idt" : "En.$(PLAT).$(CFG).Error-2.idtx" "..\L10N\de_DE.po"
-	rcxgettext.exe idtp $@ $**
-
-"En.$(PLAT).$(CFG).Error-2.idt" : "En.$(PLAT).$(CFG).Error-2.idtx"
-	copy /y $** $@ > NUL
-
-"It.$(CFG).$(PLAT).Error-2.idt" : "En.$(PLAT).$(CFG).Error-2.idtx" "..\L10N\it_IT.po"
-	rcxgettext.exe idtp $@ $**
-
-"Sl.$(CFG).$(PLAT).Error-2.idt" : "En.$(PLAT).$(CFG).Error-2.idtx" "..\L10N\sl_SI.po"
-	rcxgettext.exe idtp $@ $**
-
-
-######################################################################
 # InstallExecuteSequence
 
 All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
