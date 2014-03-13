@@ -20,7 +20,7 @@ ScheduledTask	Application	N					Formatted		Task application name.
 ScheduledTask	Parameters	Y					Formatted		Task command line parameters.
 ScheduledTask	Directory_	N			Directory	1	Identifier		Task working directory.
 ScheduledTask	Flags	N					DoubleInteger		Task's flags to pass in IScheduledWorkItem::SetFlags() call.
-ScheduledTask	Priority	N					DoubleInteger	32;64;128;256;16384,32768	Task's priority to pass in ITask::SetPriority() call.
+ScheduledTask	Priority	N					DoubleInteger	32;64;128;256;16384;32768	Task's priority to pass in ITask::SetPriority() call.
 ScheduledTask	User	Y					Formatted		Account name to run task as. Use empty string for system account.
 ScheduledTask	Password	Y					Formatted		Account password to run task as. Use NULL for system account.
 ScheduledTask	Author	Y					Formatted		Task author.
