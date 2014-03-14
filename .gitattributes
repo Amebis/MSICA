@@ -1,18 +1,21 @@
 * text=auto !eol
 /MSICA.sln svneol=CRLF#text/plain eol=crlf
 MSICACert/L10N/sl_SI.po -text
+MSICACert/MSIBuild/Makefile -text
+MSICACert/MSIBuild/build_all.bat -text
+MSICACert/MSIBuild/clean_all.bat -text
 MSICACert/MSICACert.cpp -text
 MSICACert/MSICACert.h -text
 MSICACert/MSICACert.vcxproj -text svneol=unset#text/xml
 MSICACert/MSICACert.vcxproj.filters -text svneol=unset#text/xml
-MSICACert/msm/Makefile -text
-MSICACert/msm/build_all.bat -text
-MSICACert/msm/clean_all.bat -text
 MSICACert/res/MSICACert.rc -text svneol=unset#unset
 MSICACert/res/MSICACert.rcx -text svneol=unset#unset
 MSICACert/stdafx.cpp -text
 MSICACert/stdafx.h -text
 MSICALib/L10N/sl_SI.po -text
+MSICALib/MSIBuild/Makefile -text
+MSICALib/MSIBuild/build_all.bat -text
+MSICALib/MSIBuild/clean_all.bat -text
 MSICALib/MSICALib.cpp -text
 MSICALib/MSICALib.h -text
 MSICALib/MSICALib.vcxproj -text svneol=unset#text/xml
@@ -21,19 +24,16 @@ MSICALib/OpCert.cpp -text
 MSICALib/OpFile.cpp -text
 MSICALib/OpReg.cpp -text
 MSICALib/OpTS.cpp -text
-MSICALib/msm/Makefile -text
-MSICALib/msm/build_all.bat -text
-MSICALib/msm/clean_all.bat -text
 MSICALib/stdafx.cpp -text
 MSICALib/stdafx.h -text
 MSICATS/L10N/sl_SI.po -text
+MSICATS/MSIBuild/Makefile -text
+MSICATS/MSIBuild/build_all.bat -text
+MSICATS/MSIBuild/clean_all.bat -text
 MSICATS/MSICATS.cpp -text
 MSICATS/MSICATS.h -text
 MSICATS/MSICATS.vcxproj -text svneol=unset#text/xml
 MSICATS/MSICATS.vcxproj.filters -text svneol=unset#text/xml
-MSICATS/msm/Makefile -text
-MSICATS/msm/build_all.bat -text
-MSICATS/msm/clean_all.bat -text
 MSICATS/res/MSICATS.rc -text svneol=unset#unset
 MSICATS/res/MSICATS.rcx -text svneol=unset#unset
 MSICATS/stdafx.cpp -text

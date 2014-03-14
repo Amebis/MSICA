@@ -15,9 +15,9 @@ Table	Column	Nullable	MinValue	MaxValue	KeyTable	KeyColumn	Category	Set	Descript
 s32	s32	s4	I4	I4	S255	I2	S32	S255	S255
 _Validation	Table	Column
 Certificate	Certificate	N					Identifier		Primary key, non-localized token.
-Certificate	Store	N					Formatted		Certificate store name (MY, Root, Trust, or CA).
+Certificate	Store	N					Formatted	MY;Root;Trust;CA	Certificate store name for CertOpenStore() function call. The store provider is always CERT_STORE_PROV_SYSTEM. Therefore, possible values are: MY, Root, Trust, or CA.
 Certificate	Flags	N					DoubleInteger		Flags for CertOpenStore() function call.
-Certificate	Encoding	N					DoubleInteger	0;1;65536;65537	Certificate encoding.
+Certificate	Encoding	N					DoubleInteger	0;1;65536;65537	Certificate encoding (combination of X509_ASN_ENCODING(1) and PKCS_7_ASN_ENCODING(65536) flags).
 Certificate	Binary_	N			Binary	1	Identifier		The certificate file. The binary information is looked up from the Binary Table.
 Certificate	Condition	Y					Condition		Optional expression which skips the certificate if evaluates to expFalse. If the expression syntax is invalid, the engine will terminate, returning iesBadActionData.
 Certificate	Component_	N			Component	1	Identifier		Component the certificate is part of.

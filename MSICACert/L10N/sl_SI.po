@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSICACert\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-13 12:19+0100\n"
+"POT-Creation-Date: 2014-03-14 11:10+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: ..\n"
 "X-Generator: Poedit 1.5.7\n"
-"X-Poedit-SearchPath-0: msm\n"
+"X-Poedit-SearchPath-0: MSIBuild\n"
 "X-Poedit-SearchPath-1: res\n"
 
 # Language Code and Windows Charset (hexadecimal)
@@ -32,9 +32,10 @@ msgid "0x409"
 msgstr "0x424"
 
 # Windows charset for this language (decimal)
-#: res/MSICACert.rcx:60 msm/En.Win32.Debug.ActionText-2.idtx:3
-#: msm/En.Win32.Release.ActionText-2.idtx:3
-#: msm/En.x64.Debug.ActionText-2.idtx:3 msm/En.x64.Release.ActionText-2.idtx:3
+#: res/MSICACert.rcx:60 MSIBuild/En.Win32.Debug.ActionText-2.idtx:3
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:3
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:3
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:3
 msgid "1252"
 msgstr "1250"
 
@@ -73,15 +74,17 @@ msgstr "MSICACert"
 msgid "SUBLANG_DEFAULT"
 msgstr "SUBLANG_DEFAULT"
 
-#: msm/En.Win32.Debug.ActionText-2.idtx:4
-#: msm/En.Win32.Release.ActionText-2.idtx:4
-#: msm/En.x64.Debug.ActionText-2.idtx:4 msm/En.x64.Release.ActionText-2.idtx:4
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:4
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:4
 msgid "Certificate: [1]"
 msgstr "Digitalno potrdilo: [1]"
 
-#: msm/En.Win32.Debug.ActionText-2.idtx:4
-#: msm/En.Win32.Release.ActionText-2.idtx:4
-#: msm/En.x64.Debug.ActionText-2.idtx:4 msm/En.x64.Release.ActionText-2.idtx:4
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:4
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:4
 msgid "Installing certificates"
 msgstr "Nameščanje digitalnih potrdil"
 
