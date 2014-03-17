@@ -28,7 +28,6 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
 {
     UINT uiResult;
-    HRESULT hr;
     BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
     MSICA::COpList olExecute;
     BOOL bRollbackEnabled;
@@ -131,59 +130,9 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
                     }
                     ::MsiViewClose(hViewST);
 
-                    if (SUCCEEDED(uiResult)) {
-                        ATL::CAtlString sSequenceFilename;
-                        ATL::CAtlFile fSequence;
-
-                        // Prepare our own sequence script file.
-                        // The InstallScheduledTasks is a deferred custom action, thus all this information will be unavailable to it.
-                        // Therefore save all required info to file now.
-                        {
-                            LPTSTR szBuffer = sSequenceFilename.GetBuffer(MAX_PATH);
-                            ::GetTempPath(MAX_PATH, szBuffer);
-                            ::GetTempFileName(szBuffer, _T("TS"), 0, szBuffer);
-                            sSequenceFilename.ReleaseBuffer();
-                        }
-                        // Save execute sequence to file.
-                        hr = olExecute.SaveToFile(sSequenceFilename);
-                        if (SUCCEEDED(hr)) {
-                            // Store sequence script file names to properties for deferred custiom actions.
-                            uiResult = ::MsiSetProperty(hInstall, _T("InstallScheduledTasks"),  sSequenceFilename);
-                            if (uiResult == ERROR_SUCCESS) {
-                                LPCTSTR pszExtension = ::PathFindExtension(sSequenceFilename);
-                                ATL::CAtlString sSequenceFilename2;
-
-                                sSequenceFilename2.Format(_T("%.*ls-rb%ls"), pszExtension - (LPCTSTR)sSequenceFilename, (LPCTSTR)sSequenceFilename, pszExtension);
-                                uiResult = ::MsiSetProperty(hInstall, _T("RollbackScheduledTasks"), sSequenceFilename2);
-                                if (uiResult == ERROR_SUCCESS) {
-                                    sSequenceFilename2.Format(_T("%.*ls-cm%ls"), pszExtension - (LPCTSTR)sSequenceFilename, (LPCTSTR)sSequenceFilename, pszExtension);
-                                    uiResult = ::MsiSetProperty(hInstall, _T("CommitScheduledTasks"),   sSequenceFilename2);
-                                    if (uiResult != ERROR_SUCCESS) {
-                                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_PROPERTY_SET);
-                                        ::MsiRecordSetString (hRecordProg, 2, _T("CommitScheduledTasks"));
-                                        ::MsiRecordSetInteger(hRecordProg, 3, uiResult                  );
-                                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                                    }
-                                } else {
-                                    ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_PROPERTY_SET  );
-                                    ::MsiRecordSetString (hRecordProg, 2, _T("RollbackScheduledTasks"));
-                                    ::MsiRecordSetInteger(hRecordProg, 3, uiResult                    );
-                                    ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                                }
-                            } else {
-                                ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_PROPERTY_SET );
-                                ::MsiRecordSetString (hRecordProg, 2, _T("InstallScheduledTasks"));
-                                ::MsiRecordSetInteger(hRecordProg, 3, uiResult                   );
-                                ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                            }
-                            if (uiResult != ERROR_SUCCESS) ::DeleteFile(sSequenceFilename);
-                        } else {
-                            uiResult = ERROR_INSTALL_SCRIPT_WRITE;
-                            ::MsiRecordSetInteger(hRecordProg, 1, uiResult         );
-                            ::MsiRecordSetString (hRecordProg, 2, sSequenceFilename);
-                            ::MsiRecordSetInteger(hRecordProg, 3, hr               );
-                            ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                        }
+                    if (uiResult == ERROR_SUCCESS) {
+                        // Save the sequences.
+                        uiResult = MSICA::SaveSequence(hInstall, _T("InstallScheduledTasks"), _T("CommitScheduledTasks"), _T("RollbackScheduledTasks"), olExecute);
                     } else if (uiResult != ERROR_INSTALL_USEREXIT) {
                         ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
                         ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
