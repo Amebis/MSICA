@@ -72,9 +72,9 @@ All :: "$(LANG).$(PLAT).$(CFG).ActionText-2.idt"
 Action	Description	Template
 s$(MSIBUILD_LENGTH_ID)	L0	L0
 1252	ActionText	Action
-InstallCertificates	Installing certificates	Certificate: [1]
-ConfigureServices	Configuring services	Service: [1]
-InstallScheduledTasks	Registering scheduled tasks	Scheduled task: [1]
+CertificatesExec	Installing certificates	Certificate: [1]
+ServiceConfigExec	Configuring services	Service: [1]
+ScheduledTasksExec	Registering scheduled tasks	Scheduled task: [1]
 <<NOKEEP
 
 "De.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\de_DE.po"
@@ -135,18 +135,18 @@ All :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
 Action	Type	Source	Target
 s$(MSIBUILD_LENGTH_ID)	i2	S$(MSIBUILD_LENGTH_ID)	S255
 CustomAction	Action
-EvaluateCertificates	1	binMSICA.dll	EvaluateCertificates
-InstallCertificates	3073	binMSICA.dll	ExecuteSequence
-RollbackCertificates	3329	binMSICA.dll	ExecuteSequence
-CommitCertificates	3585	binMSICA.dll	ExecuteSequence
-EvaluateServiceConfiguration	1	binMSICA.dll	EvaluateServiceConfiguration
-ConfigureServices	3073	binMSICA.dll	ExecuteSequence
-RollbackServiceConfiguration	3329	binMSICA.dll	ExecuteSequence
-CommitServiceConfiguration	3585	binMSICA.dll	ExecuteSequence
-EvaluateScheduledTasks	1	binMSICA.dll	EvaluateScheduledTasks
-InstallScheduledTasks	3073	binMSICA.dll	ExecuteSequence
-RollbackScheduledTasks	3329	binMSICA.dll	ExecuteSequence
-CommitScheduledTasks	3585	binMSICA.dll	ExecuteSequence
+CertificatesEval	1	binMSICA.dll	CertificatesEval
+CertificatesExec	3073	binMSICA.dll	ExecuteSequence
+CertificatesRollback	3329	binMSICA.dll	ExecuteSequence
+CertificatesCommit	3585	binMSICA.dll	ExecuteSequence
+ServiceConfigEval	1	binMSICA.dll	ServiceConfigEval
+ServiceConfigExec	3073	binMSICA.dll	ExecuteSequence
+ServiceConfigRollback	3329	binMSICA.dll	ExecuteSequence
+ServiceConfigCommit	3585	binMSICA.dll	ExecuteSequence
+ScheduledTasksEval	1	binMSICA.dll	ScheduledTasksEval
+ScheduledTasksExec	3073	binMSICA.dll	ExecuteSequence
+ScheduledTasksRollback	3329	binMSICA.dll	ExecuteSequence
+ScheduledTasksCommit	3585	binMSICA.dll	ExecuteSequence
 <<NOKEEP
 
 
@@ -161,18 +161,18 @@ All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
 Action	Condition	Sequence
 s$(MSIBUILD_LENGTH_ID)	S255	I2
 InstallExecuteSequence	Action
-EvaluateCertificates		6577
-RollbackCertificates		6576
-InstallCertificates		6578
-CommitCertificates		6579
-EvaluateScheduledTasks		6580
-RollbackScheduledTasks		6581
-InstallScheduledTasks		6582
-CommitScheduledTasks		6583
-EvaluateServiceConfiguration		6584
-RollbackServiceConfiguration		6585
-ConfigureServices		6586
-CommitServiceConfiguration		6587
+CertificatesEval		6576
+CertificatesRollback		6577
+CertificatesExec		6578
+CertificatesCommit		6579
+ScheduledTasksEval		6580
+ScheduledTasksRollback		6581
+ScheduledTasksExec		6582
+ScheduledTasksCommit		6583
+ServiceConfigEval		6584
+ServiceConfigRollback		6585
+ServiceConfigExec		6586
+ServiceConfigCommit		6587
 <<NOKEEP
 
 

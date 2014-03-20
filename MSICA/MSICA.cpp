@@ -27,7 +27,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 // Exported functions
 ////////////////////////////////////////////////////////////////////
 
-UINT MSICA_API EvaluateCertificates(MSIHANDLE hInstall)
+UINT MSICA_API CertificatesEval(MSIHANDLE hInstall)
 {
     //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
@@ -151,7 +151,7 @@ UINT MSICA_API EvaluateCertificates(MSIHANDLE hInstall)
 
                     if (uiResult == NO_ERROR) {
                         // Save the sequences.
-                        uiResult = MSICA::SaveSequence(hInstall, _T("InstallCertificates"), _T("CommitCertificates"), _T("RollbackCertificates"), olExecute);
+                        uiResult = MSICA::SaveSequence(hInstall, _T("CertificatesExec"), _T("CertificatesCommit"), _T("CertificatesRollback"), olExecute);
                     } else if (uiResult != ERROR_INSTALL_USEREXIT) {
                         ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
                         ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
@@ -178,9 +178,9 @@ UINT MSICA_API EvaluateCertificates(MSIHANDLE hInstall)
 }
 
 
-UINT MSICA_API EvaluateServiceConfiguration(MSIHANDLE hInstall)
+UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
 {
-    ::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
     UINT uiResult;
     BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
@@ -260,7 +260,7 @@ UINT MSICA_API EvaluateServiceConfiguration(MSIHANDLE hInstall)
 
                     if (uiResult == NO_ERROR) {
                         // Save the sequences.
-                        uiResult = MSICA::SaveSequence(hInstall, _T("ConfigureServices"), _T("CommitServiceConfiguration"), _T("RollbackServiceConfiguration"), olExecute);
+                        uiResult = MSICA::SaveSequence(hInstall, _T("ServiceConfigExec"), _T("ServiceConfigCommit"), _T("ServiceConfigRollback"), olExecute);
                     } else if (uiResult != ERROR_INSTALL_USEREXIT) {
                         ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
                         ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
@@ -287,7 +287,7 @@ UINT MSICA_API EvaluateServiceConfiguration(MSIHANDLE hInstall)
 }
 
 
-UINT MSICA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
+UINT MSICA_API ScheduledTasksEval(MSIHANDLE hInstall)
 {
     //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
@@ -396,7 +396,7 @@ UINT MSICA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
 
                     if (uiResult == NO_ERROR) {
                         // Save the sequences.
-                        uiResult = MSICA::SaveSequence(hInstall, _T("InstallScheduledTasks"), _T("CommitScheduledTasks"), _T("RollbackScheduledTasks"), olExecute);
+                        uiResult = MSICA::SaveSequence(hInstall, _T("ScheduledTasksExec"), _T("ScheduledTasksCommit"), _T("ScheduledTasksRollback"), olExecute);
                     } else if (uiResult != ERROR_INSTALL_USEREXIT) {
                         ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
                         ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
@@ -425,7 +425,7 @@ UINT MSICA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
 
 UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall)
 {
-    ::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
     return MSICA::ExecuteSequence(hInstall);
 }

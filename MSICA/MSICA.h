@@ -24,9 +24,9 @@
 extern "C" {
 #endif
 
-    UINT MSICA_API EvaluateCertificates(MSIHANDLE hInstall);
-    UINT MSICA_API EvaluateServiceConfiguration(MSIHANDLE hInstall);
-    UINT MSICA_API EvaluateScheduledTasks(MSIHANDLE hInstall);
+    UINT MSICA_API CertificatesEval(MSIHANDLE hInstall);
+    UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall);
+    UINT MSICA_API ScheduledTasksEval(MSIHANDLE hInstall);
     UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall);
 
 #ifdef __cplusplus
