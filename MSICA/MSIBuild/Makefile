@@ -37,6 +37,11 @@ ScheduledTask	IdleDeadline	Y					Integer		A value that specifies the maximum num
 ScheduledTask	MaxRuntime	N					DoubleInteger		Specifies the maximum run time (in milliseconds), for the task. This parameter may be set to -1 to specify an unlimited time.
 ScheduledTask	Condition	Y					Condition		Optional expression which skips the task if evaluates to expFalse. If the expression syntax is invalid, the engine will terminate, returning iesBadActionData.
 ScheduledTask	Component_	N			Component	1	Identifier		Component the task is part of.
+ServiceConfigure	ServiceConfigure	N					Identifier		Primary key, non-localized token.
+ServiceConfigure	Name	N					Formatted		Name of a service. /, \, comma and space are invalid
+ServiceConfigure	StartType	N					DoubleInteger	-1;0;1;2;3;4	Start type: -1=don't change, 0=boot, 1=system, 2=auto, 3=demand, 4=disabled
+ServiceConfigure	Condition	Y					Condition		Optional expression which skips the service configuration if evaluates to expFalse. If the expression syntax is invalid, the engine will terminate, returning iesBadActionData.
+ServiceConfigure	Sequence	Y							Number that determines the sort order in which the configurations are to be executed.
 TaskTrigger	Trigger	N					Identifier		Primary key, non-localized token.
 TaskTrigger	BeginDate	N					DoubleInteger		Date that the task trigger activates (counted in days from January 1st, 1980). The beginning date must be specified when setting a task.
 TaskTrigger	EndDate	Y					DoubleInteger		Date that the task trigger deactivates (counted in days from January 1st, 1980).
@@ -68,6 +73,7 @@ Action	Description	Template
 s$(MSIBUILD_LENGTH_ID)	L0	L0
 1252	ActionText	Action
 InstallCertificates	Installing certificates	Certificate: [1]
+ConfigureServices	Configuring services	Service: [1]
 InstallScheduledTasks	Registering scheduled tasks	Scheduled task: [1]
 <<NOKEEP
 
@@ -129,10 +135,14 @@ All :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
 Action	Type	Source	Target
 s$(MSIBUILD_LENGTH_ID)	i2	S$(MSIBUILD_LENGTH_ID)	S255
 CustomAction	Action
-EvaluateCertificates	1	binMSICACert.dll	EvaluateCertificates
-InstallCertificates	3073	binMSICACert.dll	ExecuteSequence
-RollbackCertificates	3329	binMSICACert.dll	ExecuteSequence
-CommitCertificates	3585	binMSICACert.dll	ExecuteSequence
+EvaluateCertificates	1	binMSICA.dll	EvaluateCertificates
+InstallCertificates	3073	binMSICA.dll	ExecuteSequence
+RollbackCertificates	3329	binMSICA.dll	ExecuteSequence
+CommitCertificates	3585	binMSICA.dll	ExecuteSequence
+EvaluateServiceConfiguration	1	binMSICA.dll	EvaluateServiceConfiguration
+ConfigureServices	3073	binMSICA.dll	ExecuteSequence
+RollbackServiceConfiguration	3329	binMSICA.dll	ExecuteSequence
+CommitServiceConfiguration	3585	binMSICA.dll	ExecuteSequence
 EvaluateScheduledTasks	1	binMSICA.dll	EvaluateScheduledTasks
 InstallScheduledTasks	3073	binMSICA.dll	ExecuteSequence
 RollbackScheduledTasks	3329	binMSICA.dll	ExecuteSequence
@@ -159,6 +169,10 @@ EvaluateScheduledTasks		6580
 RollbackScheduledTasks		6581
 InstallScheduledTasks		6582
 CommitScheduledTasks		6583
+EvaluateServiceConfiguration		6584
+RollbackServiceConfiguration		6585
+ConfigureServices		6586
+CommitServiceConfiguration		6587
 <<NOKEEP
 
 
@@ -173,6 +187,20 @@ All :: "$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt"
 Task	DisplayName	Application	Parameters	Directory_	Flags	Priority	User	Password	Author	Description	IdleMin	IdleDeadline	MaxRuntime	Condition	Component_
 s$(MSIBUILD_LENGTH_ID)	l255	s255	S255	s$(MSIBUILD_LENGTH_ID)	i4	i4	S255	S255	L255	L0	I2	I2	i4	S255	s$(MSIBUILD_LENGTH_ID)
 ScheduledTask	Task
+<<NOKEEP
+
+
+######################################################################
+# ServiceConfigure
+
+All :: "$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt"
+
+"$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+	-if exist $@ del /f /q $@
+	move /y << $@ > NUL
+ServiceConfigure	Name	StartType	Condition	Sequence
+s$(MSIBUILD_LENGTH_ID)	l255	i4	S255	I2
+ServiceConfigure	ServiceConfigure
 <<NOKEEP
 
 

@@ -5,8 +5,9 @@
 // Local constants
 ////////////////////////////////////////////////////////////////////////////
 
-#define MSICA_CERT_TICK_SIZE    (4*1024)
-#define MSICA_TASK_TICK_SIZE    (16*1024)
+#define MSICA_CERT_TICK_SIZE            (4*1024)
+#define MSICA_SVC_SET_START_TICK_SIZE   (1*1024)
+#define MSICA_TASK_TICK_SIZE            (16*1024)
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -28,7 +29,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 
 UINT MSICA_API EvaluateCertificates(MSIHANDLE hInstall)
 {
-    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICACert"), MB_OK);
+    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
     UINT uiResult;
     BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
@@ -177,8 +178,119 @@ UINT MSICA_API EvaluateCertificates(MSIHANDLE hInstall)
 }
 
 
+UINT MSICA_API EvaluateServiceConfiguration(MSIHANDLE hInstall)
+{
+    ::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+
+    UINT uiResult;
+    BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
+    MSICA::COpList olExecute;
+    BOOL bRollbackEnabled;
+    PMSIHANDLE
+        hDatabase,
+        hRecordProg = ::MsiCreateRecord(3);
+    ATL::CAtlString sValue;
+
+    // Check and add the rollback enabled state.
+    uiResult = ::MsiGetProperty(hInstall, _T("RollbackDisabled"), sValue);
+    bRollbackEnabled = uiResult == NO_ERROR ?
+        _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
+        TRUE;
+    olExecute.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+
+    // Open MSI database.
+    hDatabase = ::MsiGetActiveDatabase(hInstall);
+    if (hDatabase) {
+        // Check if ServiceConfigure table exists. If it doesn't exist, there's nothing to do.
+        MSICONDITION condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("ServiceConfigure"));
+        if (condition == MSICONDITION_FALSE || condition == MSICONDITION_TRUE) {
+            PMSIHANDLE hViewSC;
+
+            // Prepare a query to get a list/view of service configurations.
+            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Name,StartType,Condition FROM ServiceConfigure ORDER BY Sequence"), &hViewSC);
+            if (uiResult == NO_ERROR) {
+                // Execute query!
+                uiResult = ::MsiViewExecute(hViewSC, NULL);
+                if (uiResult == NO_ERROR) {
+                    int iStartType;
+
+                    for (;;) {
+                        PMSIHANDLE hRecord;
+
+                        // Fetch one record from the view.
+                        uiResult = ::MsiViewFetch(hViewSC, &hRecord);
+                        if (uiResult == ERROR_NO_MORE_ITEMS) {
+                            uiResult = NO_ERROR;
+                            break;
+                        } else if (uiResult != NO_ERROR)
+                            break;
+
+                        // Read and evaluate service configuration condition.
+                        uiResult = ::MsiRecordGetString(hRecord, 3, sValue);
+                        if (uiResult != NO_ERROR) break;
+                        condition = ::MsiEvaluateCondition(hInstall, sValue);
+                        if (condition == MSICONDITION_FALSE)
+                            continue;
+                        else if (condition == MSICONDITION_ERROR) {
+                            uiResult = ERROR_INVALID_FIELD;
+                            break;
+                        }
+
+                        // Read service name.
+                        uiResult = ::MsiRecordGetString(hRecord, 1, sValue);
+                        if (uiResult != NO_ERROR) break;
+
+                        // Read service start type.
+                        iStartType = ::MsiRecordGetInteger(hRecord, 2);
+                        if (iStartType == MSI_NULL_INTEGER) {
+                            uiResult = ERROR_INVALID_FIELD;
+                            break;
+                        }
+                        if (iStartType >= 0) {
+                            // Set service start type.
+                            olExecute.AddTail(new MSICA::COpSvcSetStart(sValue, iStartType, MSICA_SVC_SET_START_TICK_SIZE));
+
+                            // The amount of tick space to add to progress indicator.
+                            ::MsiRecordSetInteger(hRecordProg, 1, 3                            );
+                            ::MsiRecordSetInteger(hRecordProg, 2, MSICA_SVC_SET_START_TICK_SIZE);
+                            if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
+                        }
+                    }
+                    ::MsiViewClose(hViewSC);
+
+                    if (uiResult == NO_ERROR) {
+                        // Save the sequences.
+                        uiResult = MSICA::SaveSequence(hInstall, _T("ConfigureServices"), _T("CommitServiceConfiguration"), _T("RollbackServiceConfiguration"), olExecute);
+                    } else if (uiResult != ERROR_INSTALL_USEREXIT) {
+                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
+                        ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
+                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+                    }
+                } else {
+                    ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
+                    ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+                }
+            } else {
+                ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
+                ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+            }
+        }
+    } else {
+        uiResult = ERROR_INSTALL_DATABASE_OPEN;
+        ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
+        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+    }
+
+    olExecute.Free();
+    if (bIsCoInitialized) ::CoUninitialize();
+    return uiResult;
+}
+
+
 UINT MSICA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
 {
+    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+
     UINT uiResult;
     BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
     MSICA::COpList olExecute;
@@ -313,5 +425,7 @@ UINT MSICA_API EvaluateScheduledTasks(MSIHANDLE hInstall)
 
 UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall)
 {
+    ::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+
     return MSICA::ExecuteSequence(hInstall);
 }

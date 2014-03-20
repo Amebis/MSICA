@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSICA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-20 13:36+0100\n"
+"POT-Creation-Date: 2014-03-20 14:44+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -77,6 +77,13 @@ msgstr "SUBLANG_DEFAULT"
 msgid "Certificate: [1]"
 msgstr "Digitalno potrdilo: [1]"
 
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:5
+msgid "Configuring services"
+msgstr "Nastavljanje servisov"
+
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:4
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
@@ -84,22 +91,23 @@ msgstr "Digitalno potrdilo: [1]"
 msgid "Installing certificates"
 msgstr "Nameščanje digitalnih potrdil"
 
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:5
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:5
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:5
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:6
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:6
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:6
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:6
 msgid "Registering scheduled tasks"
 msgstr "Registracija razporejenih opravil"
 
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:6
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:6
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:6
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:6
+msgid "Scheduled task: [1]"
+msgstr "Razporejeno opravilo: [1]"
+
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:5
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:5
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:5
-msgid "Scheduled task: [1]"
-msgstr "Razporejeno opravilo: [1]"
-
-#~ msgid "Scheduled Task Installation Support Library"
-#~ msgstr "Podporna knjižnica za nameščanje načrtovanih opravil"
-
-#~ msgid "MSICACert"
-#~ msgstr "MSICACert"
+msgid "Service: [1]"
+msgstr "Servis: [1]"
