@@ -38,7 +38,7 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
 
     // Check and add the rollback enabled state.
     uiResult = ::MsiGetProperty(hInstall, _T("RollbackDisabled"), sValue);
-    bRollbackEnabled = uiResult == ERROR_SUCCESS ?
+    bRollbackEnabled = uiResult == NO_ERROR ?
         _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
         TRUE;
     olExecute.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
@@ -53,10 +53,10 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
 
             // Prepare a query to get a list/view of tasks.
             uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Task,DisplayName,Application,Parameters,Directory_,Flags,Priority,User,Password,Author,Description,IdleMin,IdleDeadline,MaxRuntime,Condition,Component_ FROM ScheduledTask"), &hViewST);
-            if (uiResult == ERROR_SUCCESS) {
+            if (uiResult == NO_ERROR) {
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewST, NULL);
-                if (uiResult == ERROR_SUCCESS) {
+                if (uiResult == NO_ERROR) {
                     //ATL::CAtlString sComponent;
                     ATL::CAtlStringW sDisplayName;
 
@@ -67,14 +67,14 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
                         // Fetch one record from the view.
                         uiResult = ::MsiViewFetch(hViewST, &hRecord);
                         if (uiResult == ERROR_NO_MORE_ITEMS) {
-                            uiResult = ERROR_SUCCESS;
+                            uiResult = NO_ERROR;
                             break;
-                        } else if (uiResult != ERROR_SUCCESS)
+                        } else if (uiResult != NO_ERROR)
                             break;
 
                         // Read and evaluate task's condition.
                         uiResult = ::MsiRecordGetString(hRecord, 15, sValue);
-                        if (uiResult != ERROR_SUCCESS) break;
+                        if (uiResult != NO_ERROR) break;
                         condition = ::MsiEvaluateCondition(hInstall, sValue);
                         if (condition == MSICONDITION_FALSE)
                             continue;
@@ -85,11 +85,11 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
 
                         // Read task's Component ID.
                         uiResult = ::MsiRecordGetString(hRecord, 16, sValue);
-                        if (uiResult != ERROR_SUCCESS) break;
+                        if (uiResult != NO_ERROR) break;
 
                         // Get the component state.
                         uiResult = ::MsiGetComponentState(hInstall, sValue, &iInstalled, &iAction);
-                        if (uiResult != ERROR_SUCCESS) break;
+                        if (uiResult != NO_ERROR) break;
 
                         // Get task's DisplayName.
                         uiResult = ::MsiRecordFormatStringW(hInstall, hRecord, 2, sDisplayName);
@@ -101,19 +101,19 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
 
                             // Populate the operation with task's data.
                             uiResult = opCreateTask->SetFromRecord(hInstall, hRecord);
-                            if (uiResult != ERROR_SUCCESS) break;
+                            if (uiResult != NO_ERROR) break;
 
                             // Perform another query to get task's triggers.
                             uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Trigger,BeginDate,EndDate,StartTime,StartTimeRand,MinutesDuration,MinutesInterval,Flags,Type,DaysInterval,WeeksInterval,DaysOfTheWeek,DaysOfMonth,WeekOfMonth,MonthsOfYear FROM TaskTrigger WHERE Task_=?"), &hViewTT);
-                            if (uiResult != ERROR_SUCCESS) break;
+                            if (uiResult != NO_ERROR) break;
 
                             // Execute query!
                             uiResult = ::MsiViewExecute(hViewTT, hRecord);
-                            if (uiResult == ERROR_SUCCESS) {
+                            if (uiResult == NO_ERROR) {
                                 // Populate trigger list.
                                 uiResult = opCreateTask->SetTriggersFromView(hViewTT);
                                 ::MsiViewClose(hViewTT);
-                                if (uiResult != ERROR_SUCCESS) break;
+                                if (uiResult != NO_ERROR) break;
                             } else
                                 break;
 
@@ -130,7 +130,7 @@ UINT MSICATS_API EvaluateSequence(MSIHANDLE hInstall)
                     }
                     ::MsiViewClose(hViewST);
 
-                    if (uiResult == ERROR_SUCCESS) {
+                    if (uiResult == NO_ERROR) {
                         // Save the sequences.
                         uiResult = MSICA::SaveSequence(hInstall, _T("InstallScheduledTasks"), _T("CommitScheduledTasks"), _T("RollbackScheduledTasks"), olExecute);
                     } else if (uiResult != ERROR_INSTALL_USEREXIT) {

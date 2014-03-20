@@ -23,6 +23,7 @@ MSICALib/MSICALib.vcxproj.filters -text svneol=unset#text/xml
 MSICALib/OpCert.cpp -text
 MSICALib/OpFile.cpp -text
 MSICALib/OpReg.cpp -text
+MSICALib/OpSvc.cpp -text
 MSICALib/OpTS.cpp -text
 MSICALib/stdafx.cpp -text
 MSICALib/stdafx.h -text

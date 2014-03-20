@@ -40,7 +40,7 @@ UINT MSICACERT_API EvaluateSequence(MSIHANDLE hInstall)
 
     // Check and add the rollback enabled state.
     uiResult = ::MsiGetProperty(hInstall, _T("RollbackDisabled"), sValue);
-    bRollbackEnabled = uiResult == ERROR_SUCCESS ?
+    bRollbackEnabled = uiResult == NO_ERROR ?
         _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
         TRUE;
     olExecute.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
@@ -55,10 +55,10 @@ UINT MSICACERT_API EvaluateSequence(MSIHANDLE hInstall)
 
             // Prepare a query to get a list/view of certificates.
             uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Binary_,Store,Flags,Encoding,Condition,Component_ FROM Certificate"), &hViewCert);
-            if (uiResult == ERROR_SUCCESS) {
+            if (uiResult == NO_ERROR) {
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewCert, NULL);
-                if (uiResult == ERROR_SUCCESS) {
+                if (uiResult == NO_ERROR) {
                     //ATL::CAtlString sComponent;
                     ATL::CAtlStringW sStore;
                     int iFlags, iEncoding;
@@ -72,14 +72,14 @@ UINT MSICACERT_API EvaluateSequence(MSIHANDLE hInstall)
                         // Fetch one record from the view.
                         uiResult = ::MsiViewFetch(hViewCert, &hRecord);
                         if (uiResult == ERROR_NO_MORE_ITEMS) {
-                            uiResult = ERROR_SUCCESS;
+                            uiResult = NO_ERROR;
                             break;
-                        } else if (uiResult != ERROR_SUCCESS)
+                        } else if (uiResult != NO_ERROR)
                             break;
 
                         // Read and evaluate certificate's condition.
                         uiResult = ::MsiRecordGetString(hRecord, 5, sValue);
-                        if (uiResult != ERROR_SUCCESS) break;
+                        if (uiResult != NO_ERROR) break;
                         condition = ::MsiEvaluateCondition(hInstall, sValue);
                         if (condition == MSICONDITION_FALSE)
                             continue;
@@ -90,25 +90,25 @@ UINT MSICACERT_API EvaluateSequence(MSIHANDLE hInstall)
 
                         // Perform another query to get certificate's binary data.
                         uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Data FROM Binary WHERE Name=?"), &hViewBinary);
-                        if (uiResult != ERROR_SUCCESS) break;
+                        if (uiResult != NO_ERROR) break;
 
                         // Execute query!
                         uiResult = ::MsiViewExecute(hViewBinary, hRecord);
-                        if (uiResult == ERROR_SUCCESS) {
+                        if (uiResult == NO_ERROR) {
                             PMSIHANDLE hRecord;
 
                             // Fetch one record from the view.
                             uiResult = ::MsiViewFetch(hViewBinary, &hRecord);
-                            if (uiResult == ERROR_SUCCESS)
+                            if (uiResult == NO_ERROR)
                                 uiResult = ::MsiRecordGetStream(hRecord, 1, binCert);
                             ::MsiViewClose(hViewBinary);
-                            if (uiResult != ERROR_SUCCESS) break;
+                            if (uiResult != NO_ERROR) break;
                         } else
                             break;
 
                         // Read certificate's store.
                         uiResult = ::MsiRecordGetString(hRecord, 2, sStore);
-                        if (uiResult != ERROR_SUCCESS) break;
+                        if (uiResult != NO_ERROR) break;
 
                         // Read certificate's flags.
                         iFlags = ::MsiRecordGetInteger(hRecord, 3);
@@ -126,11 +126,11 @@ UINT MSICACERT_API EvaluateSequence(MSIHANDLE hInstall)
 
                         // Read certificate's Component ID.
                         uiResult = ::MsiRecordGetString(hRecord, 6, sValue);
-                        if (uiResult != ERROR_SUCCESS) break;
+                        if (uiResult != NO_ERROR) break;
 
                         // Get the component state.
                         uiResult = ::MsiGetComponentState(hInstall, sValue, &iInstalled, &iAction);
-                        if (uiResult != ERROR_SUCCESS) break;
+                        if (uiResult != NO_ERROR) break;
 
                         if (iAction >= INSTALLSTATE_LOCAL) {
                             // Component is or should be installed. Install the certificate.
@@ -147,7 +147,7 @@ UINT MSICACERT_API EvaluateSequence(MSIHANDLE hInstall)
                     }
                     ::MsiViewClose(hViewCert);
 
-                    if (uiResult == ERROR_SUCCESS) {
+                    if (uiResult == NO_ERROR) {
                         // Save the sequences.
                         uiResult = MSICA::SaveSequence(hInstall, _T("InstallCertificates"), _T("CommitCertificates"), _T("RollbackCertificates"), olExecute);
                     } else if (uiResult != ERROR_INSTALL_USEREXIT) {
