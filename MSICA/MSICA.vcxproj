@@ -138,7 +138,7 @@
     <ClCompile />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MSICATS.cpp" />
+    <ClCompile Include="MSICA.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -147,14 +147,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MSICATS.h" />
+    <ClInclude Include="MSICA.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\MSICATS.rc" />
+    <ResourceCompile Include="res\MSICA.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceLocalizator Include="res\MSICATS.rcx" />
+    <ResourceLocalizator Include="res\MSICA.rcx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="L10N\sl_SI.po" />

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: MSICATS\n"
+"Project-Id-Version: MSICA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-14 11:12+0100\n"
+"POT-Creation-Date: 2014-03-20 13:36+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -20,19 +20,19 @@ msgstr ""
 # Language Code and Windows Charset (hexadecimal)
 # If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
 # For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#: res/MSICATS.rcx:42
+#: res/MSICA.rcx:42
 msgid "040904e4"
 msgstr "042404e2"
 
 # Language Code (hexadecimal)
 # If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
 # For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#: res/MSICATS.rcx:60
+#: res/MSICA.rcx:60
 msgid "0x409"
 msgstr "0x424"
 
 # Windows charset for this language (decimal)
-#: res/MSICATS.rcx:60 MSIBuild/En.Win32.Debug.ActionText-2.idtx:3
+#: res/MSICA.rcx:60 MSIBuild/En.Win32.Debug.ActionText-2.idtx:3
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:3
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:3
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:3
@@ -40,37 +40,33 @@ msgid "1252"
 msgstr "1250"
 
 # The name of the constant in RC to include the resources in this language.
-#: res/MSICATS.rcx:41 res/MSICATS.rcx:59 res/MSICATS.rcx:75
+#: res/MSICA.rcx:41 res/MSICA.rcx:59 res/MSICA.rcx:75
 msgid "AFX_TARG_ENU"
 msgstr "AFX_TARG_SLV"
 
-#: res/MSICATS.rcx:44
+#: res/MSICA.rcx:44
 msgid "Amebis, d. o. o., Kamnik"
 msgstr "Amebis, d. o. o., Kamnik"
 
-#: res/MSICATS.rcx:48
+#: res/MSICA.rcx:48
 msgid "Copyright © Amebis, d. o. o., Kamnik, 2012"
 msgstr "Vse pravice pridržane © Amebis, d. o. o., Kamnik, 2012"
 
+#: res/MSICA.rcx:45
+msgid "Installation Support Library"
+msgstr "Podporna knjižnica za namestitve"
+
 # Language Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#: res/MSICATS.rcx:77
+#: res/MSICA.rcx:77
 msgid "LANG_ENGLISH"
 msgstr "LANG_SLOVENIAN"
 
-#: res/MSICATS.rcx:49
+#: res/MSICA.rcx:47 res/MSICA.rcx:49
 msgid "MSICA"
 msgstr "MSICA"
 
-#: res/MSICATS.rcx:47
-msgid "MSICATS"
-msgstr "MSICATS"
-
-#: res/MSICATS.rcx:45
-msgid "Scheduled Task Installation Support Library"
-msgstr "Podporna knjižnica za nameščanje načrtovanih opravil"
-
 # Sublanguage Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#: res/MSICATS.rcx:77
+#: res/MSICA.rcx:77
 msgid "SUBLANG_DEFAULT"
 msgstr "SUBLANG_DEFAULT"
 
@@ -78,12 +74,32 @@ msgstr "SUBLANG_DEFAULT"
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:4
-msgid "Registering scheduled tasks"
-msgstr "Registracija razporejenih opravil"
+msgid "Certificate: [1]"
+msgstr "Digitalno potrdilo: [1]"
 
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:4
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:4
+msgid "Installing certificates"
+msgstr "Nameščanje digitalnih potrdil"
+
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:5
+msgid "Registering scheduled tasks"
+msgstr "Registracija razporejenih opravil"
+
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:5
 msgid "Scheduled task: [1]"
 msgstr "Razporejeno opravilo: [1]"
+
+#~ msgid "Scheduled Task Installation Support Library"
+#~ msgstr "Podporna knjižnica za nameščanje načrtovanih opravil"
+
+#~ msgid "MSICACert"
+#~ msgstr "MSICACert"

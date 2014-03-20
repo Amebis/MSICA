@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MSICATS.cpp">
+    <ClCompile Include="MSICA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -23,7 +23,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MSICATS.h">
+    <ClInclude Include="MSICA.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
@@ -31,12 +31,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\MSICATS.rc">
+    <ResourceCompile Include="res\MSICA.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceLocalizator Include="res\MSICATS.rcx">
+    <ResourceLocalizator Include="res\MSICA.rcx">
       <Filter>Resource Files</Filter>
     </ResourceLocalizator>
   </ItemGroup>
