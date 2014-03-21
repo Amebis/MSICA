@@ -40,6 +40,7 @@ ScheduledTask	Component_	N			Component	1	Identifier		Component the task is part 
 ServiceConfigure	ServiceConfigure	N					Identifier		Primary key, non-localized token.
 ServiceConfigure	Name	N					Formatted		Name of a service. /, \, comma and space are invalid
 ServiceConfigure	StartType	N					DoubleInteger	-1;0;1;2;3;4	Start type: -1=don't change, 0=boot, 1=system, 2=auto, 3=demand, 4=disabled
+ServiceConfigure	Control	N					Integer	0;2;3;4;5;7	Bitwise combination of: 0=no action, 1=wait to finish, 2=start, 4=stop
 ServiceConfigure	Condition	Y					Condition		Optional expression which skips the service configuration if evaluates to expFalse. If the expression syntax is invalid, the engine will terminate, returning iesBadActionData.
 ServiceConfigure	Sequence	Y							Number that determines the sort order in which the configurations are to be executed.
 TaskTrigger	Trigger	N					Identifier		Primary key, non-localized token.
@@ -198,8 +199,8 @@ All :: "$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt"
 "$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
-ServiceConfigure	Name	StartType	Condition	Sequence
-s$(MSIBUILD_LENGTH_ID)	l255	i4	S255	I2
+ServiceConfigure	Name	StartType	Control	Condition	Sequence
+s$(MSIBUILD_LENGTH_ID)	l255	i4	i2	S255	I2
 ServiceConfigure	ServiceConfigure
 <<NOKEEP
 

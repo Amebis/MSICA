@@ -7,6 +7,8 @@
 
 #define MSICA_CERT_TICK_SIZE            (4*1024)
 #define MSICA_SVC_SET_START_TICK_SIZE   (1*1024)
+#define MSICA_SVC_START_TICK_SIZE       (1*1024)
+#define MSICA_SVC_STOP_TICK_SIZE        (1*1024)
 #define MSICA_TASK_TICK_SIZE            (16*1024)
 
 
@@ -207,12 +209,12 @@ UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
             PMSIHANDLE hViewSC;
 
             // Prepare a query to get a list/view of service configurations.
-            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Name,StartType,Condition FROM ServiceConfigure ORDER BY Sequence"), &hViewSC);
+            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Name,StartType,Control,Condition FROM ServiceConfigure ORDER BY Sequence"), &hViewSC);
             if (uiResult == NO_ERROR) {
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewSC, NULL);
                 if (uiResult == NO_ERROR) {
-                    int iStartType;
+                    int iValue;
 
                     for (;;) {
                         PMSIHANDLE hRecord;
@@ -226,7 +228,7 @@ UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
                             break;
 
                         // Read and evaluate service configuration condition.
-                        uiResult = ::MsiRecordGetString(hRecord, 3, sValue);
+                        uiResult = ::MsiRecordGetString(hRecord, 4, sValue);
                         if (uiResult != NO_ERROR) break;
                         condition = ::MsiEvaluateCondition(hInstall, sValue);
                         if (condition == MSICONDITION_FALSE)
@@ -241,18 +243,42 @@ UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
                         if (uiResult != NO_ERROR) break;
 
                         // Read service start type.
-                        iStartType = ::MsiRecordGetInteger(hRecord, 2);
-                        if (iStartType == MSI_NULL_INTEGER) {
+                        iValue = ::MsiRecordGetInteger(hRecord, 2);
+                        if (iValue == MSI_NULL_INTEGER) {
                             uiResult = ERROR_INVALID_FIELD;
                             break;
                         }
-                        if (iStartType >= 0) {
+                        if (iValue >= 0) {
                             // Set service start type.
-                            olExecute.AddTail(new MSICA::COpSvcSetStart(sValue, iStartType, MSICA_SVC_SET_START_TICK_SIZE));
+                            olExecute.AddTail(new MSICA::COpSvcSetStart(sValue, iValue, MSICA_SVC_SET_START_TICK_SIZE));
 
                             // The amount of tick space to add to progress indicator.
                             ::MsiRecordSetInteger(hRecordProg, 1, 3                            );
                             ::MsiRecordSetInteger(hRecordProg, 2, MSICA_SVC_SET_START_TICK_SIZE);
+                            if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
+                        }
+
+                        // Read service control.
+                        iValue = ::MsiRecordGetInteger(hRecord, 3);
+                        if (iValue == MSI_NULL_INTEGER) {
+                            uiResult = ERROR_INVALID_FIELD;
+                            break;
+                        }
+                        if ((iValue & 4) != 0) {
+                            // Stop service.
+                            olExecute.AddTail(new MSICA::COpSvcStop(sValue, (iValue & 1) ? TRUE : FALSE, MSICA_SVC_STOP_TICK_SIZE));
+
+                            // The amount of tick space to add to progress indicator.
+                            ::MsiRecordSetInteger(hRecordProg, 1, 3                       );
+                            ::MsiRecordSetInteger(hRecordProg, 2, MSICA_SVC_STOP_TICK_SIZE);
+                            if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
+                        } else if ((iValue & 2) != 0) {
+                            // Start service.
+                            olExecute.AddTail(new MSICA::COpSvcStart(sValue, (iValue & 1) ? TRUE : FALSE, MSICA_SVC_START_TICK_SIZE));
+
+                            // The amount of tick space to add to progress indicator.
+                            ::MsiRecordSetInteger(hRecordProg, 1, 3                        );
+                            ::MsiRecordSetInteger(hRecordProg, 2, MSICA_SVC_START_TICK_SIZE);
                             if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
                         }
                     }
