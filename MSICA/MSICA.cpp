@@ -1,15 +1,18 @@
 #include "stdafx.h"
 
+#pragma comment(lib, "wlanapi.lib")
+
 
 ////////////////////////////////////////////////////////////////////////////
 // Local constants
 ////////////////////////////////////////////////////////////////////////////
 
-#define MSICA_CERT_TICK_SIZE            (4*1024)
-#define MSICA_SVC_SET_START_TICK_SIZE   (1*1024)
-#define MSICA_SVC_START_TICK_SIZE       (1*1024)
-#define MSICA_SVC_STOP_TICK_SIZE        (1*1024)
+#define MSICA_CERT_TICK_SIZE            ( 4*1024)
+#define MSICA_SVC_SET_START_TICK_SIZE   ( 1*1024)
+#define MSICA_SVC_START_TICK_SIZE       ( 1*1024)
+#define MSICA_SVC_STOP_TICK_SIZE        ( 1*1024)
 #define MSICA_TASK_TICK_SIZE            (16*1024)
+#define MSICA_WLAN_PROFILE_TICK_SIZE    ( 2*1024)
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -63,7 +66,6 @@ UINT MSICA_API CertificatesEval(MSIHANDLE hInstall)
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewCert, NULL);
                 if (uiResult == NO_ERROR) {
-                    //ATL::CAtlString sComponent;
                     ATL::CAtlStringW sStore;
                     int iFlags, iEncoding;
                     ATL::CAtlArray<BYTE> binCert;
@@ -444,6 +446,196 @@ UINT MSICA_API ScheduledTasksEval(MSIHANDLE hInstall)
     }
 
     olExecute.Free();
+    if (bIsCoInitialized) ::CoUninitialize();
+    return uiResult;
+}
+
+
+UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
+{
+    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+
+    UINT uiResult;
+    BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
+    MSICA::COpList olExecuteInstall, olExecuteRemove;
+    BOOL bRollbackEnabled;
+    PMSIHANDLE
+        hDatabase,
+        hRecordProg = ::MsiCreateRecord(3);
+    ATL::CAtlString sValue;
+
+    // Check and add the rollback enabled state.
+    uiResult = ::MsiGetProperty(hInstall, _T("RollbackDisabled"), sValue);
+    bRollbackEnabled = uiResult == NO_ERROR ?
+        _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
+        TRUE;
+    olExecuteInstall.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olExecuteRemove.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+
+    // Open MSI database.
+    hDatabase = ::MsiGetActiveDatabase(hInstall);
+    if (hDatabase) {
+        // Check if WLANProfile table exists. If it doesn't exist, there's nothing to do.
+        MSICONDITION condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("WLANProfile"));
+        if (condition == MSICONDITION_FALSE || condition == MSICONDITION_TRUE) {
+            PMSIHANDLE hViewProfile;
+
+            // Prepare a query to get a list/view of profiles.
+            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Binary_,Name,Condition,Component_ FROM WLANProfile"), &hViewProfile);
+            if (uiResult == NO_ERROR) {
+                // Execute query!
+                uiResult = ::MsiViewExecute(hViewProfile, NULL);
+                if (uiResult == NO_ERROR) {
+                    DWORD dwError, dwNegotiatedVersion;
+                    HANDLE hClientHandle;
+
+                    // Open WLAN handle.
+                    dwError = ::WlanOpenHandle(2, NULL, &dwNegotiatedVersion, &hClientHandle);
+                    if (dwError == NO_ERROR) {
+                        WLAN_INTERFACE_INFO_LIST *pInterfaceList;
+
+                        // Get a list of WLAN interfaces.
+                        dwError = ::WlanEnumInterfaces(hClientHandle, NULL, &pInterfaceList);
+                        if (dwError == NO_ERROR) {
+                            ATL::CAtlStringW sName, sProfileXML;
+                            ATL::CAtlArray<BYTE> binProfile;
+
+                            for (;;) {
+                                PMSIHANDLE hRecord;
+                                INSTALLSTATE iInstalled, iAction;
+                                int iTick = 0;
+                                DWORD i;
+
+                                // Fetch one record from the view.
+                                uiResult = ::MsiViewFetch(hViewProfile, &hRecord);
+                                if (uiResult == ERROR_NO_MORE_ITEMS) {
+                                    uiResult = NO_ERROR;
+                                    break;
+                                } else if (uiResult != NO_ERROR)
+                                    break;
+
+                                // Read and evaluate profile's condition.
+                                uiResult = ::MsiRecordGetString(hRecord, 3, sValue);
+                                if (uiResult != NO_ERROR) break;
+                                condition = ::MsiEvaluateCondition(hInstall, sValue);
+                                if (condition == MSICONDITION_FALSE)
+                                    continue;
+                                else if (condition == MSICONDITION_ERROR) {
+                                    uiResult = ERROR_INVALID_FIELD;
+                                    break;
+                                }
+
+                                // Read profile's name.
+                                uiResult = ::MsiRecordGetString(hRecord, 2, sName);
+                                if (uiResult != NO_ERROR) break;
+
+                                // Read profile's component ID.
+                                uiResult = ::MsiRecordGetString(hRecord, 4, sValue);
+                                if (uiResult != NO_ERROR) break;
+
+                                // Get the component state.
+                                uiResult = ::MsiGetComponentState(hInstall, sValue, &iInstalled, &iAction);
+                                if (uiResult != NO_ERROR) break;
+
+                                if (iAction >= INSTALLSTATE_LOCAL) {
+                                    PMSIHANDLE hViewBinary, hRecordBin;
+                                    LPCWSTR pProfileStr;
+                                    SIZE_T nCount;
+
+                                    // Perform another query to get profile's binary data.
+                                    uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Data FROM Binary WHERE Name=?"), &hViewBinary);
+                                    if (uiResult != NO_ERROR) break;
+
+                                    // Execute query!
+                                    uiResult = ::MsiViewExecute(hViewBinary, hRecord);
+                                    if (uiResult != NO_ERROR) break;
+
+                                    // Fetch one record from the view.
+                                    uiResult = ::MsiViewFetch(hViewBinary, &hRecordBin);
+                                    if (uiResult == NO_ERROR)
+                                        uiResult = ::MsiRecordGetStream(hRecordBin, 1, binProfile);
+                                    ::MsiViewClose(hViewBinary);
+                                    if (uiResult != NO_ERROR) break;
+
+                                    // Convert CAtlArray<BYTE> to CAtlStringW.
+                                    pProfileStr = (LPCWSTR)binProfile.GetData();
+                                    nCount = binProfile.GetCount()/sizeof(WCHAR);
+
+                                    if (nCount < 1 || pProfileStr[0] != 0xfeff) {
+                                        // The profile XML is not UTF-16 encoded.
+                                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_WLAN_PROFILE_NOT_UTF16);
+                                        ::MsiRecordSetStringW(hRecordProg, 2, sName                               );
+                                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+                                        uiResult = ERROR_INSTALL_USEREXIT;
+                                    }
+                                    sProfileXML.SetString(pProfileStr + 1, (int)nCount - 1);
+
+                                    for (i = 0; i < pInterfaceList->dwNumberOfItems; i++) {
+                                        // Check for not ready state in interface.
+                                        if (pInterfaceList->InterfaceInfo[i].isState != wlan_interface_state_not_ready) {
+                                            olExecuteInstall.AddTail(new MSICA::COpWLANProfileSet(pInterfaceList->InterfaceInfo[i].InterfaceGuid, sName, sProfileXML, MSICA_WLAN_PROFILE_TICK_SIZE));
+                                            iTick += MSICA_WLAN_PROFILE_TICK_SIZE;
+                                        }
+                                    }
+
+                                    // The amount of tick space to add for each profile to progress indicator.
+                                    ::MsiRecordSetInteger(hRecordProg, 1, 3    );
+                                    ::MsiRecordSetInteger(hRecordProg, 2, iTick);
+                                    if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
+                                } else if (iAction >= INSTALLSTATE_REMOVED) {
+                                    // Component is installed, but should be degraded to advertised/removed. Delete the profile from all interfaces.
+                                    for (i = 0; i < pInterfaceList->dwNumberOfItems; i++) {
+                                        // Check for not ready state in interface.
+                                        if (pInterfaceList->InterfaceInfo[i].isState != wlan_interface_state_not_ready) {
+                                            olExecuteRemove.AddTail(new MSICA::COpWLANProfileDelete(pInterfaceList->InterfaceInfo[i].InterfaceGuid, sName, MSICA_WLAN_PROFILE_TICK_SIZE));
+                                            iTick += MSICA_WLAN_PROFILE_TICK_SIZE;
+                                        }
+                                    }
+
+                                    // The amount of tick space to add for each profile to progress indicator.
+                                    ::MsiRecordSetInteger(hRecordProg, 1, 3    );
+                                    ::MsiRecordSetInteger(hRecordProg, 2, iTick);
+                                    if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
+                                }
+                            }
+                            ::WlanFreeMemory(pInterfaceList);
+                        }
+                        ::WlanCloseHandle(hClientHandle, NULL);
+                    } else {
+                        uiResult = ERROR_INSTALL_WLAN_HANDLE_OPEN;
+                        ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
+                        ::MsiRecordSetInteger(hRecordProg, 2, dwError);
+                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+                    }
+                    ::MsiViewClose(hViewProfile);
+
+                    if (uiResult == NO_ERROR) {
+                        // Save the sequences.
+                        uiResult = MSICA::SaveSequence(hInstall, _T("SetWLANProfilesExec"),    _T("SetWLANProfilesCommit"),    _T("SetWLANProfilesRollback"),    olExecuteInstall);
+                        uiResult = MSICA::SaveSequence(hInstall, _T("RemoveWLANProfilesExec"), _T("RemoveWLANProfilesCommit"), _T("RemoveWLANProfilesRollback"), olExecuteRemove);
+                    } else if (uiResult != ERROR_INSTALL_USEREXIT) {
+                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
+                        ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
+                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+                    }
+                } else {
+                    ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
+                    ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+                }
+            } else {
+                ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
+                ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+            }
+        }
+    } else {
+        uiResult = ERROR_INSTALL_DATABASE_OPEN;
+        ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
+        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+    }
+
+    olExecuteInstall.Free();
+    olExecuteRemove.Free();
+
     if (bIsCoInitialized) ::CoUninitialize();
     return uiResult;
 }

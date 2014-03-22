@@ -31,6 +31,7 @@
 #include <corerror.h>
 #include <stdlib.h>
 #include <time.h>
+#include <wlanapi.h>
 
 #include "..\MSICALib\MSICALib.h"
 

@@ -59,6 +59,11 @@ TaskTrigger	DaysOfMonth	Y					DoubleInteger		Specifies the day of the month a ta
 TaskTrigger	WeekOfMonth	Y					Integer	1;2;3;4;5	Specifies the week of the month when the task runs. This value is exclusive and is one of the following: 1=The task will run between the first and seventh day of the month, 2=The task will run between the eighth and 14th day of the month, 3=The task will run between the 15th and 21st day of the month, 4=The task will run between the 22nd and 28th of the month, 5=The task will run between the last seven days of the month.
 TaskTrigger	MonthsOfYear	Y	0	4095			Integer		Specifies the month(s) when the task runs. This value is a combination of the following values: 1=Jan, 2=Feb, 4=Mar, 8=Apr, 16=May, 32=Jun, 64=Jul, 128=Aug, 256=Sep, 512=Oct, 1024=Nov, 2048=Dec.
 TaskTrigger	Task_	N			ScheduledTask	1	Identifier		Key of the Trigger's task.
+WLANProfile	WLANProfile	N					Identifier		Primary key, non-localized token.
+WLANProfile	Name	N					Formatted		Profile name
+WLANProfile	Binary_	N			Binary	1	Identifier		The profile XML file. The binary information is looked up from the Binary Table.
+WLANProfile	Condition	Y					Condition		Optional expression which skips the profile if evaluates to expFalse. If the expression syntax is invalid, the engine will terminate, returning iesBadActionData.
+WLANProfile	Component_	N			Component	1	Identifier		Component the profile is part of.
 <<NOKEEP
 
 
@@ -76,6 +81,9 @@ s$(MSIBUILD_LENGTH_ID)	L0	L0
 CertificatesExec	Installing certificates	Certificate: [1]
 ServiceConfigExec	Configuring services	Service: [1]
 ScheduledTasksExec	Registering scheduled tasks	Scheduled task: [1]
+EvaluateWLANProfiles	Evaluating WLAN profiles	WLAN profile: [1]
+RemoveWLANProfilesExec	Removing WLAN profiles	WLAN profile: [1]
+SetWLANProfilesExec	Setting WLAN profiles	WLAN profile: [1]
 <<NOKEEP
 
 "De.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\de_DE.po"
@@ -148,6 +156,13 @@ ScheduledTasksEval	1	binMSICA.dll	ScheduledTasksEval
 ScheduledTasksExec	3073	binMSICA.dll	ExecuteSequence
 ScheduledTasksRollback	3329	binMSICA.dll	ExecuteSequence
 ScheduledTasksCommit	3585	binMSICA.dll	ExecuteSequence
+EvaluateWLANProfiles	1	binMSICA.dll	EvaluateWLANProfiles
+RemoveWLANProfilesExec	3073	binMSICA.dll	ExecuteSequence
+RemoveWLANProfilesRollback	3329	binMSICA.dll	ExecuteSequence
+RemoveWLANProfilesCommit	3585	binMSICA.dll	ExecuteSequence
+SetWLANProfilesExec	3073	binMSICA.dll	ExecuteSequence
+SetWLANProfilesRollback	3329	binMSICA.dll	ExecuteSequence
+SetWLANProfilesCommit	3585	binMSICA.dll	ExecuteSequence
 <<NOKEEP
 
 
@@ -162,6 +177,13 @@ All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
 Action	Condition	Sequence
 s$(MSIBUILD_LENGTH_ID)	S255	I2
 InstallExecuteSequence	Action
+EvaluateWLANProfiles		1650
+RemoveWLANProfilesRollback		1850
+RemoveWLANProfilesExec		1851
+RemoveWLANProfilesCommit		1852
+SetWLANProfilesRollback		6150
+SetWLANProfilesExec		6151
+SetWLANProfilesCommit		6152
 CertificatesEval		6576
 CertificatesRollback		6577
 CertificatesExec		6578
@@ -216,6 +238,20 @@ All :: "$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt"
 Trigger	BeginDate	EndDate	StartTime	StartTimeRand	MinutesDuration	MinutesInterval	Flags	Type	DaysInterval	WeeksInterval	DaysOfTheWeek	DaysOfMonth	WeekOfMonth	MonthsOfYear	Task_
 s$(MSIBUILD_LENGTH_ID)	i2	I2	i2	I2	I4	I4	i4	i2	I2	I2	I2	I4	I2	I2	s$(MSIBUILD_LENGTH_ID)
 TaskTrigger	Trigger
+<<NOKEEP
+
+
+######################################################################
+# WLANProfile
+
+All :: "$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt"
+
+"$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+	-if exist $@ del /f /q $@
+	move /y << $@ > NUL
+WLANProfile	Name	Binary_	Condition	Component_
+s$(MSIBUILD_LENGTH_ID)	l255	s$(MSIBUILD_LENGTH_ID)	S255	s$(MSIBUILD_LENGTH_ID)
+WLANProfile	WLANProfile
 <<NOKEEP
 
 
