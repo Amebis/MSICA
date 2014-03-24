@@ -78,12 +78,15 @@ All :: "$(LANG).$(PLAT).$(CFG).ActionText-2.idt"
 Action	Description	Template
 s$(MSIBUILD_LENGTH_ID)	L0	L0
 1252	ActionText	Action
-CertificatesExec	Installing certificates	Certificate: [1]
-ServiceConfigExec	Configuring services	Service: [1]
-ScheduledTasksExec	Registering scheduled tasks	Scheduled task: [1]
-EvaluateWLANProfiles	Evaluating WLAN profiles	WLAN profile: [1]
+RemoveScheduledTasksExec	Removing scheduled tasks	Scheduled task: [1]
+StopServicesExec	Stopping services	Service: [1]
 RemoveWLANProfilesExec	Removing WLAN profiles	WLAN profile: [1]
-SetWLANProfilesExec	Setting WLAN profiles	WLAN profile: [1]
+RemoveCertificatesExec	Removing certificates	Certificate: [1]
+InstallCertificatesExec	Installing certificates	Certificate: [1]
+InstallWLANProfilesExec	Installing WLAN profiles	WLAN profile: [1]
+SetServiceStartExec	Configuring services	Service: [1]
+StartServicesExec	Starting services	Service: [1]
+InstallScheduledTasksExec	Installing scheduled tasks	Scheduled task: [1]
 <<NOKEEP
 
 "De.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\L10N\de_DE.po"
@@ -144,25 +147,34 @@ All :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
 Action	Type	Source	Target
 s$(MSIBUILD_LENGTH_ID)	i2	S$(MSIBUILD_LENGTH_ID)	S255
 CustomAction	Action
-CertificatesEval	1	binMSICA.dll	CertificatesEval
-CertificatesExec	3073	binMSICA.dll	ExecuteSequence
-CertificatesRollback	3329	binMSICA.dll	ExecuteSequence
-CertificatesCommit	3585	binMSICA.dll	ExecuteSequence
-ServiceConfigEval	1	binMSICA.dll	ServiceConfigEval
-ServiceConfigExec	3073	binMSICA.dll	ExecuteSequence
-ServiceConfigRollback	3329	binMSICA.dll	ExecuteSequence
-ServiceConfigCommit	3585	binMSICA.dll	ExecuteSequence
-ScheduledTasksEval	1	binMSICA.dll	ScheduledTasksEval
-ScheduledTasksExec	3073	binMSICA.dll	ExecuteSequence
-ScheduledTasksRollback	3329	binMSICA.dll	ExecuteSequence
-ScheduledTasksCommit	3585	binMSICA.dll	ExecuteSequence
-EvaluateWLANProfiles	1	binMSICA.dll	EvaluateWLANProfiles
-RemoveWLANProfilesExec	3073	binMSICA.dll	ExecuteSequence
+MSICAInitialize	1	binMSICA.dll	MSICAInitialize
+RemoveScheduledTasksRollback	3329	binMSICA.dll	ExecuteSequence
+RemoveScheduledTasksExec	3073	binMSICA.dll	ExecuteSequence
+RemoveScheduledTasksCommit	3585	binMSICA.dll	ExecuteSequence
+StopServicesRollback	3329	binMSICA.dll	ExecuteSequence
+StopServicesExec	3073	binMSICA.dll	ExecuteSequence
+StopServicesCommit	3585	binMSICA.dll	ExecuteSequence
 RemoveWLANProfilesRollback	3329	binMSICA.dll	ExecuteSequence
+RemoveWLANProfilesExec	3073	binMSICA.dll	ExecuteSequence
 RemoveWLANProfilesCommit	3585	binMSICA.dll	ExecuteSequence
-SetWLANProfilesExec	3073	binMSICA.dll	ExecuteSequence
-SetWLANProfilesRollback	3329	binMSICA.dll	ExecuteSequence
-SetWLANProfilesCommit	3585	binMSICA.dll	ExecuteSequence
+RemoveCertificatesRollback	3329	binMSICA.dll	ExecuteSequence
+RemoveCertificatesExec	3073	binMSICA.dll	ExecuteSequence
+RemoveCertificatesCommit	3585	binMSICA.dll	ExecuteSequence
+InstallCertificatesRollback	3329	binMSICA.dll	ExecuteSequence
+InstallCertificatesExec	3073	binMSICA.dll	ExecuteSequence
+InstallCertificatesCommit	3585	binMSICA.dll	ExecuteSequence
+InstallWLANProfilesRollback	3329	binMSICA.dll	ExecuteSequence
+InstallWLANProfilesExec	3073	binMSICA.dll	ExecuteSequence
+InstallWLANProfilesCommit	3585	binMSICA.dll	ExecuteSequence
+SetServiceStartRollback	3329	binMSICA.dll	ExecuteSequence
+SetServiceStartExec	3073	binMSICA.dll	ExecuteSequence
+SetServiceStartCommit	3585	binMSICA.dll	ExecuteSequence
+StartServicesRollback	3329	binMSICA.dll	ExecuteSequence
+StartServicesExec	3073	binMSICA.dll	ExecuteSequence
+StartServicesCommit	3585	binMSICA.dll	ExecuteSequence
+InstallScheduledTasksRollback	3329	binMSICA.dll	ExecuteSequence
+InstallScheduledTasksExec	3073	binMSICA.dll	ExecuteSequence
+InstallScheduledTasksCommit	3585	binMSICA.dll	ExecuteSequence
 <<NOKEEP
 
 
@@ -177,25 +189,34 @@ All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
 Action	Condition	Sequence
 s$(MSIBUILD_LENGTH_ID)	S255	I2
 InstallExecuteSequence	Action
-EvaluateWLANProfiles		1650
-RemoveWLANProfilesRollback		1850
-RemoveWLANProfilesExec		1851
-RemoveWLANProfilesCommit		1852
-SetWLANProfilesRollback		6150
-SetWLANProfilesExec		6151
-SetWLANProfilesCommit		6152
-CertificatesEval		6576
-CertificatesRollback		6577
-CertificatesExec		6578
-CertificatesCommit		6579
-ScheduledTasksEval		6580
-ScheduledTasksRollback		6581
-ScheduledTasksExec		6582
-ScheduledTasksCommit		6583
-ServiceConfigEval		6584
-ServiceConfigRollback		6585
-ServiceConfigExec		6586
-ServiceConfigCommit		6587
+MSICAInitialize		1510
+RemoveScheduledTasksRollback		1850
+RemoveScheduledTasksExec		1851
+RemoveScheduledTasksCommit		1852
+StopServicesRollback		1853
+StopServicesExec		1854
+StopServicesCommit		1855
+RemoveWLANProfilesRollback		1856
+RemoveWLANProfilesExec		1857
+RemoveWLANProfilesCommit		1858
+RemoveCertificatesRollback		1859
+RemoveCertificatesExec		1860
+RemoveCertificatesCommit		1861
+InstallCertificatesRollback		6150
+InstallCertificatesExec		6151
+InstallCertificatesCommit		6152
+InstallWLANProfilesRollback		6153
+InstallWLANProfilesExec		6154
+InstallWLANProfilesCommit		6155
+SetServiceStartRollback		6156
+SetServiceStartExec		6157
+SetServiceStartCommit		6158
+StartServicesRollback		6159
+StartServicesExec		6160
+StartServicesCommit		6161
+InstallScheduledTasksRollback		6162
+InstallScheduledTasksExec		6163
+InstallScheduledTasksCommit		6164
 <<NOKEEP
 
 

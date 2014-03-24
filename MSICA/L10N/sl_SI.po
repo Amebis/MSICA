@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSICA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-22 13:34+0100\n"
+"POT-Creation-Date: 2014-03-24 13:54+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -70,80 +70,116 @@ msgstr "MSICA"
 msgid "SUBLANG_DEFAULT"
 msgstr "SUBLANG_DEFAULT"
 
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:4
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:4
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:7
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:8
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:7
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:8
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:7
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:8
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:7
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:8
 msgid "Certificate: [1]"
 msgstr "Digitalno potrdilo: [1]"
 
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:5
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:5
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:5
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:10
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:10
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:10
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:10
 msgid "Configuring services"
 msgstr "Nastavljanje servisov"
-
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:7
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:7
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:7
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:7
-msgid "Evaluating WLAN profiles"
-msgstr "Pregled profilov WLAN"
-
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:4
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:4
-msgid "Installing certificates"
-msgstr "Nameščanje digitalnih potrdil"
-
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:6
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:6
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:6
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:6
-msgid "Registering scheduled tasks"
-msgstr "Registracija razporejenih opravil"
 
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:8
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:8
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:8
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:8
-msgid "Removing WLAN profiles"
-msgstr "Odstranjevanje profilov WLAN"
+msgid "Installing certificates"
+msgstr "Nameščanje digitalnih potrdil"
+
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:12
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:12
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:12
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:12
+msgid "Installing scheduled tasks"
+msgstr "Nameščanje razporejenih opravil"
+
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:9
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:9
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:9
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:9
+msgid "Installing WLAN profiles"
+msgstr "Nameščanje profilov WLAN"
+
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:7
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:7
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:7
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:7
+msgid "Removing certificates"
+msgstr "Odstranjevanje digitalnih potrdil"
+
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:4
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:4
+msgid "Removing scheduled tasks"
+msgstr "Odstranjevanje razporejenih opravil"
 
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:6
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:6
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:6
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:6
+msgid "Removing WLAN profiles"
+msgstr "Odstranjevanje profilov WLAN"
+
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:12
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:4
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:12
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:12
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:4
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:12
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:4
 msgid "Scheduled task: [1]"
 msgstr "Razporejeno opravilo: [1]"
 
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:10
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:11
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:10
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:11
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:10
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:11
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:10
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:11
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:5
 msgid "Service: [1]"
 msgstr "Servis: [1]"
 
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:9
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:9
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:9
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:9
-msgid "Setting WLAN profiles"
-msgstr "Nastavljanje profilov WLAN"
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:11
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:11
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:11
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:11
+msgid "Starting services"
+msgstr "Zagon servisov"
 
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:7
-#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:8
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:5
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:5
+msgid "Stopping services"
+msgstr "Zaustavitev servisov"
+
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:6
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:9
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:7
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:8
+#: MSIBuild/En.Win32.Release.ActionText-2.idtx:6
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:9
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:7
-#: MSIBuild/En.x64.Debug.ActionText-2.idtx:8
+#: MSIBuild/En.x64.Debug.ActionText-2.idtx:6
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:9
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:7
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:8
+#: MSIBuild/En.x64.Release.ActionText-2.idtx:6
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:9
 msgid "WLAN profile: [1]"
 msgstr "Profil WLAN: [1]"
+
+#~ msgid "Evaluating WLAN profiles"
+#~ msgstr "Pregled profilov WLAN"

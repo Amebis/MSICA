@@ -32,13 +32,17 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 // Exported functions
 ////////////////////////////////////////////////////////////////////
 
-UINT MSICA_API CertificatesEval(MSIHANDLE hInstall)
+UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
 {
     //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
     UINT uiResult;
     BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
-    MSICA::COpList olExecute;
+    MSICA::COpList
+        olInstallCertificates, olRemoveCertificates,
+        olInstallWLANProfiles, olRemoveWLANProfiles,
+        olInstallScheduledTask, olRemoveScheduledTask,
+        olStopServices, olSetServiceStarts, olStartServices;
     BOOL bRollbackEnabled;
     PMSIHANDLE
         hDatabase,
@@ -50,13 +54,23 @@ UINT MSICA_API CertificatesEval(MSIHANDLE hInstall)
     bRollbackEnabled = uiResult == NO_ERROR ?
         _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
         TRUE;
-    olExecute.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olRemoveScheduledTask.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olStopServices.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olRemoveWLANProfiles.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olRemoveCertificates.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olInstallCertificates.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olInstallWLANProfiles.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olSetServiceStarts.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olStartServices.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olInstallScheduledTask.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
 
     // Open MSI database.
     hDatabase = ::MsiGetActiveDatabase(hInstall);
     if (hDatabase) {
+        MSICONDITION condition;
+
         // Check if Certificate table exists. If it doesn't exist, there's nothing to do.
-        MSICONDITION condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("Certificate"));
+        condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("Certificate"));
         if (condition == MSICONDITION_FALSE || condition == MSICONDITION_TRUE) {
             PMSIHANDLE hViewCert;
 
@@ -140,10 +154,10 @@ UINT MSICA_API CertificatesEval(MSIHANDLE hInstall)
 
                         if (iAction >= INSTALLSTATE_LOCAL) {
                             // Component is or should be installed. Install the certificate.
-                            olExecute.AddTail(new MSICA::COpCertInstall(binCert.GetData(), binCert.GetCount(), sStore, iEncoding, iFlags, MSICA_CERT_TICK_SIZE));
+                            olInstallCertificates.AddTail(new MSICA::COpCertInstall(binCert.GetData(), binCert.GetCount(), sStore, iEncoding, iFlags, MSICA_CERT_TICK_SIZE));
                         } else if (iAction >= INSTALLSTATE_REMOVED) {
                             // Component is installed, but should be degraded to advertised/removed. Delete the certificate.
-                            olExecute.AddTail(new MSICA::COpCertRemove(binCert.GetData(), binCert.GetCount(), sStore, iEncoding, iFlags, MSICA_CERT_TICK_SIZE));
+                            olRemoveCertificates.AddTail(new MSICA::COpCertRemove(binCert.GetData(), binCert.GetCount(), sStore, iEncoding, iFlags, MSICA_CERT_TICK_SIZE));
                         }
 
                         // The amount of tick space to add for each certificate to progress indicator.
@@ -152,15 +166,6 @@ UINT MSICA_API CertificatesEval(MSIHANDLE hInstall)
                         if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
                     }
                     ::MsiViewClose(hViewCert);
-
-                    if (uiResult == NO_ERROR) {
-                        // Save the sequences.
-                        uiResult = MSICA::SaveSequence(hInstall, _T("CertificatesExec"), _T("CertificatesCommit"), _T("CertificatesRollback"), olExecute);
-                    } else if (uiResult != ERROR_INSTALL_USEREXIT) {
-                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
-                        ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
-                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                    }
                 } else {
                     ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
                     ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
@@ -170,43 +175,9 @@ UINT MSICA_API CertificatesEval(MSIHANDLE hInstall)
                 ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
             }
         }
-    } else {
-        uiResult = ERROR_INSTALL_DATABASE_OPEN;
-        ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
-        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-    }
 
-    olExecute.Free();
-    if (bIsCoInitialized) ::CoUninitialize();
-    return uiResult;
-}
-
-
-UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
-{
-    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
-
-    UINT uiResult;
-    BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
-    MSICA::COpList olExecute;
-    BOOL bRollbackEnabled;
-    PMSIHANDLE
-        hDatabase,
-        hRecordProg = ::MsiCreateRecord(3);
-    ATL::CAtlString sValue;
-
-    // Check and add the rollback enabled state.
-    uiResult = ::MsiGetProperty(hInstall, _T("RollbackDisabled"), sValue);
-    bRollbackEnabled = uiResult == NO_ERROR ?
-        _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
-        TRUE;
-    olExecute.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-
-    // Open MSI database.
-    hDatabase = ::MsiGetActiveDatabase(hInstall);
-    if (hDatabase) {
         // Check if ServiceConfigure table exists. If it doesn't exist, there's nothing to do.
-        MSICONDITION condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("ServiceConfigure"));
+        condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("ServiceConfigure"));
         if (condition == MSICONDITION_FALSE || condition == MSICONDITION_TRUE) {
             PMSIHANDLE hViewSC;
 
@@ -252,7 +223,7 @@ UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
                         }
                         if (iValue >= 0) {
                             // Set service start type.
-                            olExecute.AddTail(new MSICA::COpSvcSetStart(sValue, iValue, MSICA_SVC_SET_START_TICK_SIZE));
+                            olSetServiceStarts.AddTail(new MSICA::COpSvcSetStart(sValue, iValue, MSICA_SVC_SET_START_TICK_SIZE));
 
                             // The amount of tick space to add to progress indicator.
                             ::MsiRecordSetInteger(hRecordProg, 1, 3                            );
@@ -268,7 +239,7 @@ UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
                         }
                         if ((iValue & 4) != 0) {
                             // Stop service.
-                            olExecute.AddTail(new MSICA::COpSvcStop(sValue, (iValue & 1) ? TRUE : FALSE, MSICA_SVC_STOP_TICK_SIZE));
+                            olStopServices.AddTail(new MSICA::COpSvcStop(sValue, (iValue & 1) ? TRUE : FALSE, MSICA_SVC_STOP_TICK_SIZE));
 
                             // The amount of tick space to add to progress indicator.
                             ::MsiRecordSetInteger(hRecordProg, 1, 3                       );
@@ -276,7 +247,7 @@ UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
                             if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
                         } else if ((iValue & 2) != 0) {
                             // Start service.
-                            olExecute.AddTail(new MSICA::COpSvcStart(sValue, (iValue & 1) ? TRUE : FALSE, MSICA_SVC_START_TICK_SIZE));
+                            olStartServices.AddTail(new MSICA::COpSvcStart(sValue, (iValue & 1) ? TRUE : FALSE, MSICA_SVC_START_TICK_SIZE));
 
                             // The amount of tick space to add to progress indicator.
                             ::MsiRecordSetInteger(hRecordProg, 1, 3                        );
@@ -285,15 +256,6 @@ UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
                         }
                     }
                     ::MsiViewClose(hViewSC);
-
-                    if (uiResult == NO_ERROR) {
-                        // Save the sequences.
-                        uiResult = MSICA::SaveSequence(hInstall, _T("ServiceConfigExec"), _T("ServiceConfigCommit"), _T("ServiceConfigRollback"), olExecute);
-                    } else if (uiResult != ERROR_INSTALL_USEREXIT) {
-                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
-                        ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
-                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                    }
                 } else {
                     ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
                     ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
@@ -303,43 +265,9 @@ UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall)
                 ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
             }
         }
-    } else {
-        uiResult = ERROR_INSTALL_DATABASE_OPEN;
-        ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
-        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-    }
 
-    olExecute.Free();
-    if (bIsCoInitialized) ::CoUninitialize();
-    return uiResult;
-}
-
-
-UINT MSICA_API ScheduledTasksEval(MSIHANDLE hInstall)
-{
-    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
-
-    UINT uiResult;
-    BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
-    MSICA::COpList olExecute;
-    BOOL bRollbackEnabled;
-    PMSIHANDLE
-        hDatabase,
-        hRecordProg = ::MsiCreateRecord(3);
-    ATL::CAtlString sValue;
-
-    // Check and add the rollback enabled state.
-    uiResult = ::MsiGetProperty(hInstall, _T("RollbackDisabled"), sValue);
-    bRollbackEnabled = uiResult == NO_ERROR ?
-        _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
-        TRUE;
-    olExecute.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-
-    // Open MSI database.
-    hDatabase = ::MsiGetActiveDatabase(hInstall);
-    if (hDatabase) {
         // Check if ScheduledTask table exists. If it doesn't exist, there's nothing to do.
-        MSICONDITION condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("ScheduledTask"));
+        condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("ScheduledTask"));
         if (condition == MSICONDITION_FALSE || condition == MSICONDITION_TRUE) {
             PMSIHANDLE hViewST;
 
@@ -409,10 +337,10 @@ UINT MSICA_API ScheduledTasksEval(MSIHANDLE hInstall)
                             } else
                                 break;
 
-                            olExecute.AddTail(opCreateTask);
+                            olInstallScheduledTask.AddTail(opCreateTask);
                         } else if (iAction >= INSTALLSTATE_REMOVED) {
                             // Component is installed, but should be degraded to advertised/removed. Delete the task.
-                            olExecute.AddTail(new MSICA::COpTaskDelete(sDisplayName, MSICA_TASK_TICK_SIZE));
+                            olRemoveScheduledTask.AddTail(new MSICA::COpTaskDelete(sDisplayName, MSICA_TASK_TICK_SIZE));
                         }
 
                         // The amount of tick space to add for each task to progress indicator.
@@ -421,15 +349,6 @@ UINT MSICA_API ScheduledTasksEval(MSIHANDLE hInstall)
                         if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
                     }
                     ::MsiViewClose(hViewST);
-
-                    if (uiResult == NO_ERROR) {
-                        // Save the sequences.
-                        uiResult = MSICA::SaveSequence(hInstall, _T("ScheduledTasksExec"), _T("ScheduledTasksCommit"), _T("ScheduledTasksRollback"), olExecute);
-                    } else if (uiResult != ERROR_INSTALL_USEREXIT) {
-                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
-                        ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
-                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                    }
                 } else {
                     ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
                     ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
@@ -439,44 +358,9 @@ UINT MSICA_API ScheduledTasksEval(MSIHANDLE hInstall)
                 ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
             }
         }
-    } else {
-        uiResult = ERROR_INSTALL_DATABASE_OPEN;
-        ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
-        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-    }
 
-    olExecute.Free();
-    if (bIsCoInitialized) ::CoUninitialize();
-    return uiResult;
-}
-
-
-UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
-{
-    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
-
-    UINT uiResult;
-    BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
-    MSICA::COpList olExecuteInstall, olExecuteRemove;
-    BOOL bRollbackEnabled;
-    PMSIHANDLE
-        hDatabase,
-        hRecordProg = ::MsiCreateRecord(3);
-    ATL::CAtlString sValue;
-
-    // Check and add the rollback enabled state.
-    uiResult = ::MsiGetProperty(hInstall, _T("RollbackDisabled"), sValue);
-    bRollbackEnabled = uiResult == NO_ERROR ?
-        _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
-        TRUE;
-    olExecuteInstall.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olExecuteRemove.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-
-    // Open MSI database.
-    hDatabase = ::MsiGetActiveDatabase(hInstall);
-    if (hDatabase) {
         // Check if WLANProfile table exists. If it doesn't exist, there's nothing to do.
-        MSICONDITION condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("WLANProfile"));
+        condition = ::MsiDatabaseIsTablePersistent(hDatabase, _T("WLANProfile"));
         if (condition == MSICONDITION_FALSE || condition == MSICONDITION_TRUE) {
             PMSIHANDLE hViewProfile;
 
@@ -573,7 +457,7 @@ UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
                                     for (i = 0; i < pInterfaceList->dwNumberOfItems; i++) {
                                         // Check for not ready state in interface.
                                         if (pInterfaceList->InterfaceInfo[i].isState != wlan_interface_state_not_ready) {
-                                            olExecuteInstall.AddTail(new MSICA::COpWLANProfileSet(pInterfaceList->InterfaceInfo[i].InterfaceGuid, 0, sName, sProfileXML, MSICA_WLAN_PROFILE_TICK_SIZE));
+                                            olInstallWLANProfiles.AddTail(new MSICA::COpWLANProfileSet(pInterfaceList->InterfaceInfo[i].InterfaceGuid, 0, sName, sProfileXML, MSICA_WLAN_PROFILE_TICK_SIZE));
                                             iTick += MSICA_WLAN_PROFILE_TICK_SIZE;
                                         }
                                     }
@@ -587,7 +471,7 @@ UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
                                     for (i = 0; i < pInterfaceList->dwNumberOfItems; i++) {
                                         // Check for not ready state in interface.
                                         if (pInterfaceList->InterfaceInfo[i].isState != wlan_interface_state_not_ready) {
-                                            olExecuteRemove.AddTail(new MSICA::COpWLANProfileDelete(pInterfaceList->InterfaceInfo[i].InterfaceGuid, sName, MSICA_WLAN_PROFILE_TICK_SIZE));
+                                            olRemoveWLANProfiles.AddTail(new MSICA::COpWLANProfileDelete(pInterfaceList->InterfaceInfo[i].InterfaceGuid, sName, MSICA_WLAN_PROFILE_TICK_SIZE));
                                             iTick += MSICA_WLAN_PROFILE_TICK_SIZE;
                                         }
                                     }
@@ -608,16 +492,6 @@ UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
                         ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                     }
                     ::MsiViewClose(hViewProfile);
-
-                    if (uiResult == NO_ERROR) {
-                        // Save the sequences.
-                        uiResult = MSICA::SaveSequence(hInstall, _T("SetWLANProfilesExec"),    _T("SetWLANProfilesCommit"),    _T("SetWLANProfilesRollback"),    olExecuteInstall);
-                        uiResult = MSICA::SaveSequence(hInstall, _T("RemoveWLANProfilesExec"), _T("RemoveWLANProfilesCommit"), _T("RemoveWLANProfilesRollback"), olExecuteRemove);
-                    } else if (uiResult != ERROR_INSTALL_USEREXIT) {
-                        ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
-                        ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
-                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
-                    }
                 } else {
                     ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
                     ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
@@ -627,14 +501,38 @@ UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
                 ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
             }
         }
+
+        // Save the sequences.
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("RemoveScheduledTasksExec"),  _T("RemoveScheduledTasksCommit"),  _T("RemoveScheduledTasksRollback"),  olRemoveScheduledTask);
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("StopServicesExec"),          _T("StopServicesCommit"),          _T("StopServicesRollback"),          olStopServices);
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("RemoveWLANProfilesExec"),    _T("RemoveWLANProfilesCommit"),    _T("RemoveWLANProfilesRollback"),    olRemoveWLANProfiles);
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("RemoveCertificatesExec"),    _T("RemoveCertificatesCommit"),    _T("RemoveCertificatesRollback"),    olRemoveCertificates);
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("InstallCertificatesExec"),   _T("InstallCertificatesCommit"),   _T("InstallCertificatesRollback"),   olInstallCertificates);
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("InstallWLANProfilesExec"),   _T("InstallWLANProfilesCommit"),   _T("InstallWLANProfilesRollback"),   olInstallWLANProfiles);
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("SetServiceStartExec"),       _T("SetServiceStartCommit"),       _T("SetServiceStartRollback"),       olSetServiceStarts);
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("StartServicesExec"),         _T("StartServicesCommit"),         _T("StartServicesRollback"),         olStartServices);
+        if (uiResult == NO_ERROR) uiResult = MSICA::SaveSequence(hInstall, _T("InstallScheduledTasksExec"), _T("InstallScheduledTasksCommit"), _T("InstallScheduledTasksRollback"), olInstallScheduledTask);
+
+        if (uiResult != NO_ERROR && uiResult != ERROR_INSTALL_USEREXIT) {
+            ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_OPLIST_CREATE);
+            ::MsiRecordSetInteger(hRecordProg, 2, uiResult                   );
+            ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
+        }
     } else {
         uiResult = ERROR_INSTALL_DATABASE_OPEN;
         ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
         ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
     }
 
-    olExecuteInstall.Free();
-    olExecuteRemove.Free();
+    olInstallScheduledTask.Free();
+    olStartServices.Free();
+    olSetServiceStarts.Free();
+    olInstallWLANProfiles.Free();
+    olInstallCertificates.Free();
+    olRemoveCertificates.Free();
+    olRemoveWLANProfiles.Free();
+    olStopServices.Free();
+    olRemoveScheduledTask.Free();
 
     if (bIsCoInitialized) ::CoUninitialize();
     return uiResult;
@@ -643,7 +541,7 @@ UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
 
 UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall)
 {
-    ::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
     return MSICA::ExecuteSequence(hInstall);
 }

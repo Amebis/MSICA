@@ -24,12 +24,7 @@
 extern "C" {
 #endif
 
-    UINT MSICA_API CertificatesEval(MSIHANDLE hInstall);
-    UINT MSICA_API ServiceConfigEval(MSIHANDLE hInstall);
-    UINT MSICA_API ScheduledTasksEval(MSIHANDLE hInstall);
-    UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall);
-    UINT MSICA_API RemoveWLANProfiles(MSIHANDLE hInstall);
-    UINT MSICA_API SetWLANProfiles(MSIHANDLE hInstall);
+    UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall);
     UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall);
 
 #ifdef __cplusplus
