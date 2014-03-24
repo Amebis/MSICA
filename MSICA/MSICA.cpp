@@ -573,7 +573,7 @@ UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
                                     for (i = 0; i < pInterfaceList->dwNumberOfItems; i++) {
                                         // Check for not ready state in interface.
                                         if (pInterfaceList->InterfaceInfo[i].isState != wlan_interface_state_not_ready) {
-                                            olExecuteInstall.AddTail(new MSICA::COpWLANProfileSet(pInterfaceList->InterfaceInfo[i].InterfaceGuid, sName, sProfileXML, MSICA_WLAN_PROFILE_TICK_SIZE));
+                                            olExecuteInstall.AddTail(new MSICA::COpWLANProfileSet(pInterfaceList->InterfaceInfo[i].InterfaceGuid, 0, sName, sProfileXML, MSICA_WLAN_PROFILE_TICK_SIZE));
                                             iTick += MSICA_WLAN_PROFILE_TICK_SIZE;
                                         }
                                     }
@@ -643,7 +643,7 @@ UINT MSICA_API EvaluateWLANProfiles(MSIHANDLE hInstall)
 
 UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall)
 {
-    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+    ::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
     return MSICA::ExecuteSequence(hInstall);
 }
