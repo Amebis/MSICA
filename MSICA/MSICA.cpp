@@ -34,7 +34,7 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpRes
 
 UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
 {
-    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+    //::DebugBreak();
 
     UINT uiResult;
     BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
@@ -541,7 +541,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
 
 UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall)
 {
-    //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
+    //::DebugBreak();
 
     return MSICA::ExecuteSequence(hInstall);
 }
