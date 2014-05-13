@@ -4,25 +4,9 @@
 
 #pragma once
 
-#if defined(_UNICODE) && !defined(UNICODE)
-#define UNICODE
-#endif
-
-#if defined(_WIN32) && !defined(WIN32)
-#define WIN32
-#endif
-
-#ifndef STRICT
-#define STRICT
-#endif
-
-#define VC_EXTRALEAN                       // Exclude rarely-used stuff from Windows headers
-#define _WIN32_WINNT 0x0501                // Include Windows XP symbols
-#define _WINSOCKAPI_                       // Prevent inclusion of winsock.h in windows.h
 #ifdef _WINDLL
-#define MSICA_DLL                          // This is a DLL
+#define MSICA_DLL // This library is compiled as a DLL
 #endif
-#define _ATL_APARTMENT_THREADED
 
 #include <atlbase.h>
 #include <atlfile.h>
