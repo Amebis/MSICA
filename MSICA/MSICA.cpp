@@ -19,10 +19,11 @@
 // Global functions
 ////////////////////////////////////////////////////////////////////////////
 
-extern "C" BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
+extern "C" BOOL WINAPI DllMain(_In_ HINSTANCE hInstance, _In_ DWORD dwReason, _In_ LPVOID pReserved)
 {
     UNREFERENCED_PARAMETER(hInstance);
-    UNREFERENCED_PARAMETER(lpReserved);
+    UNREFERENCED_PARAMETER(dwReason);
+    UNREFERENCED_PARAMETER(pReserved);
 
     return TRUE;
 }
