@@ -76,7 +76,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
             PMSIHANDLE hViewCert;
 
             // Prepare a query to get a list/view of certificates.
-            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Binary_,Store,Flags,Encoding,Condition,Component_ FROM Certificate"), &hViewCert);
+            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT `Binary_`,`Store`,`Flags`,`Encoding`,`Condition`,`Component_` FROM `Certificate`"), &hViewCert);
             if (uiResult == NO_ERROR) {
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewCert, NULL);
@@ -110,7 +110,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         }
 
                         // Perform another query to get certificate's binary data.
-                        uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Data FROM Binary WHERE Name=?"), &hViewBinary);
+                        uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT `Data` FROM `Binary` WHERE `Name`=?"), &hViewBinary);
                         if (uiResult != NO_ERROR) break;
 
                         // Execute query!
@@ -183,7 +183,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
             PMSIHANDLE hViewSC;
 
             // Prepare a query to get a list/view of service configurations.
-            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Name,StartType,Control,Condition FROM ServiceConfigure ORDER BY Sequence"), &hViewSC);
+            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT `Name`,`StartType`,`Control`,`Condition` FROM `ServiceConfigure` ORDER BY `Sequence`"), &hViewSC);
             if (uiResult == NO_ERROR) {
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewSC, NULL);
@@ -273,7 +273,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
             PMSIHANDLE hViewST;
 
             // Prepare a query to get a list/view of tasks.
-            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Task,DisplayName,Application,Parameters,Directory_,Flags,Priority,User,Password,Author,Description,IdleMin,IdleDeadline,MaxRuntime,Condition,Component_ FROM ScheduledTask"), &hViewST);
+            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT `Task`,`DisplayName`,`Application`,`Parameters`,`Directory_`,`Flags`,`Priority`,`User`,`Password`,`Author`,`Description`,`IdleMin`,`IdleDeadline`,`MaxRuntime`,`Condition`,`Component_` FROM `ScheduledTask`"), &hViewST);
             if (uiResult == NO_ERROR) {
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewST, NULL);
@@ -325,7 +325,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                             if (uiResult != NO_ERROR) break;
 
                             // Perform another query to get task's triggers.
-                            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Trigger,BeginDate,EndDate,StartTime,StartTimeRand,MinutesDuration,MinutesInterval,Flags,Type,DaysInterval,WeeksInterval,DaysOfTheWeek,DaysOfMonth,WeekOfMonth,MonthsOfYear FROM TaskTrigger WHERE Task_=?"), &hViewTT);
+                            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT `Trigger`,`BeginDate`,`EndDate`,`StartTime`,`StartTimeRand`,`MinutesDuration`,`MinutesInterval`,`Flags`,`Type`,`DaysInterval`,`WeeksInterval`,`DaysOfTheWeek`,`DaysOfMonth`,`WeekOfMonth`,`MonthsOfYear` FROM `TaskTrigger` WHERE `Task_`=?"), &hViewTT);
                             if (uiResult != NO_ERROR) break;
 
                             // Execute query!
@@ -366,7 +366,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
             PMSIHANDLE hViewProfile;
 
             // Prepare a query to get a list/view of profiles.
-            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Binary_,Name,Condition,Component_ FROM WLANProfile"), &hViewProfile);
+            uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT `Binary_`,`Name`,`Condition`,`Component_` FROM `WLANProfile`"), &hViewProfile);
             if (uiResult == NO_ERROR) {
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewProfile, NULL);
@@ -428,7 +428,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                                     SIZE_T nCount;
 
                                     // Perform another query to get profile's binary data.
-                                    uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT Data FROM Binary WHERE Name=?"), &hViewBinary);
+                                    uiResult = ::MsiDatabaseOpenView(hDatabase, _T("SELECT `Data` FROM `Binary` WHERE `Name`=?"), &hViewBinary);
                                     if (uiResult != NO_ERROR) break;
 
                                     // Execute query!
