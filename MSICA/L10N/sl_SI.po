@@ -180,6 +180,3 @@ msgstr "Zaustavitev servisov"
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:9
 msgid "WLAN profile: [1]"
 msgstr "Profil WLAN: [1]"
-
-#~ msgid "Evaluating WLAN profiles"
-#~ msgstr "Pregled profilov WLAN"
