@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSICA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-24 13:54+0100\n"
+"POT-Creation-Date: 2015-02-24 09:30+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 1.6.4\n"
+"X-Generator: Poedit 1.7.4\n"
 "X-Poedit-SearchPath-0: MSIBuild\n"
 "X-Poedit-SearchPath-1: res\n"
 
@@ -45,12 +45,12 @@ msgid "AFX_TARG_ENU"
 msgstr "AFX_TARG_SLV"
 
 #: res/MSICA.rcx:44
-msgid "Amebis, d. o. o., Kamnik"
-msgstr "Amebis, d. o. o., Kamnik"
+msgid "Amebis, d. o. o., Kamnik, Slovenia"
+msgstr "Amebis, d. o. o., Kamnik, Slovenija"
 
 #: res/MSICA.rcx:48
-msgid "Copyright © Amebis, d. o. o., Kamnik, 2012"
-msgstr "Vse pravice pridržane © Amebis, d. o. o., Kamnik, 2012"
+msgid "Copyright © Amebis, 2012"
+msgstr "Vse pravice pridržane © Amebis, 2012"
 
 #: res/MSICA.rcx:45
 msgid "Installation Support Library"
