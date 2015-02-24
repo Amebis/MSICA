@@ -6,6 +6,7 @@ MSICA/MSIBuild/build_all.bat -text
 MSICA/MSIBuild/clean_all.bat -text
 MSICA/MSICA.cpp -text
 MSICA/MSICA.h -text
+MSICA/MSICA.props -text svneol=unset#text/xml
 MSICA/MSICA.vcxproj -text svneol=unset#text/xml
 MSICA/MSICA.vcxproj.filters -text svneol=unset#text/xml
 MSICA/res/MSICA.rc -text svneol=unset#unset

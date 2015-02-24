@@ -54,89 +54,37 @@
     <Import Project="..\include\common.props" />
     <Import Project="..\include\Win32.props" />
     <Import Project="..\include\Release.props" />
+    <Import Project="MSICA.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\include\common.props" />
     <Import Project="..\include\Win32.props" />
     <Import Project="..\include\Debug.props" />
+    <Import Project="MSICA.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\include\common.props" />
     <Import Project="..\include\x64.props" />
     <Import Project="..\include\Release.props" />
+    <Import Project="MSICA.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\include\common.props" />
     <Import Project="..\include\x64.props" />
     <Import Project="..\include\Debug.props" />
+    <Import Project="MSICA.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\output\$(Platform).$(Configuration)\</OutDir>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\output\$(Platform).$(Configuration)\</OutDir>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\output\$(Platform).$(Configuration)\</OutDir>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</IgnoreImportLibrary>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\output\$(Platform).$(Configuration)\</OutDir>
-    <IgnoreImportLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</IgnoreImportLibrary>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Link>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-    <Midl>
-      <HeaderFileName>%(Filename)_h.h</HeaderFileName>
-    </Midl>
-    <ClCompile />
-    <ResourceLocalizator>
-      <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
-    </ResourceLocalizator>
-    <ClCompile />
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Link>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-    <Midl>
-      <HeaderFileName>%(Filename)_h.h</HeaderFileName>
-    </Midl>
-    <ClCompile />
-    <ResourceLocalizator>
-      <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
-    </ResourceLocalizator>
-    <ClCompile />
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Link>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-    <Midl>
-      <HeaderFileName>%(Filename)_h.h</HeaderFileName>
-    </Midl>
-    <ClCompile />
-    <ResourceLocalizator>
-      <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
-    </ResourceLocalizator>
-    <ClCompile />
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <Link>
-      <SubSystem>Windows</SubSystem>
-    </Link>
-    <Midl>
-      <HeaderFileName>%(Filename)_h.h</HeaderFileName>
-    </Midl>
-    <ClCompile />
-    <ResourceLocalizator>
-      <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
-    </ResourceLocalizator>
-    <ClCompile />
-  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   <ItemGroup>
     <ClCompile Include="MSICA.cpp" />
     <ClCompile Include="stdafx.cpp">
