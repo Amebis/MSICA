@@ -140,7 +140,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                             // Fetch one record from the view.
                             uiResult = ::MsiViewFetch(hViewBinary, &hRecord);
                             if (uiResult == NO_ERROR)
-                                uiResult = ::MsiRecordGetStream(hRecord, 1, binCert);
+                                uiResult = ::MsiRecordReadStream(hRecord, 1, binCert);
                             ::MsiViewClose(hViewBinary);
                             if (uiResult != NO_ERROR) break;
                         } else
@@ -457,7 +457,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                                     // Fetch one record from the view.
                                     uiResult = ::MsiViewFetch(hViewBinary, &hRecordBin);
                                     if (uiResult == NO_ERROR)
-                                        uiResult = ::MsiRecordGetStream(hRecordBin, 1, binProfile);
+                                        uiResult = ::MsiRecordReadStream(hRecordBin, 1, binProfile);
                                     ::MsiViewClose(hViewBinary);
                                     if (uiResult != NO_ERROR) break;
 
