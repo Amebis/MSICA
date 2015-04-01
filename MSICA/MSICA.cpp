@@ -505,6 +505,10 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                             ::WlanFreeMemory(pInterfaceList);
                         }
                         ::WlanCloseHandle(hClientHandle, NULL);
+                    } else if (dwError == ERROR_SERVICE_NOT_ACTIVE) {
+                        uiResult = ERROR_INSTALL_WLAN_SVC_NOT_STARTED;
+                        ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
+                        ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                     } else {
                         uiResult = ERROR_INSTALL_WLAN_HANDLE_OPEN;
                         ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
