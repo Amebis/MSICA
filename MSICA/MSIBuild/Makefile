@@ -141,18 +141,18 @@ binMSICA.dll	MSICA.dll
 	copy /y $** $@ > NUL
 
 
-######################################################################
-# Certificate
-
-All :: "$(LANG).$(PLAT).$(CFG).Certificate-1.idt"
-
-"$(LANG).$(PLAT).$(CFG).Certificate-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
-	-if exist $@ del /f /q $@
-	move /y << $@ > NUL
-Certificate	Store	Flags	Encoding	Binary_	Condition	Component_
-s$(MSIBUILD_LENGTH_ID)	s255	i4	i4	s$(MSIBUILD_LENGTH_ID)	S255	s$(MSIBUILD_LENGTH_ID)
-Certificate	Certificate
-<<NOKEEP
+#######################################################################
+## Certificate
+#
+#All :: "$(LANG).$(PLAT).$(CFG).Certificate-1.idt"
+#
+#"$(LANG).$(PLAT).$(CFG).Certificate-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#	-if exist $@ del /f /q $@
+#	move /y << $@ > NUL
+#Certificate	Store	Flags	Encoding	Binary_	Condition	Component_
+#s$(MSIBUILD_LENGTH_ID)	s255	i4	i4	s$(MSIBUILD_LENGTH_ID)	S255	s$(MSIBUILD_LENGTH_ID)
+#Certificate	Certificate
+#<<NOKEEP
 
 
 ######################################################################
@@ -239,60 +239,60 @@ InstallScheduledTasksCommit		6164
 <<NOKEEP
 
 
-######################################################################
-# ScheduledTask
-
-All :: "$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt"
-
-"$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
-	-if exist $@ del /f /q $@
-	move /y << $@ > NUL
-Task	DisplayName	Application	Parameters	Directory_	Flags	Priority	User	Password	Author	Description	IdleMin	IdleDeadline	MaxRuntime	Condition	Component_
-s$(MSIBUILD_LENGTH_ID)	l255	s255	S255	s$(MSIBUILD_LENGTH_ID)	i4	i4	S255	S255	L255	L0	I2	I2	i4	S255	s$(MSIBUILD_LENGTH_ID)
-ScheduledTask	Task
-<<NOKEEP
-
-
-######################################################################
-# ServiceConfigure
-
-All :: "$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt"
-
-"$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
-	-if exist $@ del /f /q $@
-	move /y << $@ > NUL
-ServiceConfigure	Name	StartType	Control	Condition	Sequence
-s$(MSIBUILD_LENGTH_ID)	l255	i4	i2	S255	I2
-ServiceConfigure	ServiceConfigure
-<<NOKEEP
+#######################################################################
+## ScheduledTask
+#
+#All :: "$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt"
+#
+#"$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#	-if exist $@ del /f /q $@
+#	move /y << $@ > NUL
+#Task	DisplayName	Application	Parameters	Directory_	Flags	Priority	User	Password	Author	Description	IdleMin	IdleDeadline	MaxRuntime	Condition	Component_
+#s$(MSIBUILD_LENGTH_ID)	l255	s255	S255	s$(MSIBUILD_LENGTH_ID)	i4	i4	S255	S255	L255	L0	I2	I2	i4	S255	s$(MSIBUILD_LENGTH_ID)
+#ScheduledTask	Task
+#<<NOKEEP
 
 
-######################################################################
-# TaskTrigger
+#######################################################################
+## ServiceConfigure
+#
+#All :: "$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt"
+#
+#"$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#	-if exist $@ del /f /q $@
+#	move /y << $@ > NUL
+#ServiceConfigure	Name	StartType	Control	Condition	Sequence
+#s$(MSIBUILD_LENGTH_ID)	l255	i4	i2	S255	I2
+#ServiceConfigure	ServiceConfigure
+#<<NOKEEP
 
-All :: "$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt"
 
-"$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
-	-if exist $@ del /f /q $@
-	move /y << $@ > NUL
-Trigger	BeginDate	EndDate	StartTime	StartTimeRand	MinutesDuration	MinutesInterval	Flags	Type	DaysInterval	WeeksInterval	DaysOfTheWeek	DaysOfMonth	WeekOfMonth	MonthsOfYear	Task_
-s$(MSIBUILD_LENGTH_ID)	i2	I2	i2	I2	I4	I4	i4	i2	I2	I2	I2	I4	I2	I2	s$(MSIBUILD_LENGTH_ID)
-TaskTrigger	Trigger
-<<NOKEEP
+#######################################################################
+## TaskTrigger
+#
+#All :: "$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt"
+#
+#"$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#	-if exist $@ del /f /q $@
+#	move /y << $@ > NUL
+#Trigger	BeginDate	EndDate	StartTime	StartTimeRand	MinutesDuration	MinutesInterval	Flags	Type	DaysInterval	WeeksInterval	DaysOfTheWeek	DaysOfMonth	WeekOfMonth	MonthsOfYear	Task_
+#s$(MSIBUILD_LENGTH_ID)	i2	I2	i2	I2	I4	I4	i4	i2	I2	I2	I2	I4	I2	I2	s$(MSIBUILD_LENGTH_ID)
+#TaskTrigger	Trigger
+#<<NOKEEP
 
 
-######################################################################
-# WLANProfile
-
-All :: "$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt"
-
-"$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
-	-if exist $@ del /f /q $@
-	move /y << $@ > NUL
-WLANProfile	Name	Binary_	Condition	Component_
-s$(MSIBUILD_LENGTH_ID)	l255	s$(MSIBUILD_LENGTH_ID)	S255	s$(MSIBUILD_LENGTH_ID)
-WLANProfile	WLANProfile
-<<NOKEEP
+#######################################################################
+## WLANProfile
+#
+#All :: "$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt"
+#
+#"$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#	-if exist $@ del /f /q $@
+#	move /y << $@ > NUL
+#WLANProfile	Name	Binary_	Condition	Component_
+#s$(MSIBUILD_LENGTH_ID)	l255	s$(MSIBUILD_LENGTH_ID)	S255	s$(MSIBUILD_LENGTH_ID)
+#WLANProfile	WLANProfile
+#<<NOKEEP
 
 
 ######################################################################
