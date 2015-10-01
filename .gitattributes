@@ -29,6 +29,7 @@ MSICALib/OpTS.cpp -text
 MSICALib/OpWLAN.cpp -text
 MSICALib/stdafx.cpp -text
 MSICALib/stdafx.h -text
+/TODO.rtf -text svneol=unset#text/rtf
 include/Debug.props -text svneol=unset#text/xml
 include/Release.props -text svneol=unset#text/xml
 include/Win32.props -text svneol=unset#text/xml
