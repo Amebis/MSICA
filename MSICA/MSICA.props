@@ -14,7 +14,7 @@
       <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
     </ResourceLocalizator>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\lib\MSICALib\include;..\..\..\lib\atlex\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\lib\MSICALib\include;..\lib\atlex\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

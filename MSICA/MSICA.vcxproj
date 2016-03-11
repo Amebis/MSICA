@@ -103,7 +103,7 @@
     <ResourceCompile Include="MSICA.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\lib\MSICALib\build\MSICALib.vcxproj">
+    <ProjectReference Include="..\lib\MSICALib\build\MSICALib.vcxproj">
       <Project>{8552ee55-177e-4f51-b51b-baf7d6462cde}</Project>
     </ProjectReference>
   </ItemGroup>
