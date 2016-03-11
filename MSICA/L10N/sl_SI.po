@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSICA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-24 09:30+0100\n"
+"POT-Creation-Date: 2016-03-11 13:31+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -13,61 +13,16 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: ..\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-SearchPath-0: MSIBuild\n"
 
-# Language Code and Windows Charset (hexadecimal)
-# If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
-# For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#: res/MSICA.rcx:42
-msgid "040904e4"
-msgstr "042404e2"
-
-# Language Code (hexadecimal)
-# If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
-# For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#: res/MSICA.rcx:60
-msgid "0x409"
-msgstr "0x424"
-
 # Windows charset for this language (decimal)
-#: res/MSICA.rcx:60 MSIBuild/En.Win32.Debug.ActionText-2.idtx:3
+#: MSIBuild/En.Win32.Debug.ActionText-2.idtx:3
 #: MSIBuild/En.Win32.Release.ActionText-2.idtx:3
 #: MSIBuild/En.x64.Debug.ActionText-2.idtx:3
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:3
 msgid "1252"
 msgstr "1250"
-
-# The name of the constant in RC to include the resources in this language.
-#: res/MSICA.rcx:41 res/MSICA.rcx:59 res/MSICA.rcx:75
-msgid "AFX_TARG_ENU"
-msgstr "AFX_TARG_SLV"
-
-#: res/MSICA.rcx:44
-msgid "Amebis, d. o. o., Kamnik, Slovenia"
-msgstr "Amebis, d. o. o., Kamnik, Slovenija"
-
-#: res/MSICA.rcx:48
-msgid "Copyright © Amebis, 2012"
-msgstr "Vse pravice pridržane © Amebis, 2012"
-
-#: res/MSICA.rcx:45
-msgid "Installation Support Library"
-msgstr "Podporna knjižnica za namestitve"
-
-# Language Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#: res/MSICA.rcx:77
-msgid "LANG_ENGLISH"
-msgstr "LANG_SLOVENIAN"
-
-#: res/MSICA.rcx:47 res/MSICA.rcx:49
-msgid "MSICA"
-msgstr "MSICA"
-
-# Sublanguage Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#: res/MSICA.rcx:77
-msgid "SUBLANG_DEFAULT"
-msgstr "SUBLANG_DEFAULT"
 
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:7
 #: MSIBuild/En.Win32.Debug.ActionText-2.idtx:8
@@ -179,3 +134,39 @@ msgstr "Zaustavitev servisov"
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:9
 msgid "WLAN profile: [1]"
 msgstr "Profil WLAN: [1]"
+
+# Language Code and Windows Charset (hexadecimal)
+# If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
+# For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
+#~ msgid "040904e4"
+#~ msgstr "042404e2"
+
+# Language Code (hexadecimal)
+# If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
+# For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
+#~ msgid "0x409"
+#~ msgstr "0x424"
+
+# The name of the constant in RC to include the resources in this language.
+#~ msgid "AFX_TARG_ENU"
+#~ msgstr "AFX_TARG_SLV"
+
+#~ msgid "Amebis, d. o. o., Kamnik, Slovenia"
+#~ msgstr "Amebis, d. o. o., Kamnik, Slovenija"
+
+#~ msgid "Copyright © Amebis, 2012"
+#~ msgstr "Vse pravice pridržane © Amebis, 2012"
+
+#~ msgid "Installation Support Library"
+#~ msgstr "Podporna knjižnica za namestitve"
+
+# Language Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
+#~ msgid "LANG_ENGLISH"
+#~ msgstr "LANG_SLOVENIAN"
+
+#~ msgid "MSICA"
+#~ msgstr "MSICA"
+
+# Sublanguage Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
+#~ msgid "SUBLANG_DEFAULT"
+#~ msgstr "SUBLANG_DEFAULT"
