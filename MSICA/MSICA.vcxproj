@@ -100,12 +100,12 @@
     <None Include="L10N\sl_SI.po" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\lib\MSICALib\build\MSICALib.vcxproj">
-      <Project>{8552ee55-177e-4f51-b51b-baf7d6462cde}</Project>
-    </ProjectReference>
+    <ResourceCompile Include="MSICA.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MSICA.rc" />
+    <ProjectReference Include="..\..\..\lib\MSICALib\build\MSICALib.vcxproj">
+      <Project>{8552ee55-177e-4f51-b51b-baf7d6462cde}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
