@@ -137,7 +137,7 @@ Binary	Name
 binMSICA.dll	MSICA.dll
 <<NOKEEP
 
-"$(LANG).$(PLAT).$(CFG).Binary-1\MSICA.dll" : "..\..\output\$(PLAT).$(CFG)\MSICA.dll"
+"$(LANG).$(PLAT).$(CFG).Binary-1\MSICA.dll" : "..\..\..\..\output\$(PLAT).$(CFG)\MSICA.dll"
 	copy /y $** $@ > NUL
 
 
