@@ -13,17 +13,5 @@ MSICA/MSIBuild/*.Icon-2
 MSICA/MSIBuild/*.lst
 MSICA/MSIBuild/*.msm
 MSICA/temp
-MSICALib/*.user
-MSICALib/L10N/*.mo
-MSICALib/MSIBuild/*-1.idt
-MSICALib/MSIBuild/*-2.idt
-MSICALib/MSIBuild/*-2.idtx
-MSICALib/MSIBuild/*.Binary-1
-MSICALib/MSIBuild/*.Binary-2
-MSICALib/MSIBuild/*.Icon-1
-MSICALib/MSIBuild/*.Icon-2
-MSICALib/MSIBuild/*.lst
-MSICALib/MSIBuild/*.msm
-MSICALib/temp
 /ipch
 /output

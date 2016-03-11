@@ -31,18 +31,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="res\MSICA.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceLocalizator Include="res\MSICA.rcx">
-      <Filter>Resource Files</Filter>
-    </ResourceLocalizator>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="L10N\sl_SI.po">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MSICA.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

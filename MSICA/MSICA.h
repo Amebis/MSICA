@@ -20,8 +20,23 @@
 #ifndef __MSICA_H__
 #define __MSICA_H__
 
-#include <msi.h>
+////////////////////////////////////////////////////////////////////
+// Version
+////////////////////////////////////////////////////////////////////
 
+#define MSICA_VERSION        0x00ff0400
+
+#define MSICA_VERSION_MAJ    0
+#define MSICA_VERSION_MIN    255
+#define MSICA_VERSION_REV    4
+#define MSICA_VERSION_BUILD  0
+
+#define MSICA_VERSION_STR    "1.0-pre4"
+#define MSICA_BUILD_YEAR_STR "2015"
+
+#if !defined(RC_INVOKED) && !defined(MIDL_PASS)
+
+#include <msi.h>
 
 ////////////////////////////////////////////////////////////////////
 // Calling declaration
@@ -50,4 +65,5 @@ extern "C" {
 }
 #endif
 
+#endif // !RC_INVOKED && !MIDL_PASS
 #endif // __MSICA_H__

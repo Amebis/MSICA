@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir>..\output\$(Platform).$(Configuration)\</OutDir>
+    <OutDir>..\..\output\$(Platform).$(Configuration)\</OutDir>
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -13,6 +13,9 @@
     <ResourceLocalizator>
       <LanguageCatalogs>L10N\sl_SI.po</LanguageCatalogs>
     </ResourceLocalizator>
+    <ClCompile>
+      <AdditionalIncludeDirectories>..\include;..\..\lib\MSICALib\include;..\..\lib\atlex\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

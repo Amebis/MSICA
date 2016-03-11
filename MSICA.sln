@@ -1,14 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MSICALib", "MSICALib\MSICALib.vcxproj", "{8552EE55-177E-4F51-B51B-BAF7D6462CDE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "atlex", "..\lib\atlex\build\atlex.vcxproj", "{5A4EADF2-3237-457A-9DA8-BB9942A91019}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MSICALib", "..\lib\MSICALib\build\MSICALib.vcxproj", "{8552EE55-177E-4F51-B51B-BAF7D6462CDE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MSICA", "MSICA\MSICA.vcxproj", "{A7D9EBC1-1E64-4399-9C88-6692F8742153}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F3D5C008-7728-49CA-84F1-12C186FC87F8}"
-	ProjectSection(SolutionItems) = preProject
-		include\version.h = include\version.h
-	EndProjectSection
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{26350A68-2F55-4732-972C-4A5E9077699E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +17,14 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019}.Debug|Win32.Build.0 = Debug|Win32
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019}.Debug|x64.ActiveCfg = Debug|x64
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019}.Debug|x64.Build.0 = Debug|x64
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019}.Release|Win32.ActiveCfg = Release|Win32
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019}.Release|Win32.Build.0 = Release|Win32
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019}.Release|x64.ActiveCfg = Release|x64
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019}.Release|x64.Build.0 = Release|x64
 		{8552EE55-177E-4F51-B51B-BAF7D6462CDE}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8552EE55-177E-4F51-B51B-BAF7D6462CDE}.Debug|Win32.Build.0 = Debug|Win32
 		{8552EE55-177E-4F51-B51B-BAF7D6462CDE}.Debug|x64.ActiveCfg = Debug|x64
@@ -37,5 +44,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5A4EADF2-3237-457A-9DA8-BB9942A91019} = {26350A68-2F55-4732-972C-4A5E9077699E}
+		{8552EE55-177E-4F51-B51B-BAF7D6462CDE} = {26350A68-2F55-4732-972C-4A5E9077699E}
 	EndGlobalSection
 EndGlobal

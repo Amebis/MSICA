@@ -15,7 +15,6 @@ msgstr ""
 "X-Poedit-Basepath: ..\n"
 "X-Generator: Poedit 1.7.4\n"
 "X-Poedit-SearchPath-0: MSIBuild\n"
-"X-Poedit-SearchPath-1: res\n"
 
 # Language Code and Windows Charset (hexadecimal)
 # If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.

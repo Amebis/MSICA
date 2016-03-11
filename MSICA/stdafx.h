@@ -32,6 +32,6 @@
 #include <time.h>
 #include <wlanapi.h>
 
-#include "..\MSICALib\MSICALib.h"
+#include <MSICALib.h>
 
 #include "MSICA.h"
