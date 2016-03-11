@@ -1,5 +1,5 @@
 /*
-    Copyright 1991-2015 Amebis
+    Copyright 1991-2016 Amebis
 
     This file is part of MSICA.
 
@@ -24,15 +24,15 @@
 // Version
 ////////////////////////////////////////////////////////////////////
 
-#define MSICA_VERSION        0x00ff0400
+#define MSICA_VERSION        0x00ff0500
 
 #define MSICA_VERSION_MAJ    0
 #define MSICA_VERSION_MIN    255
-#define MSICA_VERSION_REV    4
+#define MSICA_VERSION_REV    5
 #define MSICA_VERSION_BUILD  0
 
-#define MSICA_VERSION_STR    "1.0-pre4"
-#define MSICA_BUILD_YEAR_STR "2015"
+#define MSICA_VERSION_STR    "1.0-pre5"
+#define MSICA_BUILD_YEAR_STR "2016"
 
 #if !defined(RC_INVOKED) && !defined(MIDL_PASS)
 
