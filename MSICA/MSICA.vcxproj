@@ -49,30 +49,30 @@
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\include\common.props" />
-    <Import Project="..\..\include\Win32.props" />
-    <Import Project="..\..\include\Release.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\Win32.props" />
+    <Import Project="..\include\Release.props" />
     <Import Project="MSICA.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\include\common.props" />
-    <Import Project="..\..\include\Win32.props" />
-    <Import Project="..\..\include\Debug.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\Win32.props" />
+    <Import Project="..\include\Debug.props" />
     <Import Project="MSICA.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\include\common.props" />
-    <Import Project="..\..\include\x64.props" />
-    <Import Project="..\..\include\Release.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\x64.props" />
+    <Import Project="..\include\Release.props" />
     <Import Project="MSICA.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\include\common.props" />
-    <Import Project="..\..\include\x64.props" />
-    <Import Project="..\..\include\Debug.props" />
+    <Import Project="..\include\common.props" />
+    <Import Project="..\include\x64.props" />
+    <Import Project="..\include\Debug.props" />
     <Import Project="MSICA.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
