@@ -13,23 +13,6 @@ MSICA/res/MSICA.rc -text svneol=unset#unset
 MSICA/res/MSICA.rcx -text svneol=unset#unset
 MSICA/stdafx.cpp -text
 MSICA/stdafx.h -text
-MSICALib/L10N/sl_SI.po -text
-MSICALib/MSIBuild/Makefile -text
-MSICALib/MSIBuild/build_all.bat -text
-MSICALib/MSIBuild/clean_all.bat -text
-MSICALib/MSICALib.cpp -text
-MSICALib/MSICALib.h -text
-MSICALib/MSICALib.vcxproj -text svneol=unset#text/xml
-MSICALib/MSICALib.vcxproj.filters -text svneol=unset#text/xml
-MSICALib/OpCert.cpp -text
-MSICALib/OpFile.cpp -text
-MSICALib/OpReg.cpp -text
-MSICALib/OpSvc.cpp -text
-MSICALib/OpTS.cpp -text
-MSICALib/OpWLAN.cpp -text
-MSICALib/stdafx.cpp -text
-MSICALib/stdafx.h -text
-/TODO.rtf -text svneol=unset#text/rtf
 include/Debug.props -text svneol=unset#text/xml
 include/Release.props -text svneol=unset#text/xml
 include/Win32.props -text svneol=unset#text/xml
