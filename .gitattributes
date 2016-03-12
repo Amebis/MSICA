@@ -1,21 +1,14 @@
 * text=auto !eol
 /MSICA.sln svneol=CRLF#text/plain eol=crlf
-MSICA/L10N/sl_SI.po -text
-MSICA/MSIBuild/Makefile -text
-MSICA/MSIBuild/build_all.bat -text
-MSICA/MSIBuild/clean_all.bat -text
-MSICA/MSICA.cpp -text
-MSICA/MSICA.h -text
-MSICA/MSICA.props -text svneol=unset#text/xml
-MSICA/MSICA.vcxproj -text svneol=unset#text/xml
-MSICA/MSICA.vcxproj.filters -text svneol=unset#text/xml
-MSICA/res/MSICA.rc -text svneol=unset#unset
-MSICA/res/MSICA.rcx -text svneol=unset#unset
-MSICA/stdafx.cpp -text
-MSICA/stdafx.h -text
-include/Debug.props -text svneol=unset#text/xml
-include/Release.props -text svneol=unset#text/xml
-include/Win32.props -text svneol=unset#text/xml
-include/common.props -text svneol=unset#text/xml
-include/version.h -text
-include/x64.props -text svneol=unset#text/xml
+L10N/sl_SI.po -text
+MSIBuild/Makefile -text
+MSIBuild/build_all.bat -text
+MSIBuild/clean_all.bat -text
+src/MSICA.cpp -text
+include/MSICA.h -text
+build/MSICA.props -text svneol=unset#text/xml
+build/MSICA.vcxproj -text svneol=unset#text/xml
+build/MSICA.vcxproj.filters -text svneol=unset#text/xml
+res/MSICA.rc -text svneol=unset#unset
+src/stdafx.cpp -text
+src/stdafx.h -text
