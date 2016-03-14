@@ -2,11 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSICA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-11 13:31+0100\n"
+"POT-Creation-Date: 2016-03-14 17:16+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
-"Language: sl\n"
+"Language: sl_SI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -14,6 +14,7 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: ..\n"
 "X-Generator: Poedit 1.8.7\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 "X-Poedit-SearchPath-0: MSIBuild\n"
 
 # Windows charset for this language (decimal)
@@ -134,39 +135,3 @@ msgstr "Zaustavitev servisov"
 #: MSIBuild/En.x64.Release.ActionText-2.idtx:9
 msgid "WLAN profile: [1]"
 msgstr "Profil WLAN: [1]"
-
-# Language Code and Windows Charset (hexadecimal)
-# If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
-# For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#~ msgid "040904e4"
-#~ msgstr "042404e2"
-
-# Language Code (hexadecimal)
-# If we do not intend to provide different localization of same base language (like merging Portugal Portugeese and Brasil Portugese into the same Portugeese), use the code of Microsoft defined default sublanguage.
-# For example: Use LANG_PORTUGUESE + SUBLANG_DEFAULT = 0x416, although 0x416 represents Brasil Portugese (too).
-#~ msgid "0x409"
-#~ msgstr "0x424"
-
-# The name of the constant in RC to include the resources in this language.
-#~ msgid "AFX_TARG_ENU"
-#~ msgstr "AFX_TARG_SLV"
-
-#~ msgid "Amebis, d. o. o., Kamnik, Slovenia"
-#~ msgstr "Amebis, d. o. o., Kamnik, Slovenija"
-
-#~ msgid "Copyright © Amebis, 2012"
-#~ msgstr "Vse pravice pridržane © Amebis, 2012"
-
-#~ msgid "Installation Support Library"
-#~ msgstr "Podporna knjižnica za namestitve"
-
-# Language Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#~ msgid "LANG_ENGLISH"
-#~ msgstr "LANG_SLOVENIAN"
-
-#~ msgid "MSICA"
-#~ msgstr "MSICA"
-
-# Sublanguage Identifier (see http://msdn.microsoft.com/en-us/library/windows/desktop/dd318693(v=vs.85).aspx)
-#~ msgid "SUBLANG_DEFAULT"
-#~ msgstr "SUBLANG_DEFAULT"
