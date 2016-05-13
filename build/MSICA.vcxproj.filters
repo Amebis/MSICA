@@ -13,6 +13,10 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;rcx;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;po</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Localization">
+      <UniqueIdentifier>{5e758a87-4e4b-484d-ae31-f6ee4f248b3b}</UniqueIdentifier>
+      <Extensions>po;pot</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\MSICA.cpp">
@@ -31,8 +35,17 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\locale\de_DE.po">
+      <Filter>Resource Files\Localization</Filter>
+    </None>
+    <None Include="..\locale\ru_RU.po">
+      <Filter>Resource Files\Localization</Filter>
+    </None>
     <None Include="..\locale\sl_SI.po">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Localization</Filter>
+    </None>
+    <None Include="..\locale\MSICA.pot">
+      <Filter>Resource Files\Localization</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
