@@ -38,9 +38,6 @@
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
-    <ResourceLocalizator>
-      <LanguageCatalogs>locale\sl_SI.po</LanguageCatalogs>
-    </ResourceLocalizator>
     <ClCompile>
       <AdditionalIncludeDirectories>..\include;..\..\..\lib\MSICALib\include;..\..\..\lib\atlex\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

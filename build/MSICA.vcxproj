@@ -93,12 +93,6 @@
     <ClInclude Include="..\src\stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\locale\de_DE.po" />
-    <None Include="..\locale\MSICA.pot" />
-    <None Include="..\locale\ru_RU.po" />
-    <None Include="..\locale\sl_SI.po" />
-  </ItemGroup>
-  <ItemGroup>
     <ResourceCompile Include="..\res\MSICA.rc" />
   </ItemGroup>
   <ItemGroup>
