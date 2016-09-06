@@ -108,20 +108,13 @@ StartServicesExec	Starting services	Service: [1]
 InstallScheduledTasksExec	Installing scheduled tasks	Scheduled task: [1]
 <<NOKEEP
 
-"De.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\de_DE.po"
-	rcxgettext.exe idtp $@ $**
-
+!IF "$(LANG)" == "En"
 "En.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx"
 	copy /y $** $@ > NUL
-
-"It.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\it_IT.po"
+!ELSE
+"$(LANG).$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\$(MSIBUILD_LANG_PO).po"
 	rcxgettext.exe idtp $@ $**
-
-"Ru.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\ru_RU.po"
-	rcxgettext.exe idtp $@ $**
-
-"Sl.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\sl_SI.po"
-	rcxgettext.exe idtp $@ $**
+!ENDIF
 
 
 ######################################################################
