@@ -91,7 +91,7 @@ WLANProfile	Component_	N			Component	1	Identifier		Component the profile is part
 
 All :: "$(LANG).$(PLAT).$(CFG).ActionText-2.idt"
 
-"En.$(PLAT).$(CFG).ActionText-2.idtx" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+"en_US.$(PLAT).$(CFG).ActionText-2.idtx" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Action	Description	Template
@@ -108,11 +108,11 @@ StartServicesExec	Starting services	Service: [1]
 InstallScheduledTasksExec	Installing scheduled tasks	Scheduled task: [1]
 <<NOKEEP
 
-!IF "$(LANG)" == "En"
-"En.$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx"
+!IF "$(LANG)" == "en_US"
+"en_US.$(PLAT).$(CFG).ActionText-2.idt" : "en_US.$(PLAT).$(CFG).ActionText-2.idtx"
 	copy /y $** $@ > NUL
 !ELSE
-"$(LANG).$(PLAT).$(CFG).ActionText-2.idt" : "En.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\$(MSIBUILD_LANG_PO).po"
+"$(LANG).$(PLAT).$(CFG).ActionText-2.idt" : "en_US.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\$(LANG).po"
 	rcxgettext.exe idtp $@ $**
 !ENDIF
 
