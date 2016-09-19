@@ -113,7 +113,7 @@ InstallScheduledTasksExec	Installing scheduled tasks	Scheduled task: [1]
 	copy /y $** $@ > NUL
 !ELSE
 "$(LANG).$(PLAT).$(CFG).ActionText-2.idt" : "en_US.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\$(LANG).po"
-	rcxgettext.exe idtp $@ $**
+	cscript.exe "..\..\MSIBuild\MSI.wsf" //Job:IDTTranslate //Nologo $@ $** /CP:$(MSIBUILD_CODEPAGE)
 !ENDIF
 
 
