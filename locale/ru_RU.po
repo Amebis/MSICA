@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MSICA\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-13 19:50+0200\n"
+"POT-Creation-Date: 2016-10-05 08:42+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Simon Rozman <simon.rozman@amebis.si>\n"
 "Language-Team: Amebis, d. o. o., Kamnik <simon.rozman@amebis.si>\n"
@@ -13,87 +13,117 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: .\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.9\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-# Windows charset for this language (decimal)
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:3
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:3
-msgid "1252"
-msgstr "1251"
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:7
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:8
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:7
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:8
-msgid "Certificate: [1]"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:10
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:10
-msgid "Configuring services"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:8
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:8
-msgid "Installing certificates"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:12
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:12
-msgid "Installing scheduled tasks"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:9
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:9
-msgid "Installing WLAN profiles"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:7
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:7
-msgid "Removing certificates"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:4
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:4
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:4
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:4
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:4
 msgid "Removing scheduled tasks"
-msgstr ""
+msgstr "Удаление запланированных задач"
 
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:6
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:6
-msgid "Removing WLAN profiles"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:12
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:4
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:12
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:4
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:4
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:12
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:4
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:12
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:4
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:12
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:4
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:12
 msgid "Scheduled task: [1]"
-msgstr ""
+msgstr "Запланированная задача: [1]"
 
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:10
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:11
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:10
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:11
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:5
-msgid "Service: [1]"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:11
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:11
-msgid "Starting services"
-msgstr ""
-
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:5
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:5
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:5
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:5
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:5
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:5
 msgid "Stopping services"
-msgstr ""
+msgstr "Остановка служб"
 
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:6
-#: MSIBuild/En.Win32.Release.ActionText-2.idtx:9
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:6
-#: MSIBuild/En.x64.Release.ActionText-2.idtx:9
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:5
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:10
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:11
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:5
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:10
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:11
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:5
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:10
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:11
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:5
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:10
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:11
+msgid "Service: [1]"
+msgstr "Служба: [1]"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:6
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:6
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:6
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:6
+msgid "Removing WLAN profiles"
+msgstr "Удаление профилей WLAN"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:6
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:9
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:6
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:9
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:6
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:9
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:6
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:9
 msgid "WLAN profile: [1]"
-msgstr ""
+msgstr "Профиль WLAN: [1]"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:7
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:7
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:7
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:7
+msgid "Removing certificates"
+msgstr "Удаление сертификатов"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:7
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:8
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:7
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:8
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:7
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:8
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:7
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:8
+msgid "Certificate: [1]"
+msgstr "Сертификат: [1]"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:8
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:8
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:8
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:8
+msgid "Installing certificates"
+msgstr "Установка сертификатов"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:9
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:9
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:9
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:9
+msgid "Installing WLAN profiles"
+msgstr "Установка профилей WLAN"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:10
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:10
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:10
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:10
+msgid "Configuring services"
+msgstr "Настройка служб"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:11
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:11
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:11
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:11
+msgid "Starting services"
+msgstr "Запуск служб"
+
+#: MSIBuild/en_US.Win32.Debug.ActionText-2.idtx:12
+#: MSIBuild/en_US.Win32.Release.ActionText-2.idtx:12
+#: MSIBuild/en_US.x64.Debug.ActionText-2.idtx:12
+#: MSIBuild/en_US.x64.Release.ActionText-2.idtx:12
+msgid "Installing scheduled tasks"
+msgstr "Установка запланированных задач"
