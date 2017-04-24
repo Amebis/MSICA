@@ -17,7 +17,7 @@
 #    along with MSICA. If not, see <http://www.gnu.org/licenses/>.
 #
 
-!INCLUDE "..\..\..\include\MSIBuildCfg.mak"
+!INCLUDE "..\..\..\..\include\MSIBuildCfg.mak"
 
 MSIBUILD_IS_LOCALIZEABLE=1
 
@@ -27,7 +27,7 @@ MSIBUILD_IS_LOCALIZEABLE=1
 
 All :: "$(LANG).$(PLAT).$(CFG)._Validation-1.idt"
 
-"$(LANG).$(PLAT).$(CFG)._Validation-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+"$(LANG).$(PLAT).$(CFG)._Validation-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Table	Column	Nullable	MinValue	MaxValue	KeyTable	KeyColumn	Category	Set	Description
@@ -91,7 +91,7 @@ WLANProfile	Component_	N			Component	1	Identifier		Component the profile is part
 
 All :: "$(LANG).$(PLAT).$(CFG).ActionText-2.idt"
 
-"en_US.$(PLAT).$(CFG).ActionText-2.idtx" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+"en_US.$(PLAT).$(CFG).ActionText-2.idtx" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Action	Description	Template
@@ -113,7 +113,7 @@ InstallScheduledTasksExec	Installing scheduled tasks	Scheduled task: [1]
 	copy /y $** $@ > NUL
 !ELSE
 "$(LANG).$(PLAT).$(CFG).ActionText-2.idt" : "en_US.$(PLAT).$(CFG).ActionText-2.idtx" "..\locale\$(LANG).po"
-	cscript.exe "..\..\MSIBuild\MSI.wsf" //Job:IDTTranslate //Nologo $@ $** /CP:$(MSIBUILD_CODEPAGE)
+	cscript.exe "..\..\..\MSIBuild\MSI.wsf" //Job:IDTTranslate //Nologo $@ $** /CP:$(MSIBUILD_CODEPAGE)
 !ENDIF
 
 
@@ -124,7 +124,7 @@ All :: \
 	"$(LANG).$(PLAT).$(CFG).Binary-1.idt" \
 	"$(LANG).$(PLAT).$(CFG).Binary-1\MSICA.dll"
 
-"$(LANG).$(PLAT).$(CFG).Binary-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak" "$(LANG).$(PLAT).$(CFG).Binary-1"
+"$(LANG).$(PLAT).$(CFG).Binary-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak" "$(LANG).$(PLAT).$(CFG).Binary-1"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Name	Data
@@ -133,7 +133,7 @@ Binary	Name
 binMSICA.dll	MSICA.dll
 <<NOKEEP
 
-"$(LANG).$(PLAT).$(CFG).Binary-1\MSICA.dll" : "..\output\$(PLAT).$(CFG)\MSICA.dll"
+"$(LANG).$(PLAT).$(CFG).Binary-1\MSICA.dll" : "..\..\output\$(PLAT).$(CFG)\MSICA.dll"
 	copy /y $** $@ > NUL
 
 
@@ -142,7 +142,7 @@ binMSICA.dll	MSICA.dll
 #
 #All :: "$(LANG).$(PLAT).$(CFG).Certificate-1.idt"
 #
-#"$(LANG).$(PLAT).$(CFG).Certificate-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#"$(LANG).$(PLAT).$(CFG).Certificate-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 #	-if exist $@ del /f /q $@
 #	move /y << $@ > NUL
 #Certificate	Store	Flags	Encoding	Binary_	Condition	Component_
@@ -156,7 +156,7 @@ binMSICA.dll	MSICA.dll
 
 All :: "$(LANG).$(PLAT).$(CFG).CustomAction-1.idt"
 
-"$(LANG).$(PLAT).$(CFG).CustomAction-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+"$(LANG).$(PLAT).$(CFG).CustomAction-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Action	Type	Source	Target
@@ -198,7 +198,7 @@ InstallScheduledTasksCommit	3585	binMSICA.dll	ExecuteSequence
 
 All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
 
-"$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+"$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 	-if exist $@ del /f /q $@
 	move /y << $@ > NUL
 Action	Condition	Sequence
@@ -240,7 +240,7 @@ InstallScheduledTasksCommit		6164
 #
 #All :: "$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt"
 #
-#"$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#"$(LANG).$(PLAT).$(CFG).ScheduledTask-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 #	-if exist $@ del /f /q $@
 #	move /y << $@ > NUL
 #Task	DisplayName	Application	Parameters	Directory_	Flags	Priority	User	Password	Author	Description	IdleMin	IdleDeadline	MaxRuntime	Condition	Component_
@@ -254,7 +254,7 @@ InstallScheduledTasksCommit		6164
 #
 #All :: "$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt"
 #
-#"$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#"$(LANG).$(PLAT).$(CFG).ServiceConfigure-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 #	-if exist $@ del /f /q $@
 #	move /y << $@ > NUL
 #ServiceConfigure	Name	StartType	Control	Condition	Sequence
@@ -268,7 +268,7 @@ InstallScheduledTasksCommit		6164
 #
 #All :: "$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt"
 #
-#"$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#"$(LANG).$(PLAT).$(CFG).TaskTrigger-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 #	-if exist $@ del /f /q $@
 #	move /y << $@ > NUL
 #Trigger	BeginDate	EndDate	StartTime	StartTimeRand	MinutesDuration	MinutesInterval	Flags	Type	DaysInterval	WeeksInterval	DaysOfTheWeek	DaysOfMonth	WeekOfMonth	MonthsOfYear	Task_
@@ -282,7 +282,7 @@ InstallScheduledTasksCommit		6164
 #
 #All :: "$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt"
 #
-#"$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt" : "Makefile" "..\..\..\include\MSIBuildCfg.mak"
+#"$(LANG).$(PLAT).$(CFG).WLANProfile-1.idt" : "Makefile" "..\..\..\..\include\MSIBuildCfg.mak"
 #	-if exist $@ del /f /q $@
 #	move /y << $@ > NUL
 #WLANProfile	Name	Binary_	Condition	Component_
@@ -295,4 +295,4 @@ InstallScheduledTasksCommit		6164
 # Build MSM module!
 ######################################################################
 
-!INCLUDE "..\..\MSIBuild\MSM.mak"
+!INCLUDE "..\..\..\MSIBuild\MSM.mak"

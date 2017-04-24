@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2016-2017 Amebis
+
+    This file is part of MSICA.
+
+    MSICA is free software: you can redistribute it and/or modify it
+    under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    MSICA is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with MSICA. If not, see <http://www.gnu.org/licenses/>.
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="xgettext.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros">
+    <UpdaterVersion>MSICA</UpdaterVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <_PropertySheetDisplayName>MSICA Common</_PropertySheetDisplayName>
+    <IntDir>temp\$(MSBuildProjectName).$(Platform).$(Configuration).$(PlatformToolset)\</IntDir>
+    <OutDir>temp\$(MSBuildProjectName).$(Platform).$(Configuration).$(PlatformToolset)\</OutDir>
+    <IncludePath>$(WXWIN)\include\msvc;$(WXWIN)\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(WXWIN)\src\aui;$(WXWIN)\src\cocoa;$(WXWIN)\src\common;$(WXWIN)\src\dfb;$(WXWIN)\src\expat;$(WXWIN)\src\generic;$(WXWIN)\src\gtk;$(WXWIN)\src\gtk1;$(WXWIN)\src\html;$(WXWIN)\src\jpeg;$(WXWIN)\src\motif;$(WXWIN)\src\msdos;$(WXWIN)\src\msw;$(WXWIN)\src\os2;$(WXWIN)\src\osx;$(WXWIN)\src\png;$(WXWIN)\src\propgrid;$(WXWIN)\src\regex;$(WXWIN)\src\ribbon;$(WXWIN)\src\richtext;$(WXWIN)\src\stc;$(WXWIN)\src\tiff;$(WXWIN)\src\univ;$(WXWIN)\src\unix;$(WXWIN)\src\x11;$(WXWIN)\src\xml;$(WXWIN)\src\xrc;$(WXWIN)\src\zlib;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>NTDDI_VERSION=NTDDI_WINXP;_WIN32_WINNT=_WIN32_WINNT_WINXP;wxMSVC_VERSION_AUTO;WXUSINGDLL;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <StringPooling>true</StringPooling>
+      <DisableSpecificWarnings>4100;4505</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WINVER=0x0501;_WIN32_WINNT=0x0501;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <POCompile>
+      <CheckAccel>Amperstand</CheckAccel>
+      <OutputFile>$(OutDir)..\locale\%(Filename)\$(ProjectName).mo</OutputFile>
+    </POCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>

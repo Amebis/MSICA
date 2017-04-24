@@ -39,4 +39,4 @@ extern DWORD (WINAPI *pfnWlanEnumInterfaces)(__in HANDLE hClientHandle, __reserv
 
 #include <MSICALib.h>
 
-#include <MSICA.h>
+#include "MSICA.h"

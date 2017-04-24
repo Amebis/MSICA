@@ -1,0 +1,6 @@
+[submodule "lib/WinStd"]
+	path = lib/WinStd
+	url = https://github.com/Amebis/WinStd.git
+[submodule "lib/MSICALib"]
+	path = lib/MSICALib
+	url = https://github.com/Amebis/MSICALib.git
