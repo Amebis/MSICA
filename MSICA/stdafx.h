@@ -23,6 +23,8 @@
 #define MSICA_DLL // This library is compiled as a DLL
 #endif
 
+#include <WinStd\COM.h>
+
 #include <Windows.h>
 
 #include <corerror.h>

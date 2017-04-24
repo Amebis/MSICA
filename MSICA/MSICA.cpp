@@ -87,7 +87,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
     //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
     UINT uiResult;
-    BOOL bIsCoInitialized = SUCCEEDED(::CoInitialize(NULL));
+    winstd::com_initializer com_init(NULL);
     MSICA::COpList
         olInstallCertificates, olRemoveCertificates,
         olInstallWLANProfiles, olRemoveWLANProfiles,
@@ -584,7 +584,6 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
         ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
     }
 
-    if (bIsCoInitialized) ::CoUninitialize();
     return uiResult;
 }
 
