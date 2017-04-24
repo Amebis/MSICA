@@ -39,7 +39,7 @@
       <SubSystem>Windows</SubSystem>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\include;..\..\..\lib\MSICALib\include;..\..\..\lib\atlex\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\include;..\..\..\lib\MSICALib\include;..\..\..\lib\WinStd\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

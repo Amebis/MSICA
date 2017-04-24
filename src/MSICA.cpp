@@ -97,22 +97,22 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
     PMSIHANDLE
         hDatabase,
         hRecordProg = ::MsiCreateRecord(3);
-    ATL::CAtlString sValue;
+    winstd::tstring sValue;
 
     // Check and add the rollback enabled state.
     uiResult = ::MsiGetProperty(hInstall, _T("RollbackDisabled"), sValue);
     bRollbackEnabled = uiResult == NO_ERROR ?
-        _ttoi(sValue) || !sValue.IsEmpty() && _totlower(sValue.GetAt(0)) == _T('y') ? FALSE : TRUE :
+        _ttoi(sValue.c_str()) || !sValue.empty() && _totlower(sValue[0]) == _T('y') ? FALSE : TRUE :
         TRUE;
-    olRemoveScheduledTask.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olStopServices.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olRemoveWLANProfiles.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olRemoveCertificates.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olInstallCertificates.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olInstallWLANProfiles.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olSetServiceStarts.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olStartServices.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
-    olInstallScheduledTask.AddTail(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olRemoveScheduledTask.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olStopServices.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olRemoveWLANProfiles.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olRemoveCertificates.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olInstallCertificates.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olInstallWLANProfiles.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olSetServiceStarts.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olStartServices.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
+    olInstallScheduledTask.push_back(new MSICA::COpRollbackEnable(bRollbackEnabled));
 
     // Open MSI database.
     hDatabase = ::MsiGetActiveDatabase(hInstall);
@@ -130,9 +130,9 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewCert, NULL);
                 if (uiResult == NO_ERROR) {
-                    ATL::CAtlStringW sStore;
+                    std::wstring sStore;
                     int iFlags, iEncoding;
-                    ATL::CAtlArray<BYTE> binCert;
+                    std::vector<BYTE> binCert;
 
                     for (;;) {
                         PMSIHANDLE hRecord;
@@ -150,7 +150,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         // Read and evaluate certificate's condition.
                         uiResult = ::MsiRecordGetString(hRecord, 5, sValue);
                         if (uiResult != NO_ERROR) break;
-                        condition = ::MsiEvaluateCondition(hInstall, sValue);
+                        condition = ::MsiEvaluateCondition(hInstall, sValue.c_str());
                         if (condition == MSICONDITION_FALSE)
                             continue;
                         else if (condition == MSICONDITION_ERROR) {
@@ -199,15 +199,15 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         if (uiResult != NO_ERROR) break;
 
                         // Get the component state.
-                        uiResult = ::MsiGetComponentState(hInstall, sValue, &iInstalled, &iAction);
+                        uiResult = ::MsiGetComponentState(hInstall, sValue.c_str(), &iInstalled, &iAction);
                         if (uiResult != NO_ERROR) break;
 
                         if (iAction >= INSTALLSTATE_LOCAL) {
                             // Component is or should be installed. Install the certificate.
-                            olInstallCertificates.AddTail(new MSICA::COpCertInstall(binCert.GetData(), binCert.GetCount(), sStore, iEncoding, iFlags, MSICA_CERT_TICK_SIZE));
+                            olInstallCertificates.push_back(new MSICA::COpCertInstall(binCert.data(), binCert.size(), sStore.c_str(), iEncoding, iFlags, MSICA_CERT_TICK_SIZE));
                         } else if (iAction >= INSTALLSTATE_REMOVED) {
                             // Component is installed, but should be degraded to advertised/removed. Delete the certificate.
-                            olRemoveCertificates.AddTail(new MSICA::COpCertRemove(binCert.GetData(), binCert.GetCount(), sStore, iEncoding, iFlags, MSICA_CERT_TICK_SIZE));
+                            olRemoveCertificates.push_back(new MSICA::COpCertRemove(binCert.data(), binCert.size(), sStore.c_str(), iEncoding, iFlags, MSICA_CERT_TICK_SIZE));
                         }
 
                         // The amount of tick space to add for each certificate to progress indicator.
@@ -253,7 +253,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         // Read and evaluate service configuration condition.
                         uiResult = ::MsiRecordGetString(hRecord, 4, sValue);
                         if (uiResult != NO_ERROR) break;
-                        condition = ::MsiEvaluateCondition(hInstall, sValue);
+                        condition = ::MsiEvaluateCondition(hInstall, sValue.c_str());
                         if (condition == MSICONDITION_FALSE)
                             continue;
                         else if (condition == MSICONDITION_ERROR) {
@@ -273,7 +273,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         }
                         if (iValue >= 0) {
                             // Set service start type.
-                            olSetServiceStarts.AddTail(new MSICA::COpSvcSetStart(sValue, iValue, MSICA_SVC_SET_START_TICK_SIZE));
+                            olSetServiceStarts.push_back(new MSICA::COpSvcSetStart(sValue.c_str(), iValue, MSICA_SVC_SET_START_TICK_SIZE));
 
                             // The amount of tick space to add to progress indicator.
                             ::MsiRecordSetInteger(hRecordProg, 1, 3                            );
@@ -289,7 +289,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         }
                         if ((iValue & 4) != 0) {
                             // Stop service.
-                            olStopServices.AddTail(new MSICA::COpSvcStop(sValue, (iValue & 1) ? TRUE : FALSE, MSICA_SVC_STOP_TICK_SIZE));
+                            olStopServices.push_back(new MSICA::COpSvcStop(sValue.c_str(), (iValue & 1) ? TRUE : FALSE, MSICA_SVC_STOP_TICK_SIZE));
 
                             // The amount of tick space to add to progress indicator.
                             ::MsiRecordSetInteger(hRecordProg, 1, 3                       );
@@ -297,7 +297,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                             if (::MsiProcessMessage(hInstall, INSTALLMESSAGE_PROGRESS, hRecordProg) == IDCANCEL) { uiResult = ERROR_INSTALL_USEREXIT; break; }
                         } else if ((iValue & 2) != 0) {
                             // Start service.
-                            olStartServices.AddTail(new MSICA::COpSvcStart(sValue, (iValue & 1) ? TRUE : FALSE, MSICA_SVC_START_TICK_SIZE));
+                            olStartServices.push_back(new MSICA::COpSvcStart(sValue.c_str(), (iValue & 1) ? TRUE : FALSE, MSICA_SVC_START_TICK_SIZE));
 
                             // The amount of tick space to add to progress indicator.
                             ::MsiRecordSetInteger(hRecordProg, 1, 3                        );
@@ -327,8 +327,8 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                 // Execute query!
                 uiResult = ::MsiViewExecute(hViewST, NULL);
                 if (uiResult == NO_ERROR) {
-                    //ATL::CAtlString sComponent;
-                    ATL::CAtlStringW sDisplayName;
+                    //winstd::tstring sComponent;
+                    std::wstring sDisplayName;
 
                     for (;;) {
                         PMSIHANDLE hRecord;
@@ -345,7 +345,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         // Read and evaluate task's condition.
                         uiResult = ::MsiRecordGetString(hRecord, 15, sValue);
                         if (uiResult != NO_ERROR) break;
-                        condition = ::MsiEvaluateCondition(hInstall, sValue);
+                        condition = ::MsiEvaluateCondition(hInstall, sValue.c_str());
                         if (condition == MSICONDITION_FALSE)
                             continue;
                         else if (condition == MSICONDITION_ERROR) {
@@ -358,7 +358,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         if (uiResult != NO_ERROR) break;
 
                         // Get the component state.
-                        uiResult = ::MsiGetComponentState(hInstall, sValue, &iInstalled, &iAction);
+                        uiResult = ::MsiGetComponentState(hInstall, sValue.c_str(), &iInstalled, &iAction);
                         if (uiResult != NO_ERROR) break;
 
                         // Get task's DisplayName.
@@ -367,7 +367,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         if (iAction >= INSTALLSTATE_LOCAL) {
                             // Component is or should be installed. Create the task.
                             PMSIHANDLE hViewTT;
-                            MSICA::COpTaskCreate *opCreateTask = new MSICA::COpTaskCreate(sDisplayName, MSICA_TASK_TICK_SIZE);
+                            MSICA::COpTaskCreate *opCreateTask = new MSICA::COpTaskCreate(sDisplayName.c_str(), MSICA_TASK_TICK_SIZE);
 
                             // Populate the operation with task's data.
                             uiResult = opCreateTask->SetFromRecord(hInstall, hRecord);
@@ -387,10 +387,10 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                             } else
                                 break;
 
-                            olInstallScheduledTask.AddTail(opCreateTask);
+                            olInstallScheduledTask.push_back(opCreateTask);
                         } else if (iAction >= INSTALLSTATE_REMOVED) {
                             // Component is installed, but should be degraded to advertised/removed. Delete the task.
-                            olRemoveScheduledTask.AddTail(new MSICA::COpTaskDelete(sDisplayName, MSICA_TASK_TICK_SIZE));
+                            olRemoveScheduledTask.push_back(new MSICA::COpTaskDelete(sDisplayName.c_str(), MSICA_TASK_TICK_SIZE));
                         }
 
                         // The amount of tick space to add for each task to progress indicator.
@@ -432,8 +432,8 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                             // Get a list of WLAN interfaces.
                             dwError = ::pfnWlanEnumInterfaces(hClientHandle, NULL, &pInterfaceList);
                             if (dwError == NO_ERROR) {
-                                ATL::CAtlStringW sName, sProfileXML;
-                                ATL::CAtlArray<BYTE> binProfile;
+                                std::wstring sName, sProfileXML;
+                                std::vector<BYTE> binProfile;
 
                                 for (;;) {
                                     PMSIHANDLE hRecord;
@@ -452,7 +452,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                                     // Read and evaluate profile's condition.
                                     uiResult = ::MsiRecordGetString(hRecord, 3, sValue);
                                     if (uiResult != NO_ERROR) break;
-                                    condition = ::MsiEvaluateCondition(hInstall, sValue);
+                                    condition = ::MsiEvaluateCondition(hInstall, sValue.c_str());
                                     if (condition == MSICONDITION_FALSE)
                                         continue;
                                     else if (condition == MSICONDITION_ERROR) {
@@ -469,7 +469,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                                     if (uiResult != NO_ERROR) break;
 
                                     // Get the component state.
-                                    uiResult = ::MsiGetComponentState(hInstall, sValue, &iInstalled, &iAction);
+                                    uiResult = ::MsiGetComponentState(hInstall, sValue.c_str(), &iInstalled, &iAction);
                                     if (uiResult != NO_ERROR) break;
 
                                     if (iAction >= INSTALLSTATE_LOCAL) {
@@ -492,23 +492,23 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                                         ::MsiViewClose(hViewBinary);
                                         if (uiResult != NO_ERROR) break;
 
-                                        // Convert CAtlArray<BYTE> to CAtlStringW.
-                                        pProfileStr = (LPCWSTR)binProfile.GetData();
-                                        nCount = binProfile.GetCount()/sizeof(WCHAR);
+                                        // Convert std::vector<BYTE> to std::wstring.
+                                        pProfileStr = (LPCWSTR)binProfile.data();
+                                        nCount = binProfile.size()/sizeof(WCHAR);
 
                                         if (nCount < 1 || pProfileStr[0] != 0xfeff) {
                                             // The profile XML is not UTF-16 encoded.
                                             ::MsiRecordSetInteger(hRecordProg, 1, ERROR_INSTALL_WLAN_PROFILE_NOT_UTF16);
-                                            ::MsiRecordSetStringW(hRecordProg, 2, sName                               );
+                                            ::MsiRecordSetStringW(hRecordProg, 2, sName.c_str()                       );
                                             ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
                                             uiResult = ERROR_INSTALL_USEREXIT;
                                         }
-                                        sProfileXML.SetString(pProfileStr + 1, (int)nCount - 1);
+                                        sProfileXML.assign(pProfileStr + 1, (int)nCount - 1);
 
                                         for (i = 0; i < pInterfaceList->dwNumberOfItems; i++) {
                                             // Check for not ready state in interface.
                                             if (pInterfaceList->InterfaceInfo[i].isState != wlan_interface_state_not_ready) {
-                                                olInstallWLANProfiles.AddTail(new MSICA::COpWLANProfileSet(pInterfaceList->InterfaceInfo[i].InterfaceGuid, 0, sName, sProfileXML, MSICA_WLAN_PROFILE_TICK_SIZE));
+                                                olInstallWLANProfiles.push_back(new MSICA::COpWLANProfileSet(pInterfaceList->InterfaceInfo[i].InterfaceGuid, 0, sName.c_str(), sProfileXML.c_str(), MSICA_WLAN_PROFILE_TICK_SIZE));
                                                 iTick += MSICA_WLAN_PROFILE_TICK_SIZE;
                                             }
                                         }
@@ -522,7 +522,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                                         for (i = 0; i < pInterfaceList->dwNumberOfItems; i++) {
                                             // Check for not ready state in interface.
                                             if (pInterfaceList->InterfaceInfo[i].isState != wlan_interface_state_not_ready) {
-                                                olRemoveWLANProfiles.AddTail(new MSICA::COpWLANProfileDelete(pInterfaceList->InterfaceInfo[i].InterfaceGuid, sName, MSICA_WLAN_PROFILE_TICK_SIZE));
+                                                olRemoveWLANProfiles.push_back(new MSICA::COpWLANProfileDelete(pInterfaceList->InterfaceInfo[i].InterfaceGuid, sName.c_str(), MSICA_WLAN_PROFILE_TICK_SIZE));
                                                 iTick += MSICA_WLAN_PROFILE_TICK_SIZE;
                                             }
                                         }
@@ -583,16 +583,6 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
         ::MsiRecordSetInteger(hRecordProg, 1, uiResult);
         ::MsiProcessMessage(hInstall, INSTALLMESSAGE_ERROR, hRecordProg);
     }
-
-    olInstallScheduledTask.Free();
-    olStartServices.Free();
-    olSetServiceStarts.Free();
-    olInstallWLANProfiles.Free();
-    olInstallCertificates.Free();
-    olRemoveCertificates.Free();
-    olRemoveWLANProfiles.Free();
-    olStopServices.Free();
-    olRemoveScheduledTask.Free();
 
     if (bIsCoInitialized) ::CoUninitialize();
     return uiResult;

@@ -23,9 +23,7 @@
 #define MSICA_DLL // This library is compiled as a DLL
 #endif
 
-#include <atlbase.h>
-#include <atlfile.h>
-#include <atlstr.h>
+#include <Windows.h>
 
 #include <corerror.h>
 #include <stdlib.h>
