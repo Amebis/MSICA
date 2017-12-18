@@ -24,7 +24,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_PropertySheetDisplayName>MSICA x64</_PropertySheetDisplayName>
-    <LibraryPath>$(WXWIN)\lib\vc$(PlatformToolsetVersion)_x64_dll;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Lib>
