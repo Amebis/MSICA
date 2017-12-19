@@ -24,15 +24,15 @@
 // Version
 ////////////////////////////////////////////////////////////////////
 
-#define MSICA_VERSION        0x01ff0000
+#define MSICA_VERSION        0x02000000
 
-#define MSICA_VERSION_MAJ    1
-#define MSICA_VERSION_MIN    255
+#define MSICA_VERSION_MAJ    2
+#define MSICA_VERSION_MIN    0
 #define MSICA_VERSION_REV    0
 #define MSICA_VERSION_BUILD  0
 
-#define MSICA_VERSION_STR    "2.0-pre"
-#define MSICA_BUILD_YEAR_STR "2016"
+#define MSICA_VERSION_STR    "2.0"
+#define MSICA_BUILD_YEAR_STR "2017"
 
 #if !defined(RC_INVOKED) && !defined(MIDL_PASS)
 
