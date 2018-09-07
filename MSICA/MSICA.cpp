@@ -165,12 +165,12 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
                         // Execute query!
                         uiResult = ::MsiViewExecute(hViewBinary, hRecord);
                         if (uiResult == NO_ERROR) {
-                            PMSIHANDLE hRecord;
+                            PMSIHANDLE hRecordCert;
 
                             // Fetch one record from the view.
-                            uiResult = ::MsiViewFetch(hViewBinary, &hRecord);
+                            uiResult = ::MsiViewFetch(hViewBinary, &hRecordCert);
                             if (uiResult == NO_ERROR)
-                                uiResult = ::MsiRecordReadStream(hRecord, 1, binCert);
+                                uiResult = ::MsiRecordReadStream(hRecordCert, 1, binCert);
                             ::MsiViewClose(hViewBinary);
                             if (uiResult != NO_ERROR) break;
                         } else
