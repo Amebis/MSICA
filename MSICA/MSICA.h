@@ -1,5 +1,5 @@
 /*
-    Copyright 1991-2017 Amebis
+    Copyright 1991-2018 Amebis
 
     This file is part of MSICA.
 
@@ -32,7 +32,7 @@
 #define MSICA_VERSION_BUILD  0
 
 #define MSICA_VERSION_STR    "2.0"
-#define MSICA_BUILD_YEAR_STR "2017"
+#define MSICA_BUILD_YEAR_STR "2018"
 
 #if !defined(RC_INVOKED) && !defined(MIDL_PASS)
 
