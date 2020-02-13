@@ -28,6 +28,8 @@
     <_PropertySheetDisplayName>MSICA Common</_PropertySheetDisplayName>
     <IntDir>temp\$(MSBuildProjectName).$(Platform).$(Configuration).$(PlatformToolset)\</IntDir>
     <OutDir>temp\$(MSBuildProjectName).$(Platform).$(Configuration).$(PlatformToolset)\</OutDir>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
