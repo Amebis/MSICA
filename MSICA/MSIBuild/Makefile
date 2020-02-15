@@ -203,7 +203,7 @@ All :: "$(LANG).$(PLAT).$(CFG).InstallExecuteSequence-1.idt"
 	move /y << $@ > NUL
 Action	Condition	Sequence
 s$(MSIBUILD_LENGTH_ID)	S255	I2
-InstallExecuteSequence	Action
+InstallExecuteSequence	Action	Condition
 MSICAInitialize		1510
 RemoveScheduledTasksRollback		1850
 RemoveScheduledTasksExec		1851
