@@ -2,3 +2,5 @@
 /Win32.Release
 /x64.Debug
 /x64.Release
+/ARM64.Debug
+/ARM64.Release
