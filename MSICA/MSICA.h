@@ -39,18 +39,6 @@
 #include <msi.h>
 
 ////////////////////////////////////////////////////////////////////
-// Calling declaration
-////////////////////////////////////////////////////////////////////
-
-#if defined(MSICA_DLL)
-#define MSICA_API __declspec(dllexport)
-#elif defined(MSICA_DLLIMP)
-#define MSICA_API __declspec(dllimport)
-#else
-#define MSICA_API
-#endif
-
-////////////////////////////////////////////////////////////////////
 // Exported functions
 ////////////////////////////////////////////////////////////////////
 
@@ -58,8 +46,8 @@
 extern "C" {
 #endif
 
-    UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall);
-    UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall);
+    UINT __declspec(dllexport) MSICAInitialize(MSIHANDLE hInstall);
+    UINT __declspec(dllexport) ExecuteSequence(MSIHANDLE hInstall);
 
 #ifdef __cplusplus
 }

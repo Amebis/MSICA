@@ -82,7 +82,7 @@ extern "C" BOOL WINAPI DllMain(_In_ HINSTANCE hInstance, _In_ DWORD dwReason, _I
 // Exported functions
 ////////////////////////////////////////////////////////////////////
 
-UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
+UINT __declspec(dllexport) MSICAInitialize(MSIHANDLE hInstall)
 {
     //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
@@ -588,7 +588,7 @@ UINT MSICA_API MSICAInitialize(MSIHANDLE hInstall)
 }
 
 
-UINT MSICA_API ExecuteSequence(MSIHANDLE hInstall)
+UINT __declspec(dllexport) ExecuteSequence(MSIHANDLE hInstall)
 {
     //::MessageBox(NULL, _T(__FUNCTION__), _T("MSICA"), MB_OK);
 
