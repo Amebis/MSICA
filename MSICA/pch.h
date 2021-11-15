@@ -21,8 +21,6 @@
 
 #include <WinStd\COM.h>
 
-#include <Windows.h>
-
 #include <corerror.h>
 #include <stdlib.h>
 #include <time.h>
