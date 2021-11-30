@@ -21,7 +21,6 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="common.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_PropertySheetDisplayName>MSICA Win32</_PropertySheetDisplayName>
   </PropertyGroup>
@@ -34,5 +33,4 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup />
 </Project>

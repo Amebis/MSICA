@@ -21,9 +21,6 @@
   <ImportGroup Label="ExtensionSettings">
     <Import Project="xgettext.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros">
-    <UpdaterVersion>MSICA</UpdaterVersion>
-  </PropertyGroup>
   <PropertyGroup>
     <_PropertySheetDisplayName>MSICA Common</_PropertySheetDisplayName>
     <IntDir>temp\$(MSBuildProjectName).$(Platform).$(Configuration).$(PlatformToolset)\</IntDir>
@@ -51,5 +48,4 @@
       <OutputFile>$(OutDir)..\locale\%(Filename)\$(ProjectName).mo</OutputFile>
     </POCompile>
   </ItemDefinitionGroup>
-  <ItemGroup />
 </Project>

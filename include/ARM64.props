@@ -21,7 +21,6 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="common.props" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_PropertySheetDisplayName>MSICA ARM64</_PropertySheetDisplayName>
   </PropertyGroup>
@@ -35,5 +34,4 @@
       <AdditionalDependencies>ole32.lib;oleaut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup />
 </Project>
