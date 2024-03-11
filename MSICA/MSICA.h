@@ -20,7 +20,7 @@
 #define MSICA_VERSION_STR    "2.0"
 #define MSICA_BUILD_YEAR_STR "2018"
 
-#if !defined(RC_INVOKED) && !defined(MIDL_PASS)
+#if !defined(RC_INVOKED) && !defined(__midl)
 
 #include <msi.h>
 
@@ -39,5 +39,5 @@ extern "C" {
 }
 #endif
 
-#endif // !RC_INVOKED && !MIDL_PASS
-#endif // __MSICA_H__
+#endif
+#endif
